@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6089A1ED-8990-4080-9539-B6CD15F18368}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WMP</RootNamespace>
+    <AssemblyName>WMP</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="WMPViewModel.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\1.png" />
+    <Resource Include="Icons\10.png" />
+    <Resource Include="Icons\100.png" />
+    <Resource Include="Icons\101.png" />
+    <Resource Include="Icons\102.png" />
+    <Resource Include="Icons\103.png" />
+    <Resource Include="Icons\104.png" />
+    <Resource Include="Icons\105.png" />
+    <Resource Include="Icons\106.png" />
+    <Resource Include="Icons\107.png" />
+    <Resource Include="Icons\108.png" />
+    <Resource Include="Icons\109.png" />
+    <Resource Include="Icons\11.png" />
+    <Resource Include="Icons\110.png" />
+    <Resource Include="Icons\111.png" />
+    <Resource Include="Icons\112.png" />
+    <Resource Include="Icons\113.png" />
+    <Resource Include="Icons\114.png" />
+    <Resource Include="Icons\115.png" />
+    <Resource Include="Icons\116.png" />
+    <Resource Include="Icons\117.png" />
+    <Resource Include="Icons\118.png" />
+    <Resource Include="Icons\119.png" />
+    <Resource Include="Icons\12.png" />
+    <Resource Include="Icons\120.png" />
+    <Resource Include="Icons\121.png" />
+    <Resource Include="Icons\122.png" />
+    <Resource Include="Icons\123.png" />
+    <Resource Include="Icons\124.png" />
+    <Resource Include="Icons\125.png" />
+    <Resource Include="Icons\126.png" />
+    <Resource Include="Icons\127.png" />
+    <Resource Include="Icons\128.png" />
+    <Resource Include="Icons\129.png" />
+    <Resource Include="Icons\13.png" />
+    <Resource Include="Icons\130.png" />
+    <Resource Include="Icons\131.png" />
+    <Resource Include="Icons\14.png" />
+    <Resource Include="Icons\15.png" />
+    <Resource Include="Icons\16.png" />
+    <Resource Include="Icons\17.png" />
+    <Resource Include="Icons\18.png" />
+    <Resource Include="Icons\19.png" />
+    <Resource Include="Icons\2.png" />
+    <Resource Include="Icons\20.png" />
+    <Resource Include="Icons\21.png" />
+    <Resource Include="Icons\22.png" />
+    <Resource Include="Icons\23.png" />
+    <Resource Include="Icons\24.png" />
+    <Resource Include="Icons\25.png" />
+    <Resource Include="Icons\26.png" />
+    <Resource Include="Icons\27.png" />
+    <Resource Include="Icons\28.png" />
+    <Resource Include="Icons\29.png" />
+    <Resource Include="Icons\3.png" />
+    <Resource Include="Icons\30.png" />
+    <Resource Include="Icons\31.png" />
+    <Resource Include="Icons\32.png" />
+    <Resource Include="Icons\33.png" />
+    <Resource Include="Icons\34.png" />
+    <Resource Include="Icons\35.png" />
+    <Resource Include="Icons\36.png" />
+    <Resource Include="Icons\37.png" />
+    <Resource Include="Icons\38.png" />
+    <Resource Include="Icons\39.png" />
+    <Resource Include="Icons\4.png" />
+    <Resource Include="Icons\40.png" />
+    <Resource Include="Icons\41.png" />
+    <Resource Include="Icons\42.png" />
+    <Resource Include="Icons\43.png" />
+    <Resource Include="Icons\44.png" />
+    <Resource Include="Icons\45.png" />
+    <Resource Include="Icons\46.png" />
+    <Resource Include="Icons\47.png" />
+    <Resource Include="Icons\48.png" />
+    <Resource Include="Icons\49.png" />
+    <Resource Include="Icons\5.png" />
+    <Resource Include="Icons\50.png" />
+    <Resource Include="Icons\51.png" />
+    <Resource Include="Icons\52.png" />
+    <Resource Include="Icons\53.png" />
+    <Resource Include="Icons\54.png" />
+    <Resource Include="Icons\55.png" />
+    <Resource Include="Icons\56.png" />
+    <Resource Include="Icons\57.png" />
+    <Resource Include="Icons\58.png" />
+    <Resource Include="Icons\59.png" />
+    <Resource Include="Icons\6.png" />
+    <Resource Include="Icons\60.png" />
+    <Resource Include="Icons\61.png" />
+    <Resource Include="Icons\62.png" />
+    <Resource Include="Icons\63.png" />
+    <Resource Include="Icons\64.png" />
+    <Resource Include="Icons\65.png" />
+    <Resource Include="Icons\66.png" />
+    <Resource Include="Icons\67.png" />
+    <Resource Include="Icons\68.png" />
+    <Resource Include="Icons\69.png" />
+    <Resource Include="Icons\7.png" />
+    <Resource Include="Icons\70.png" />
+    <Resource Include="Icons\71.png" />
+    <Resource Include="Icons\72.png" />
+    <Resource Include="Icons\73.png" />
+    <Resource Include="Icons\74.png" />
+    <Resource Include="Icons\75.png" />
+    <Resource Include="Icons\76.png" />
+    <Resource Include="Icons\77.png" />
+    <Resource Include="Icons\78.png" />
+    <Resource Include="Icons\79.png" />
+    <Resource Include="Icons\8.png" />
+    <Resource Include="Icons\80.png" />
+    <Resource Include="Icons\81.png" />
+    <Resource Include="Icons\82.png" />
+    <Resource Include="Icons\83.png" />
+    <Resource Include="Icons\84.png" />
+    <Resource Include="Icons\85.png" />
+    <Resource Include="Icons\86.png" />
+    <Resource Include="Icons\87.png" />
+    <Resource Include="Icons\88.png" />
+    <Resource Include="Icons\89.png" />
+    <Resource Include="Icons\9.png" />
+    <Resource Include="Icons\90.png" />
+    <Resource Include="Icons\91.png" />
+    <Resource Include="Icons\92.png" />
+    <Resource Include="Icons\93.png" />
+    <Resource Include="Icons\94.png" />
+    <Resource Include="Icons\95.png" />
+    <Resource Include="Icons\96.png" />
+    <Resource Include="Icons\97.png" />
+    <Resource Include="Icons\98.png" />
+    <Resource Include="Icons\99.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
