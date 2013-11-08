@@ -22,14 +22,27 @@ namespace WMP
     {
         public MainWindow()
         {
-            WMPViewModel player = new WMPViewModel();
-            this.DataContext = player;
             InitializeComponent();
+            WMPViewModel player = new WMPViewModel();
+            player.PlayerEvent += new EventHandler<PlayerEvent>(OnPlayerAction);
+            this.DataContext = player;
         }
 
         private void VolumeButtonClick(object sender, RoutedEventArgs e)
         {
             VolumePopup.IsOpen = true;
+        }
+
+        private void OnPlayerAction(object sender, PlayerEvent evt)
+        {
+            if (evt.PlayerAction == ActionType.PAUSE)
+            {
+                MediaPlayer.Pause();
+            }
+            else if (evt.PlayerAction == ActionType.PLAY)
+            {
+                MediaPlayer.Play();
+            }
         }
     }
 }

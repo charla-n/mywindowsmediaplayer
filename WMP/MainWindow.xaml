@@ -6,6 +6,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -14,7 +15,7 @@
 
         <Menu IsMainMenu="True" Background="Transparent">
             <MenuItem Header="_File" >
-                <MenuItem Header="_Open">
+                <MenuItem Command="{Binding OpenMedia}" Header="_Open">
                     <MenuItem.Icon>
                         <Image Source="Icons/119.png" />
                     </MenuItem.Icon>
@@ -40,12 +41,16 @@
         </Menu>
 
         <!--Source="http://radiofg.impek.com/fgd.mp3"-->
-        <MediaElement x:Name="MediaPlayer" Grid.Row="1">
+        <!--C:\Users\Grapefruit\Documents\Visual Studio 2013\Projects\mywindowsmediaplayer\WMP\[5x01] Weeds VF.avi-->
+        <MediaElement x:Name="MediaPlayer" LoadedBehavior="Manual" Position="0" Source="{Binding MovieSource}" Grid.Row="1">
         </MediaElement>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <Button Height="32" Width="32" Background="Transparent" BorderBrush="Transparent" >
-                <Image Source="Icons/98.png" ToolTip="Play"></Image>
+        <ProgressBar Margin="5,0,5,0" Grid.Row="2" Maximum="{Binding ElementName=MediaPlayer, Mode=OneWay, Path=Position.TotalSeconds}" Value="{Binding ElementName=MediaPlayer, Mode=OneWay, Path=Position.Seconds}"></ProgressBar>
+
+        <!--Icons/98.png-->
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <Button Command="{Binding Play}" Height="32" Width="32" Background="Transparent" BorderBrush="Transparent" >
+                <Image Source="{Binding StopPlay}" ToolTip="Play"></Image>
             </Button>
             <Button Background="Transparent" BorderBrush="Transparent" Margin="10,0,0,0" Height="32" Width="32">
                 <Image Source="Icons/92.png" ToolTip="Previous"></Image>
