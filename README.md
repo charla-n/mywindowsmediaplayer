@@ -3,7 +3,7 @@ La bibliotheque ne se fera pas via une base de donnee, mais via un fichier XML g
 
 TODO :
 
-:::HTML
+	:::html
 
 <ul>
 <li>Interface Bibliotheque + Code</li>
