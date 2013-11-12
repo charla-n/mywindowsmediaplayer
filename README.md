@@ -5,16 +5,16 @@ TODO :
 
 	:::html
 
-<ul>
-<li>Interface Bibliotheque + Code</li>
-<li>Interface Playlist + Code + Rajouter un bouton afin d'y acceder</li>
-<li>Gestion des images</li>
-<li>Binder les touches Next et Previous</li>
-<li>Clean le MediaPlayer sur Stop</li>
-<li>Corriger le warning sur le Volume</li>
-<li>Ajouter les fenetres Tips et About</li>
-<li>Rajouter les exceptions</li>
-</ul>
+	<ul>
+	<li>Interface Bibliotheque + Code</li>
+	<li>Interface Playlist + Code + Rajouter un bouton afin d'y 	acceder</li>
+	<li>Gestion des images</li>
+	<li>Binder les touches Next et Previous</li>
+	<li>Clean le MediaPlayer sur Stop</li>
+	<li>Corriger le warning sur le Volume</li>
+	<li>Ajouter les fenetres Tips et About</li>
+	<li>Rajouter les exceptions</li>
+	</ul>
 
 Bonus :
 
