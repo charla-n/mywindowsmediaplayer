@@ -1,1 +1,22 @@
-COUCOU
+Le MVVM est à priori bon.
+La bibliothèque ne se fera pas via une base de donnée, mais via un fichier XML grâce à Serialize pour respecter le sujet.
+
+TODO :
+
+<ul>
+<li>Interface Bibliothèque + Code</li>
+<li>Interface Playlist + Code + Rajouter un bouton afin d'y accéder</li>
+<li>Gestion des images</li>
+<li>Binder les touches Next et Previous</li>
+<li>Clean le MediaPlayer sur Stop</li>
+<li>Corriger le warning sur le Volume</li>
+<li>Ajouter les fenêtres Tips et About</li>
+<li>Rajouter les exceptions</li>
+</ul>
+
+Bonus :
+
+Faire un vrai fullscreen
+Gérer le streaming
+Enregistrer les playlists
+MVVM
