@@ -97,6 +97,48 @@ namespace WMP
             }
         }
 
+        public ICommand Stop
+        {
+            get
+            {
+                return new RelayCommand(StopCmd, () => true);
+            }
+        }
+
+        public ICommand FullScreen
+        {
+            get
+            {
+                return new RelayCommand(FullScreenCmd, CanFullScreen);
+            }
+        }
+
+        private void FullScreenCmd()
+        {
+            if (PlayerEvent != null)
+            {
+                PlayerEvent(this, new PlayerEvent(ActionType.FULLSCREEN));
+            }
+        }
+
+        private bool CanFullScreen()
+        {
+            if (_media != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void StopCmd()
+        {
+            if (PlayerEvent != null)
+            {
+                _media = null;
+                PlayerEvent(this, new PlayerEvent(ActionType.STOP));
+            }
+        }
+
         private void PlayCmd()
         {
             if (_media == null)

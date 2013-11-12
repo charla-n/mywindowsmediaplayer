@@ -10,7 +10,8 @@ namespace WMP
     {
         STOP,
         PLAY,
-        PAUSE
+        PAUSE,
+        FULLSCREEN
     };
 
     public class PlayerEvent : EventArgs

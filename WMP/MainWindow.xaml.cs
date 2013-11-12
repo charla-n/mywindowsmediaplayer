@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -42,6 +43,24 @@ namespace WMP
             else if (evt.PlayerAction == ActionType.PLAY)
             {
                 MediaPlayer.Play();
+            }
+            else if (evt.PlayerAction == ActionType.STOP)
+            {
+                MediaPlayer.Stop();
+                MediaPlayer.Close();
+            }
+            else if (evt.PlayerAction == ActionType.FULLSCREEN)
+            {
+                if (WindowState == WindowState.Maximized)
+                {
+                    WindowStyle = WindowStyle.SingleBorderWindow;
+                    WindowState = WindowState.Normal;
+                }
+                else
+                {
+                    WindowStyle = WindowStyle.None;
+                    WindowState = WindowState.Maximized;
+                }
             }
         }
     }
