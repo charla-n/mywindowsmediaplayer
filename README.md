@@ -1,13 +1,13 @@
 Le MVVM est a priori bon.
 La bibliotheque ne se fera pas via une base de donnee, mais via un fichier XML grace a Serialize pour respecter le sujet.
 
-TODO :
+Todo :
 
 	:::html
 
 	
 	Interface Bibliotheque + Code
-	Interface Playlist + Code + Rajouter un bouton afin d'y 	acceder
+	Interface Playlist + Code + Rajouter un bouton afin d'y acceder
 	Gestion des images
 	Binder les touches Next et Previous
 	Clean le MediaPlayer sur Stop
