@@ -25,43 +25,11 @@ namespace WMP
         {
             InitializeComponent();
             WMPViewModel player = new WMPViewModel();
-            player.PlayerEvent += new EventHandler<PlayerEvent>(OnPlayerAction);
-            this.DataContext = player;
         }
 
         private void VolumeButtonClick(object sender, RoutedEventArgs e)
         {
             VolumePopup.IsOpen = true;
-        }
-
-        private void OnPlayerAction(object sender, PlayerEvent evt)
-        {
-            if (evt.PlayerAction == ActionType.PAUSE)
-            {
-                MediaPlayer.Pause();
-            }
-            else if (evt.PlayerAction == ActionType.PLAY)
-            {
-                MediaPlayer.Play();
-            }
-            else if (evt.PlayerAction == ActionType.STOP)
-            {
-                MediaPlayer.Stop();
-                MediaPlayer.Close();
-            }
-            else if (evt.PlayerAction == ActionType.FULLSCREEN)
-            {
-                if (WindowState == WindowState.Maximized)
-                {
-                    WindowStyle = WindowStyle.SingleBorderWindow;
-                    WindowState = WindowState.Normal;
-                }
-                else
-                {
-                    WindowStyle = WindowStyle.None;
-                    WindowState = WindowState.Maximized;
-                }
-            }
         }
     }
 }

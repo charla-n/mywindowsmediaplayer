@@ -6,38 +6,85 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using WMP.Model;
 
 namespace WMP
 {
     public class WMPViewModel : ViewModelBase
     {
-        public event EventHandler<PlayerEvent> PlayerEvent;
-
+        bool _fullScreen;
+        Timer _progress;
+        MediaElement _player;
         ObservableCollection<Media> _playList;
         Media _media;
 
         public WMPViewModel()
         {
+            _fullScreen = false;
+            _progress = new Timer(1000);
+            _progress.Elapsed += ProgressElapsed;
+            _player = new MediaElement();
+            _player.LoadedBehavior = MediaState.Manual;
+            _player.MediaOpened += MediaLoaded;
             _playList = new ObservableCollection<Media>();
         }
 
+        #region Events
+        private void MediaLoaded(object sender, RoutedEventArgs evt)
+        {
+            _media.Duration = (int)_player.NaturalDuration.TimeSpan.TotalSeconds;
+            OnPropertyChanged("StopPlay");
+            OnPropertyChanged("MaxProgressBar");
+        }
+
+        private void ProgressElapsed(object sender, ElapsedEventArgs evt)
+        {
+            OnPropertyChanged("ProgressBar");
+        }
+        #endregion Events
+
         #region Properties
-        public string MovieSource
+
+        public MediaElement MyMediaElement
         {
             get
             {
-                return _media == null ? "" : _media.FileName;
+                return _player;
+            }
+        }
+
+        public int ProgressBar
+        {
+            get
+            {
+                return _player.Position.Seconds;
             }
             set
             {
-                _media.FileName = value;
-                _media.isPlaying = true;
-                OnPropertyChanged("MovieSource");
-                OnPropertyChanged("StopPlay");
+                OnPropertyChanged("ProgressBar");
+            }
+        }
+
+        public int MaxProgressBar
+        {
+            get
+            {
+                if (_player.IsLoaded)
+                {
+                    Console.WriteLine(_player.NaturalDuration.TimeSpan.TotalSeconds);
+                    return (int)_player.NaturalDuration.TimeSpan.TotalSeconds;
+                }
+                else
+                    return 0;
+            }
+            set
+            {
+                OnPropertyChanged("MaxProgressBar");
             }
         }
 
@@ -51,9 +98,6 @@ namespace WMP
                     return "Icons/98.png";
                 return "Icons/93.png";
             }
-            set
-            {
-            }
         }
         #endregion
 
@@ -66,6 +110,24 @@ namespace WMP
             }
         }
 
+        public ICommand Quit
+        {
+            get
+            {
+                return new RelayCommand(QuitCmd, () => true);
+            }
+        }
+
+        #endregion
+
+        #region CommandMenu
+
+        private void QuitCmd()
+        {
+            _player.Close();
+            Application.Current.Shutdown();
+        }
+
         private void OpenMediaCmd()
         {
             OpenFileDialog  dialog = new OpenFileDialog();
@@ -75,13 +137,18 @@ namespace WMP
             res = dialog.ShowDialog();
             if (res == true)
             {
+                _progress.Start();
+                _player.Source = new Uri(dialog.FileName);
+                _player.Play();
                 if (_media == null)
-                    _media = new Media();
-                if (PlayerEvent != null)
                 {
-                    PlayerEvent(this, new PlayerEvent(ActionType.PLAY));
+                    _media = new Media { isPlaying = true, FileName = dialog.FileName };
                 }
-                MovieSource = dialog.FileName;
+                else
+                {
+                    _media.isPlaying = true;
+                    _media.FileName = dialog.FileName;
+                }
             }
         }
 
@@ -113,12 +180,22 @@ namespace WMP
             }
         }
 
+        #endregion
+
+        #region CommandTaskBar
         private void FullScreenCmd()
         {
-            if (PlayerEvent != null)
+            if (!_fullScreen)
             {
-                PlayerEvent(this, new PlayerEvent(ActionType.FULLSCREEN));
+                Application.Current.MainWindow.WindowStyle = WindowStyle.None;
+                Application.Current.MainWindow.WindowState = WindowState.Maximized;
             }
+            else
+            {
+                Application.Current.MainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+                Application.Current.MainWindow.WindowState = WindowState.Normal;
+            }
+            _fullScreen = !_fullScreen;
         }
 
         private bool CanFullScreen()
@@ -132,11 +209,9 @@ namespace WMP
 
         private void StopCmd()
         {
-            if (PlayerEvent != null)
-            {
-                _media = null;
-                PlayerEvent(this, new PlayerEvent(ActionType.STOP));
-            }
+            _media = null;
+            _progress.Stop();
+            _player.Stop();
         }
 
         private void PlayCmd()
@@ -145,17 +220,13 @@ namespace WMP
                 return;
             if (_media.isPlaying == true)
             {
-                if (PlayerEvent != null)
-                {
-                    PlayerEvent(this, new PlayerEvent(ActionType.PAUSE));
-                }
+                _progress.Stop();
+                _player.Pause();
             }
             else
             {
-                if (PlayerEvent != null)
-                {
-                    PlayerEvent(this, new PlayerEvent(ActionType.PLAY));
-                }
+                _progress.Start();
+                _player.Play();
             }
             _media.isPlaying = !_media.isPlaying;
             OnPropertyChanged("StopPlay");
