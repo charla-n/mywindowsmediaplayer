@@ -18,8 +18,8 @@ namespace WMP
     public class WMPViewModel : ViewModelBase
     {
         Konami _k;
-        Window tips;
-        Window about;
+        Window _tips;
+        Window _about;
         bool _fullScreen;
         Timer _progress;
         MediaElement _player;
@@ -29,7 +29,7 @@ namespace WMP
         public WMPViewModel()
         {
             _k = new Konami();
-            about = null;
+            _about = null;
             _fullScreen = false;
             _progress = new Timer(1000);
             _progress.Elapsed += ProgressElapsed;
@@ -55,12 +55,12 @@ namespace WMP
 
         private void OnCloseHelp(object sender, EventArgs e)
         {
-            about = null;
+            _about = null;
         }
 
         private void OnCloseTips(object sender, EventArgs e)
         {
-            tips = null;
+            _tips = null;
         }
 
         #endregion Events
@@ -173,23 +173,23 @@ namespace WMP
 
         private void TipsCmd()
         {
-            if (tips == null)
+            if (_tips == null)
             {
-                tips = new Tips();
+                _tips = new Tips();
 
-                tips.Closed += OnCloseTips;
-                tips.Show();
+                _tips.Closed += OnCloseTips;
+                _tips.Show();
             }
         }
 
         private void AboutCmd()
         {
-            if (about == null)
+            if (_about == null)
             {
-                about = new About();
+                _about = new About();
 
-                about.Closed += OnCloseHelp;
-                about.Show();
+                _about.Closed += OnCloseHelp;
+                _about.Show();
             }
         }
 
@@ -283,6 +283,8 @@ namespace WMP
             _media = null;
             _progress.Stop();
             _player.Stop();
+            _player.Close();
+            OnPropertyChanged("StopPlay");
         }
 
         private void PlayCmd()

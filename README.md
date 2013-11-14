@@ -20,6 +20,7 @@ Bonus :
 
 	:::html
 
+	!DONE Konami Code
 	Faire un vrai fullscreen
 	Gerer le streaming
 	Enregistrer les playlists

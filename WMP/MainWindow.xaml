@@ -60,7 +60,7 @@
             </ContentControl.InputBindings>
         </ContentControl>
 
-        <GridSplitter Width="5" Grid.Row="1" Grid.Column="1" ResizeBehavior="PreviousAndNext" ShowsPreview="True"></GridSplitter>
+        <GridSplitter Background="SlateBlue" Width="5" Grid.Row="1" Grid.Column="1" ResizeBehavior="PreviousAndNext" ShowsPreview="True"></GridSplitter>
 
         <StackPanel Grid.Column="2" Grid.Row="1" >
             <TextBlock HorizontalAlignment="Center">Library</TextBlock>
