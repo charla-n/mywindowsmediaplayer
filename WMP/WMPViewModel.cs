@@ -17,6 +17,9 @@ namespace WMP
 {
     public class WMPViewModel : ViewModelBase
     {
+        Konami _k;
+        Window tips;
+        Window about;
         bool _fullScreen;
         Timer _progress;
         MediaElement _player;
@@ -25,6 +28,8 @@ namespace WMP
 
         public WMPViewModel()
         {
+            _k = new Konami();
+            about = null;
             _fullScreen = false;
             _progress = new Timer(1000);
             _progress.Elapsed += ProgressElapsed;
@@ -37,7 +42,8 @@ namespace WMP
         #region Events
         private void MediaLoaded(object sender, RoutedEventArgs evt)
         {
-            _media.Duration = (int)_player.NaturalDuration.TimeSpan.TotalSeconds;
+            if (_media != null)
+                _media.Duration = (int)_player.NaturalDuration.TimeSpan.TotalSeconds;
             OnPropertyChanged("StopPlay");
             OnPropertyChanged("MaxProgressBar");
         }
@@ -46,6 +52,17 @@ namespace WMP
         {
             OnPropertyChanged("ProgressBar");
         }
+
+        private void OnCloseHelp(object sender, EventArgs e)
+        {
+            about = null;
+        }
+
+        private void OnCloseTips(object sender, EventArgs e)
+        {
+            tips = null;
+        }
+
         #endregion Events
 
         #region Properties
@@ -74,13 +91,17 @@ namespace WMP
         {
             get
             {
-                if (_player.IsLoaded)
+                if (_media != null)
                 {
-                    Console.WriteLine(_player.NaturalDuration.TimeSpan.TotalSeconds);
-                    return (int)_player.NaturalDuration.TimeSpan.TotalSeconds;
+                    if (_player.IsLoaded)
+                    {
+                        Console.WriteLine(_player.NaturalDuration.TimeSpan.TotalSeconds);
+                        return (int)_player.NaturalDuration.TimeSpan.TotalSeconds;
+                    }
+                    else
+                        return 0;
                 }
-                else
-                    return 0;
+                return 0;
             }
             set
             {
@@ -118,9 +139,47 @@ namespace WMP
             }
         }
 
+        public ICommand About
+        {
+            get
+            {
+                return new RelayCommand(AboutCmd, () => true);
+            }
+        }
+
+        public ICommand Tips
+        {
+            get
+            {
+                return new RelayCommand(TipsCmd, () => true);
+            }
+        }
+
         #endregion
 
         #region CommandMenu
+
+        private void TipsCmd()
+        {
+            if (tips == null)
+            {
+                tips = new Tips();
+
+                tips.Closed += OnCloseTips;
+                tips.Show();
+            }
+        }
+
+        private void AboutCmd()
+        {
+            if (about == null)
+            {
+                about = new About();
+
+                about.Closed += OnCloseHelp;
+                about.Show();
+            }
+        }
 
         private void QuitCmd()
         {
@@ -230,6 +289,73 @@ namespace WMP
             }
             _media.isPlaying = !_media.isPlaying;
             OnPropertyChanged("StopPlay");
+        }
+
+        #endregion
+
+        #region Konami
+
+        public ICommand KonamiUp
+        {
+            get
+            {
+                return new RelayCommand(KonamiCmd, () => true);
+            }
+        }
+
+        public ICommand KonamiDown
+        {
+            get
+            {
+                return new RelayCommand(KonamiCmd, () => true);
+            }
+        }
+
+        public ICommand KonamiLeft
+        {
+            get
+            {
+                return new RelayCommand(KonamiCmd, () => true);
+            }
+        }
+
+        public ICommand KonamiRight
+        {
+            get
+            {
+                return new RelayCommand(KonamiCmd, () => true);
+            }
+        }
+
+        public ICommand KonamiA
+        {
+            get
+            {
+                return new RelayCommand(KonamiCmd, () => true);
+            }
+        }
+
+        public ICommand KonamiB
+        {
+            get
+            {
+                return new RelayCommand(KonamiCmd, () => true);
+            }
+        }
+
+        private void KonamiCmd(object key)
+        {
+            string cmd = key as string;
+            Key k;
+
+            if (Enum.TryParse<Key>(cmd, out k) == false)
+                return;
+            if (_k.StepKonami(k) == true)
+            {
+                _player.Stop();
+                _player.Source = new Uri(@"Konami/konami.wav", UriKind.Relative);
+                _player.Play();
+            }
         }
 
         #endregion

@@ -3,10 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:WMP"
         Title="WMPv2" Height="600" Width="800">
-    <Window.Resources>
-        <local:WMPViewModel x:Key="MyViewModel"/>
-    </Window.Resources>
-    <Grid DataContext="{StaticResource MyViewModel}" x:Name="MainPanel">
+    <Window.DataContext>
+        <local:WMPViewModel/>
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="Up" Command="{Binding KonamiUp}" CommandParameter="Up"></KeyBinding>
+        <KeyBinding Key="Down" Command="{Binding KonamiDown}" CommandParameter="Down"></KeyBinding>
+        <KeyBinding Key="Left" Command="{Binding KonamiLeft}" CommandParameter="Left"></KeyBinding>
+        <KeyBinding Key="Right" Command="{Binding KonamiRight}" CommandParameter="Right"></KeyBinding>
+        <KeyBinding Key="A" Command="{Binding KonamiA}" CommandParameter="A"></KeyBinding>
+        <KeyBinding Key="B" Command="{Binding KonamiB}" CommandParameter="B"></KeyBinding>
+    </Window.InputBindings>
+    <Grid x:Name="MainPanel">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
@@ -33,12 +41,12 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Help" >
-                <MenuItem Header="_Tips">
+                <MenuItem Command="{Binding Tips}" Header="_Tips">
                     <MenuItem.Icon>
                         <Image Source="Icons/34.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_About">
+                <MenuItem Command="{Binding About}" Header="_About">
                     <MenuItem.Icon>
                         <Image Source="Icons/65.png" />
                     </MenuItem.Icon>

@@ -9,14 +9,26 @@ namespace WMP
 {
     public class RelayCommand : ICommand
     {
-        Action _execute;
+        Action<object> _execute;
+        Action _executeNoObj;
         Func<bool> _canExecute;
+
+        public RelayCommand(Action<object> execute, Func<bool> canExecute)
+        {
+            if (execute != null)
+            {
+                _executeNoObj = null;
+                _execute = execute;
+                _canExecute = canExecute;
+            }
+        }
 
         public RelayCommand(Action execute, Func<bool> canExecute)
         {
             if (execute != null)
             {
-                _execute = execute;
+                _execute = null;
+                _executeNoObj = execute;
                 _canExecute = canExecute;
             }
         }
@@ -37,7 +49,10 @@ namespace WMP
 
         void ICommand.Execute(object parameter)
         {
-            _execute();
+            if (_executeNoObj != null)
+                _executeNoObj();
+            else
+                _execute(parameter);
         }
     }
 }
