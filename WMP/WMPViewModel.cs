@@ -42,10 +42,22 @@ namespace WMP
         #region Events
         private void MediaLoaded(object sender, RoutedEventArgs evt)
         {
-            if (_media != null)
-                _media.Duration = (int)_player.NaturalDuration.TimeSpan.TotalSeconds;
-            OnPropertyChanged("StopPlay");
-            OnPropertyChanged("MaxProgressBar");
+            if (_player.NaturalDuration.HasTimeSpan)
+            {
+                if (_media != null)
+                {
+                    try
+                    {
+                        _media.Duration = (int)_player.NaturalDuration.TimeSpan.TotalSeconds;
+                    }
+                    catch (System.InvalidOperationException e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }
+                OnPropertyChanged("StopPlay");
+                OnPropertyChanged("MaxProgressBar");
+            }
         }
 
         private void ProgressElapsed(object sender, ElapsedEventArgs evt)
@@ -105,7 +117,7 @@ namespace WMP
             {
                 if (_media != null)
                 {
-                    if (_player.IsLoaded)
+                    if (_player.IsLoaded && _player.NaturalDuration.HasTimeSpan)
                     {
                         Console.WriteLine(_player.NaturalDuration.TimeSpan.TotalSeconds);
                         return (int)_player.NaturalDuration.TimeSpan.TotalSeconds;
@@ -204,7 +216,7 @@ namespace WMP
             OpenFileDialog  dialog = new OpenFileDialog();
             bool? res;
 
-            dialog.Filter = "Video files|*.avi;*.mpg;*.mov;*.asf|Audio files|*.mp3;*.wav;*.wma;*.ogg;*.pls|ALL files|*.*";
+            dialog.Filter = "Video files|*.avi;*.mpg;*.mov;*.asf|Audio files|*.mp3;*.wav;*.wma;*.ogg;*.pls|Picture Files|*.jpg;*.bmp;*.png|ALL files|*.*";
             res = dialog.ShowDialog();
             if (res == true)
             {
