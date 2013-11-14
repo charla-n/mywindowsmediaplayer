@@ -17,14 +17,23 @@ namespace WMP
 {
     public class WMPViewModel : ViewModelBase
     {
-        Konami _k;
-        Window _tips;
-        Window _about;
-        bool _fullScreen;
-        Timer _progress;
-        MediaElement _player;
+        //WINDOWS & PAGES
+
+        Playlist                    _playlistPage;
+        Window                      _tips;
+        Window                      _about;
+
+        //FEATURES
+
+        bool                        _fullScreen;
+        Timer                       _progress;
+        Konami                      _k;
+
+        //MEDIA
+
+        MediaElement                _player;
         ObservableCollection<Media> _playList;
-        Media _media;
+        Media                       _media;
 
         public WMPViewModel()
         {

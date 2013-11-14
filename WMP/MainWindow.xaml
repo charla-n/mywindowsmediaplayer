@@ -84,6 +84,9 @@
             <Button Command="{Binding FullScreen}" Margin="10,0,0,0" Background="Transparent" BorderBrush="Transparent" Height="32" Width="32">
                 <Image Source="Icons/22.png" ToolTip="FullScreen"></Image>
             </Button>
+            <Button Background="Transparent" BorderBrush="Transparent" Height="32" Width="32">
+                <Image Source="Icons/127.png" ToolTip="FullScreen"></Image>
+            </Button>
             <Button x:Name="VolumeButton" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" Height="32" Width="32" Click="VolumeButtonClick">
                 <Image Source="Icons/114.png" ToolTip="Volume"></Image>
             </Button>
@@ -96,8 +99,5 @@
             </Popup>
             <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding ElementName=ZoomSlider, StringFormat=\{0:P\}, Path=Value}"></TextBlock>
         </StackPanel>
-
-        
-        
     </Grid>
 </Window>
