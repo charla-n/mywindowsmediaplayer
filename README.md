@@ -12,7 +12,7 @@ Todo :
 	Binder les touches Next et Previous
 	Clean le MediaPlayer sur Stop
 	Corriger le warning sur le Volume
-	Ajouter les fenetres Tips et About
+	DONE !Ajouter les fenetres Tips et About!
 	Rajouter les exceptions
 	
 
