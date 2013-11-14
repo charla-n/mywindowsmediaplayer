@@ -67,6 +67,18 @@ namespace WMP
 
         #region Properties
 
+        public double Volume
+        {
+            get
+            {
+                return _player.Volume;
+            }
+            set
+            {
+                _player.Volume = value;
+            }
+        }
+
         public MediaElement MyMediaElement
         {
             get
