@@ -10,7 +10,7 @@ Todo :
 	Interface Playlist + Code + Rajouter un bouton afin d'y acceder
 	Gestion des images
 	Binder les touches Next et Previous
-	Clean le MediaPlayer sur Stop
+	!DONE Clean le MediaPlayer sur Stop
 	!DONE Corriger le warning sur le Volume
 	!DONE Ajouter les fenetres Tips et About
 	Rajouter les exceptions
