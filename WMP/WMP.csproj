@@ -53,6 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\PlaylistViewModel.cs" />
     <Compile Include="View\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -60,7 +61,7 @@
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\MainWindowModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Model\Media.cs" />
     <Compile Include="View\Playlist.xaml.cs">
       <DependentUpon>Playlist.xaml</DependentUpon>

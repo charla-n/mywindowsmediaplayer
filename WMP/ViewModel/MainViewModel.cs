@@ -17,9 +17,7 @@ namespace WMP
 {
     public class MainViewModel : ViewModelBase
     {
-        //WINDOWS & PAGES
-
-        Playlist                    _playlistPage;
+        MainWindowViewModel             _model;
 
         //FEATURES
 
@@ -32,9 +30,10 @@ namespace WMP
         ObservableCollection<Media> _playList;
         Media                       _media;
 
-        public MainViewModel()
+        public MainViewModel(MainWindowViewModel model)
         {
             Console.WriteLine("Instanciate MainViewModel");
+            _model = model;
             _media = null;
             _fullScreen = false;
             _progress = new Timer(1000);
@@ -166,6 +165,14 @@ namespace WMP
 
         #region TaskBar
 
+        public ICommand Playlist
+        {
+            get
+            {
+                return new RelayCommand(PlaylistCmd, () => true);
+            }
+        }
+
         public ICommand Play
         {
             get
@@ -193,6 +200,13 @@ namespace WMP
         #endregion
 
         #region CommandTaskBar
+
+        private void PlaylistCmd()
+        {
+            _player.Pause();
+            _model.ChangePage();
+        }
+
         private void FullScreenCmd()
         {
             if (!_fullScreen)
@@ -223,7 +237,8 @@ namespace WMP
             _progress.Stop();
             _player.Stop();
             _player.Close();
-            FullScreenCmd();
+            if (_fullScreen)
+                FullScreenCmd();
             OnPropertyChanged("StopPlay");
         }
 

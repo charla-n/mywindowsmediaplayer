@@ -18,7 +18,7 @@ namespace WMP
     /// <summary>
     /// Interaction logic for Playlist.xaml
     /// </summary>
-    public partial class Playlist : Page
+    public partial class Playlist : UserControl
     {
         public Playlist()
         {

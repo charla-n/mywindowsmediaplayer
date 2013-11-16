@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace WMP
 {
-    public class MainWindowModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
         Window                  _tips;
         Window                  _about;
@@ -18,13 +18,14 @@ namespace WMP
         ViewModelBase           _currentPage;
         Konami                  _k;
 
-        public MainWindowModel()
+        public MainWindowViewModel()
         {
             _about = null;
             _tips = null;
             _k = new Konami();
             _pages = new List<ViewModelBase>();
-            _pages.Add(new MainViewModel() { IsCurrentPage = true });
+            _pages.Add(new MainViewModel(this) { IsCurrentPage = true });
+            _pages.Add(new PlaylistViewModel(this));
             _currentPage = _pages[0];
         }
 
@@ -136,6 +137,29 @@ namespace WMP
                     ((MainViewModel)_currentPage).OnOpenMedia(dialog.FileName);
                 }
             }
+        }
+
+        #endregion
+
+        #region Playlist
+
+        public void ChangePage()
+        {
+            if (_pages[0].IsCurrentPage)
+            {
+                _pages[1].IsCurrentPage = true;
+                _pages[0].IsCurrentPage = false;
+
+                _currentPage = _pages[1];
+            }
+            else
+            {
+                _pages[0].IsCurrentPage = true;
+                _pages[1].IsCurrentPage = false;
+
+                _currentPage = _pages[0];
+            }
+            OnPropertyChanged("CurrentPage");
         }
 
         #endregion

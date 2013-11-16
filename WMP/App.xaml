@@ -7,5 +7,8 @@
         <DataTemplate DataType="{x:Type view:MainViewModel}">
             <view:MainView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type view:PlaylistViewModel}">
+            <view:Playlist/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

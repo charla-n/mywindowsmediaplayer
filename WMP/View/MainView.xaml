@@ -48,8 +48,8 @@
             <Button Command="{Binding FullScreen}" Margin="10,0,0,0" Background="Transparent" BorderBrush="Transparent" Height="32" Width="32">
                 <Image Source="../Icons/22.png" ToolTip="FullScreen"></Image>
             </Button>
-            <Button Background="Transparent" BorderBrush="Transparent" Height="32" Width="32">
-                <Image Source="../Icons/127.png" ToolTip="FullScreen"></Image>
+            <Button Command="{Binding Playlist}" Background="Transparent" BorderBrush="Transparent" Height="32" Width="32">
+                <Image Source="../Icons/127.png" ToolTip="Playlist"></Image>
             </Button>
             <Button x:Name="VolumeButton" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" Height="32" Width="32" Click="VolumeButtonClick">
                 <Image Source="../Icons/114.png" ToolTip="Volume"></Image>
