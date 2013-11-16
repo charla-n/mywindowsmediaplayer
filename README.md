@@ -7,7 +7,7 @@ Todo :
 
 	
 	Interface Bibliotheque + Code
-	Interface Playlist + Code + Rajouter un bouton afin d'y acceder
+	Interface Playlist + Code
 	!DONE Gestion des images
 	Binder les touches Next et Previous
 	!DONE Clean le MediaPlayer sur Stop
