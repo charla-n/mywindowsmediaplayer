@@ -8,7 +8,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="32"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -18,9 +18,11 @@
             coucou
         </ListView>
 
-        <Button Height="32" Width="32" Grid.Row="1">
-            <Image Source="../Icons/127.png"/>
-        </Button>
-        
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Button Height="32" Width="32">
+                <Image Source="../Icons/127.png"/>
+            </Button>
+        </StackPanel>
+
     </Grid>
 </UserControl>
