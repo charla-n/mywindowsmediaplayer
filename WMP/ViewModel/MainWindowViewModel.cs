@@ -1,31 +1,36 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WMP.Model;
 
 namespace WMP
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        Window                  _tips;
-        Window                  _about;
-        List<ViewModelBase>     _pages;
-        ViewModelBase           _currentPage;
-        Konami                  _k;
+        Window                      _tips;
+        Window                      _about;
+        List<ViewModelBase>         _pages;
+        ViewModelBase               _currentPage;
+        Konami                      _k;
 
         public MainWindowViewModel()
         {
+            PlaylistViewModel playlist = new PlaylistViewModel(this);
+            ViewModelBase mainView = new MainViewModel(this, playlist) { IsCurrentPage = true };
+
             _about = null;
             _tips = null;
             _k = new Konami();
             _pages = new List<ViewModelBase>();
-            _pages.Add(new MainViewModel(this) { IsCurrentPage = true });
-            _pages.Add(new PlaylistViewModel(this));
+            _pages.Add(mainView);
+            _pages.Add(playlist);
             _currentPage = _pages[0];
         }
 
@@ -147,16 +152,14 @@ namespace WMP
         {
             if (_pages[0].IsCurrentPage)
             {
+                _currentPage.IsCurrentPage = false;
                 _pages[1].IsCurrentPage = true;
-                _pages[0].IsCurrentPage = false;
-
                 _currentPage = _pages[1];
             }
             else
             {
+                _currentPage.IsCurrentPage = false;
                 _pages[0].IsCurrentPage = true;
-                _pages[1].IsCurrentPage = false;
-
                 _currentPage = _pages[0];
             }
             OnPropertyChanged("CurrentPage");

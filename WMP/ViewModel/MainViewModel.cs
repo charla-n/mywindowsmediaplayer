@@ -18,6 +18,7 @@ namespace WMP
     public class MainViewModel : ViewModelBase
     {
         MainWindowViewModel             _model;
+        PlaylistViewModel               _playlist;
 
         //FEATURES
 
@@ -27,12 +28,12 @@ namespace WMP
         //MEDIA
 
         MediaElement                _player;
-        ObservableCollection<Media> _playList;
         Media                       _media;
 
-        public MainViewModel(MainWindowViewModel model)
+        public MainViewModel(MainWindowViewModel model, PlaylistViewModel playlist)
         {
             Console.WriteLine("Instanciate MainViewModel");
+            _playlist = playlist;
             _model = model;
             _media = null;
             _fullScreen = false;
@@ -41,7 +42,6 @@ namespace WMP
             _player = new MediaElement();
             _player.LoadedBehavior = MediaState.Manual;
             _player.MediaOpened += MediaLoaded;
-            _playList = new ObservableCollection<Media>();
         }
 
         #region Events
@@ -165,6 +165,22 @@ namespace WMP
 
         #region TaskBar
 
+        public ICommand Next
+        {
+            get
+            {
+                return new RelayCommand(NextCmd, CanChangeMedia);
+            }
+        }
+
+        public ICommand Previous
+        {
+            get
+            {
+                return new RelayCommand(PreviousCmd, CanChangeMedia);
+            }
+        }
+
         public ICommand Playlist
         {
             get
@@ -200,6 +216,23 @@ namespace WMP
         #endregion
 
         #region CommandTaskBar
+
+        private void NextCmd()
+        {
+
+        }
+
+        private void PreviousCmd()
+        {
+
+        }
+
+        private bool CanChangeMedia()
+        {
+            if (_playlist.ListMedia.Count == 0)
+                return false;
+            return true;
+        }
 
         private void PlaylistCmd()
         {

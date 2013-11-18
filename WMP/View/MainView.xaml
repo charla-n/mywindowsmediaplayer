@@ -36,13 +36,13 @@
             <Button Command="{Binding Play}" Height="32" Width="32" Background="Transparent" BorderBrush="Transparent" >
                 <Image Source="{Binding StopPlay}" ToolTip="Play"></Image>
             </Button>
-            <Button Background="Transparent" BorderBrush="Transparent" Margin="10,0,0,0" Height="32" Width="32">
+            <Button Command="{Binding Previous}" Background="Transparent" BorderBrush="Transparent" Margin="10,0,0,0" Height="32" Width="32">
                 <Image Source="../Icons/92.png" ToolTip="Previous"></Image>
             </Button>
             <Button Command="{Binding Stop}" Background="Transparent" BorderBrush="Transparent" Height="32" Width="32">
                 <Image Source="../Icons/91.png" ToolTip="Stop"></Image>
             </Button>
-            <Button Background="Transparent" BorderBrush="Transparent" Height="32" Width="32">
+            <Button Command="{Binding Next}" Background="Transparent" BorderBrush="Transparent" Height="32" Width="32">
                 <Image Source="../Icons/94.png" ToolTip="Next"></Image>
             </Button>
             <Button Command="{Binding FullScreen}" Margin="10,0,0,0" Background="Transparent" BorderBrush="Transparent" Height="32" Width="32">
