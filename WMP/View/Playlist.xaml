@@ -14,7 +14,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ListView Name="listView" ItemsSource="{Binding ListMedia}" Grid.Column="1">
+        <ListView x:Name="listView" ItemsSource="{Binding ListMedia}" Grid.Column="1" Margin="10,10,10,0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding FileName}" />
@@ -53,9 +53,9 @@
             </ListView.ContextMenu>
         </ListView>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <Button Command="{Binding Playlist}" Height="32" Width="32">
-                <Image Source="../Icons/127.png"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Height="32" Margin="0">
+            <Button Command="{Binding Playlist}" Height="32" Width="38" Background="{x:Null}" BorderThickness="0" FontSize="16" Margin="0">
+                <Image Source="../Icons/72.png"/>
             </Button>
         </StackPanel>
 
