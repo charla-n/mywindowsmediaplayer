@@ -2,11 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Serialization;
 using WMP.Model;
 
 namespace WMP
@@ -22,6 +26,24 @@ namespace WMP
         }
 
         #region Properties
+
+        public ObservableCollection<Media> ListMedia { get; private set; }
+
+        public ICommand SavePlaylist
+        {
+            get
+            {
+                return new RelayCommand(SavePlaylistCmd, CanSavePlaylist);
+            }
+        }
+
+        public ICommand AddFromFile
+        {
+            get
+            {
+                return new RelayCommand(AddFromFileCmd, () => true);
+            }
+        }
 
         public ICommand Add
         {
@@ -57,9 +79,69 @@ namespace WMP
 
         #endregion
 
-        public ObservableCollection<Media> ListMedia { get; set; }
-
         #region Commands
+
+        private void SavePlaylistCmd()
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            bool? res;
+
+            dlg.Filter = "Playlist Files|*.pls";
+            res = dlg.ShowDialog();
+            if (res == true)
+            {
+                try
+                {
+                    using (FileStream stream = new FileStream(dlg.FileName, FileMode.OpenOrCreate))
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(List<Media>));
+
+                        serializer.Serialize(stream, ListMedia.ToList());
+                    };
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error occured when saving playlist" + Environment.NewLine + "Be sure you've correct permissions", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private bool CanSavePlaylist()
+        {
+            if (ListMedia.Count > 0)
+                return true;
+            return false;
+        }
+
+        private void AddFromFileCmd()
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            bool? res;
+
+            dlg.Filter = "Playlist Files|*.pls";
+            res = dlg.ShowDialog();
+            if (res == true)
+            {
+                try
+                {
+                    using (FileStream stream = new FileStream(dlg.FileName, FileMode.Open))
+                    {
+                        TextReader reader = new StreamReader(stream);
+                        XmlSerializer serializer = new XmlSerializer(typeof(List<Media>));
+
+                        List<Media> list = (List<Media>)serializer.Deserialize(reader);
+                        foreach (Media m in list)
+                        {
+                            ListMedia.Add(m);
+                        }
+                    };
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error occured when loading playlist" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
 
         private void AddCmd()
         {
@@ -74,9 +156,11 @@ namespace WMP
             }
         }
 
-        private void DeleteCmd()
+        private void DeleteCmd(object obj)
         {
+            Media m = obj as Media;
 
+            Console.WriteLine("MEDIA : " + m.FileName);
         }
 
         private void ClearCmd()

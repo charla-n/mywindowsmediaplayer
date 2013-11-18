@@ -32,7 +32,6 @@ namespace WMP
 
         public MainViewModel(MainWindowViewModel model, PlaylistViewModel playlist)
         {
-            Console.WriteLine("Instanciate MainViewModel");
             _playlist = playlist;
             _model = model;
             _media = null;
@@ -84,6 +83,7 @@ namespace WMP
             if (_media == null)
             {
                 _media = new Media { isPlaying = true, FileName = FileName };
+                _playlist.ListMedia.Add(_media);
             }
             else
             {
@@ -169,7 +169,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(NextCmd, CanChangeMedia);
+                return new RelayCommand(NextCmd, CanNext);
             }
         }
 
@@ -177,7 +177,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(PreviousCmd, CanChangeMedia);
+                return new RelayCommand(PreviousCmd, CanPrevious);
             }
         }
 
@@ -219,24 +219,40 @@ namespace WMP
 
         private void NextCmd()
         {
-
+            _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) + 1];
+            _player.Source = new Uri(_media.FileName);
         }
 
         private void PreviousCmd()
         {
-
+            _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) - 1];
+            _player.Source = new Uri(_media.FileName);
         }
 
-        private bool CanChangeMedia()
+        private bool CanPrevious()
         {
-            if (_playlist.ListMedia.Count == 0)
-                return false;
-            return true;
+            if (_media != null)
+            {
+                if (_playlist.ListMedia.Count > 0 && (_playlist.ListMedia.IndexOf(_media) - 1) >= 0)
+                    return true;
+            }
+            return false;
+        }
+
+        private bool CanNext()
+        {
+            if (_media != null)
+            {
+                if (_playlist.ListMedia.Count > 0 && (_playlist.ListMedia.IndexOf(_media) + 1) < _playlist.ListMedia.Count)
+                    return true;
+            }
+            return false;
         }
 
         private void PlaylistCmd()
         {
-            _player.Pause();
+            _player.Stop();
+            _player.Close();
             _model.ChangePage();
         }
 
@@ -291,6 +307,19 @@ namespace WMP
             }
             _media.isPlaying = !_media.isPlaying;
             OnPropertyChanged("StopPlay");
+        }
+
+        #endregion
+
+        #region Playlist
+
+        public void OnAddPlaylist()
+        {
+            if (_playlist.ListMedia.Count > 0 && _media == null)
+            {
+                _media = _playlist.ListMedia[0];
+                _player.Source = new Uri(_media.FileName);
+            }
         }
 
         #endregion

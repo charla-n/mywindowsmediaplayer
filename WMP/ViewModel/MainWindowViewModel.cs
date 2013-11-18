@@ -146,7 +146,7 @@ namespace WMP
 
         #endregion
 
-        #region Playlist
+        #region Pages
 
         public void ChangePage()
         {
@@ -161,6 +161,7 @@ namespace WMP
                 _currentPage.IsCurrentPage = false;
                 _pages[0].IsCurrentPage = true;
                 _currentPage = _pages[0];
+                ((MainViewModel)_currentPage).OnAddPlaylist();
             }
             OnPropertyChanged("CurrentPage");
         }

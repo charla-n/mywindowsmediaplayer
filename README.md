@@ -9,7 +9,7 @@ Todo :
 	Interface Bibliotheque + Code
 	Interface Playlist + Code
 	!DONE Gestion des images
-	Binder les touches Next et Previous
+	!DONE Binder les touches Next et Previous
 	!DONE Clean le MediaPlayer sur Stop
 	!DONE Corriger le warning sur le Volume
 	!DONE Ajouter les fenetres Tips et About
@@ -21,7 +21,14 @@ Bonus :
 	:::html
 
 	!DONE Konami Code
+	Binder le click sur la progressBar pour controler le media
 	Faire un vrai fullscreen
 	Gerer le streaming
 	Enregistrer les playlists
 	MVVM
+
+Bugs :
+	
+	:::html
+	
+	Lancer un media, aller sur playlist, ajouter un media et revenir sur l'interface principale : le bouton play est mal set

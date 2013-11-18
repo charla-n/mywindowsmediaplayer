@@ -14,7 +14,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ListView ItemsSource="{Binding ListMedia}" Grid.Column="1">
+        <ListView Name="listView" ItemsSource="{Binding ListMedia}" Grid.Column="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding FileName}" />
@@ -27,9 +27,21 @@
                             <Image Source="../Icons/112.png" />
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem Header="Add from file" Command="{Binding AddFromFile}">
+                        <MenuItem.Icon>
+                            <Image Source="../Icons/119.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Save playlist" Command="{Binding SavePlaylist}">
+                        <MenuItem.Icon>
+                            <Image Source="../Icons/119.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
                     <MenuItem Header="Delete Media" Command="{Binding Delete}">
                         <MenuItem.Icon>
-                            <Image Source="../Icons/117.png" />
+                            <Image Source="../Icons/7.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Clear Playlist" Command="{Binding Clear}">
