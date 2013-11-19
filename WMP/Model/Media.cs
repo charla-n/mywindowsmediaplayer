@@ -15,5 +15,7 @@ namespace WMP.Model
         public int Duration { get; set; }
         [XmlIgnore]
         public bool isPlaying { get; set; }
+        [XmlIgnore]
+        public bool IsSelected { get; set; }
     }
 }

@@ -7,7 +7,7 @@ Todo :
 
 	
 	Interface Bibliotheque + Code
-	Interface Playlist + Code
+	!DONE Interface Playlist + Code
 	!DONE Gestion des images
 	!DONE Binder les touches Next et Previous
 	!DONE Clean le MediaPlayer sur Stop
@@ -32,4 +32,4 @@ Bugs :
 	:::html
 	
 	Lancer un media, aller sur playlist, ajouter un media et revenir sur l'interface principale : le bouton play est mal set
-	Change ce putin de FileMode dans le save de la playlist
+	!DONE Change ce putin de FileMode dans le save de la playlist

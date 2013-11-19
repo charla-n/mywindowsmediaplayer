@@ -156,11 +156,20 @@ namespace WMP
             }
         }
 
-        private void DeleteCmd(object obj)
+        private void DeleteCmd()
         {
-            Media m = obj as Media;
+            List<Media> tmp = new List<Media>();
+            IEnumerable<Media> lm = ListMedia.Where(m => m.IsSelected == true);
 
-            Console.WriteLine("MEDIA : " + m.FileName);
+           
+            foreach (Media m in lm)
+            {
+                tmp.Add(m);
+            }
+            foreach (Media m in tmp)
+            {
+                ListMedia.Remove(m);
+            }
         }
 
         private void ClearCmd()
