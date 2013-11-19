@@ -32,3 +32,4 @@ Bugs :
 	:::html
 	
 	Lancer un media, aller sur playlist, ajouter un media et revenir sur l'interface principale : le bouton play est mal set
+	Change ce putin de FileMode dans le save de la playlist
