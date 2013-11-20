@@ -13,6 +13,7 @@ Todo :
 	!DONE Clean le MediaPlayer sur Stop
 	!DONE Corriger le warning sur le Volume
 	!DONE Ajouter les fenetres Tips et About
+	OnMediaEnded appelle le média suivant dans le cas d'une playlist
 	Rajouter les exceptions
 	
 
@@ -32,4 +33,5 @@ Bugs :
 	:::html
 	
 	Lancer un media, aller sur playlist, ajouter un media et revenir sur l'interface principale : le bouton play est mal set
-	!DONE Change ce putin de FileMode dans le save de la playlist
+	!DONE Changer ce putin de FileMode dans le save de la playlist
+	La progress bar ne fonctionne pas très bien (temps d'une video)

@@ -44,6 +44,7 @@ namespace WMP
         }
 
         #region Events
+
         private void MediaLoaded(object sender, RoutedEventArgs evt)
         {
             Console.WriteLine("Event MediaLoaded");
@@ -219,13 +220,19 @@ namespace WMP
 
         private void NextCmd()
         {
+            bool playingPrev = _media.isPlaying;
+
             _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) + 1];
+            _media.isPlaying = playingPrev;
             _player.Source = new Uri(_media.FileName);
         }
 
         private void PreviousCmd()
         {
+            bool playingNext = _media.isPlaying;
+
             _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) - 1];
+            _media.isPlaying = playingNext;
             _player.Source = new Uri(_media.FileName);
         }
 
@@ -253,6 +260,7 @@ namespace WMP
         {
             _player.Stop();
             _player.Close();
+            OnPropertyChanged("StopPlay");
             _model.ChangePage();
         }
 
@@ -282,10 +290,12 @@ namespace WMP
 
         private void StopCmd()
         {
-            _media = null;
+            _media = _playlist.ListMedia[0];
+            _media.isPlaying = false;
             _progress.Stop();
             _player.Stop();
             _player.Close();
+            _player.Source = new Uri(_media.FileName);
             if (_fullScreen)
                 FullScreenCmd();
             OnPropertyChanged("StopPlay");

@@ -28,6 +28,33 @@
 
         <StackPanel Grid.Column="2" Grid.Row="0" >
             <TextBlock HorizontalAlignment="Center">Library</TextBlock>
+            <local:PlaceHolderTextBox PlaceHolder="Search" Height="19" TextWrapping="Wrap" BorderThickness="1" MinWidth="60" Margin="5,5,5,0"/>
+            <TreeView BorderThickness="0" Margin="5">
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="12" Height="12" Margin="0,0,3,0" Source="../Icons/18.png"/> 
+                            <TextBlock Text="Videos"/>
+                        </StackPanel>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="12" Height="12" Margin="0,0,3,0" Source="../Icons/17.png"/>
+                            <TextBlock Text="Music"/>
+                        </StackPanel>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="12" Height="12" Margin="0,0,3,0" Source="../Icons/63.png"/>
+                            <TextBlock Text="Pictures"/>
+                        </StackPanel>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+            </TreeView>
         </StackPanel>
 
         <ProgressBar x:Name="ProgressBar" Grid.ColumnSpan="3" Margin="5,0,5,0" Grid.Row="1" Value="{Binding ProgressBar}" Maximum="{Binding MaxProgressBar}"></ProgressBar>
