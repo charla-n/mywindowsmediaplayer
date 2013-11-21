@@ -41,9 +41,28 @@ namespace WMP
             _player = new MediaElement();
             _player.LoadedBehavior = MediaState.Manual;
             _player.MediaOpened += MediaLoaded;
+            _player.MediaEnded += OnMediaEnded;
         }
 
         #region Events
+
+        private void OnMediaEnded(object sender, RoutedEventArgs evt)
+        {
+            Console.WriteLine("Event OnMediaEnded");
+            if (!CanNext())
+            {
+                _media.isPlaying = false;
+                _progress.Stop();
+                _player.Stop();
+            }
+            else
+            {
+                NextCmd();
+            }
+            OnPropertyChanged("Next");
+            OnPropertyChanged("Previous");
+            OnPropertyChanged("StopPlay");
+        }
 
         private void MediaLoaded(object sender, RoutedEventArgs evt)
         {
@@ -121,7 +140,8 @@ namespace WMP
         {
             get
             {
-                return _player.Position.Seconds;
+                Console.WriteLine("ProgressBar=" + _player.Position.Hours * 3600 + _player.Position.Minutes * 60 + _player.Position.Seconds);
+                return _player.Position.Hours * 3600 + _player.Position.Minutes * 60 + _player.Position.Seconds;
             }
             set
             {
@@ -137,7 +157,7 @@ namespace WMP
                 {
                     if (_player.IsLoaded && _player.NaturalDuration.HasTimeSpan)
                     {
-                        Console.WriteLine(_player.NaturalDuration.TimeSpan.TotalSeconds);
+                        Console.WriteLine("MaxProgressBar=" + _player.NaturalDuration.TimeSpan.TotalSeconds);
                         return (int)_player.NaturalDuration.TimeSpan.TotalSeconds;
                     }
                     else
