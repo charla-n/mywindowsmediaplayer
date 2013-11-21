@@ -281,7 +281,8 @@ namespace WMP
             _progress.Stop();
             _player.Stop();
             _player.Close();
-            _media.isPlaying = false;
+            if (_media != null)
+                _media.isPlaying = false;
             OnPropertyChanged("StopPlay");
             _model.ChangePage();
         }
