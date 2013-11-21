@@ -13,7 +13,7 @@ Todo :
 	!DONE Clean le MediaPlayer sur Stop
 	!DONE Corriger le warning sur le Volume
 	!DONE Ajouter les fenetres Tips et About
-	OnMediaEnded appelle le média suivant dans le cas d'une playlist
+	!DONE OnMediaEnded appelle le média suivant dans le cas d'une playlist
 	Rajouter les exceptions
 	
 
@@ -22,16 +22,18 @@ Bonus :
 	:::html
 
 	!DONE Konami Code
+	!DONE Produire un style pour le slider
+	!DONE Insérer un PlaceHolder dans la classe TextBox
 	Binder le click sur la progressBar pour controler le media
 	Faire un vrai fullscreen
 	Gerer le streaming
-	Enregistrer les playlists
+	!DONE Enregistrer les playlists
 	MVVM
 
 Bugs :
 	
 	:::html
 	
-	Lancer un media, aller sur playlist, ajouter un media et revenir sur l'interface principale : le bouton play est mal set
+	!DONE Lancer un media, aller sur playlist, ajouter un media et revenir sur l'interface principale : le bouton play est mal set
 	!DONE Changer ce putin de FileMode dans le save de la playlist
-	La progress bar ne fonctionne pas très bien (temps d'une video)
+	!DONE La progress bar ne fonctionne pas tres bien (temps d'une video)

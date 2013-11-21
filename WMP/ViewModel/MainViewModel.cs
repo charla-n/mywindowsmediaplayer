@@ -278,8 +278,10 @@ namespace WMP
 
         private void PlaylistCmd()
         {
+            _progress.Stop();
             _player.Stop();
             _player.Close();
+            _media.isPlaying = false;
             OnPropertyChanged("StopPlay");
             _model.ChangePage();
         }
