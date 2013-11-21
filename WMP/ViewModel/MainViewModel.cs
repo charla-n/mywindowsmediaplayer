@@ -145,7 +145,7 @@ namespace WMP
             }
             set
             {
-                OnPropertyChanged("ProgressBar");
+                _player.Position = TimeSpan.FromSeconds(value);
             }
         }
 

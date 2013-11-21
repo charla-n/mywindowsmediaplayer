@@ -24,7 +24,7 @@ Bonus :
 	!DONE Konami Code
 	!DONE Produire un style pour le slider
 	!DONE Insérer un PlaceHolder dans la classe TextBox
-	Binder le click sur la progressBar pour controler le media
+	!DONE Binder le click sur la progressBar pour controler le media
 	Faire un vrai fullscreen
 	Gerer le streaming
 	!DONE Enregistrer les playlists

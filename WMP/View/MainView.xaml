@@ -322,7 +322,7 @@
             </TreeView>
         </StackPanel>
 
-        <Slider x:Name="ProgressBar" Grid.ColumnSpan="3" Margin="5,0,5,0" Grid.Row="1" Value="{Binding ProgressBar}" Maximum="{Binding MaxProgressBar}" Style="{StaticResource SliderStyle}"></Slider>
+        <Slider x:Name="ProgressBar" IsMoveToPointEnabled="True" Grid.ColumnSpan="3" Margin="5,0,5,0" Grid.Row="1" Value="{Binding ProgressBar, Mode=TwoWay}" Maximum="{Binding MaxProgressBar}" Style="{StaticResource SliderStyle}"></Slider>
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal">
             <Button Command="{Binding Play}" Height="32" Width="32" Background="Transparent" BorderBrush="Transparent" >
