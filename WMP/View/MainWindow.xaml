@@ -33,6 +33,11 @@
                         <Image Source="../Icons/119.png" />
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Command="{Binding OpenStreaming}" Header="_Open stream">
+                    <MenuItem.Icon>
+                        <Image Source="../Icons/6.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Command="{Binding Quit}" Header="_Quit">
                     <MenuItem.Icon>
                         <Image Source="../Icons/116.png" />

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,6 +81,8 @@ namespace WMP
                         Console.WriteLine(e);
                     }
                 }
+                OnPropertyChanged("MediaName");
+                OnPropertyChanged("MediaNameNext");
                 OnPropertyChanged("StopPlay");
                 OnPropertyChanged("MaxProgressBar");
             }
@@ -96,25 +99,57 @@ namespace WMP
 
         public void OnOpenMedia(string FileName)
         {
-            Console.WriteLine("FileName : " + FileName);
-            _progress.Start();
-            _player.Source = new Uri(FileName);
-            _player.Play();
-            if (_media == null)
+            if (FileName != null)
             {
-                _media = new Media { isPlaying = true, FileName = FileName };
-                _playlist.ListMedia.Add(_media);
-            }
-            else
-            {
-                _media.isPlaying = true;
-                _media.FileName = FileName;
+                Console.WriteLine("FileName : " + FileName);
+                _progress.Start();
+                try
+                {
+                    _player.Source = new Uri(FileName);
+                    _player.Play();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error occured when trying to open streaming", "Streaming Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                if (_media == null)
+                {
+                    _media = new Media { isPlaying = true, FileName = FileName };
+                    _playlist.ListMedia.Add(_media);
+                }
+                else
+                {
+                    _media.isPlaying = true;
+                    _media.FileName = FileName;
+                }
             }
         }
 
         #endregion
 
         #region Properties
+
+        public string MediaName
+        {
+            get
+            {
+                if (_media == null)
+                    return "Currently playing : no media";
+                else
+                    return "Currently playing : " + Path.GetFileName(_media.FileName);
+            }
+        }
+
+        public string MediaNameNext
+        {
+            get
+            {
+                if (_media == null || CanNext() == false)
+                    return "Next media : no next media";
+                else
+                    return "Next media : " + Path.GetFileName(_playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) + 1].FileName);
+            }
+        }
 
         public double Volume
         {
@@ -245,6 +280,8 @@ namespace WMP
             _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) + 1];
             _media.isPlaying = playingPrev;
             _player.Source = new Uri(_media.FileName);
+            OnPropertyChanged("MediaName");
+            OnPropertyChanged("MediaNameNext");
         }
 
         private void PreviousCmd()
@@ -254,6 +291,8 @@ namespace WMP
             _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) - 1];
             _media.isPlaying = playingNext;
             _player.Source = new Uri(_media.FileName);
+            OnPropertyChanged("MediaName");
+            OnPropertyChanged("MediaNameNext");
         }
 
         private bool CanPrevious()
@@ -313,12 +352,15 @@ namespace WMP
 
         private void StopCmd()
         {
-            _media = _playlist.ListMedia[0];
-            _media.isPlaying = false;
+            if (_playlist.ListMedia.Count > 0)
+            {
+                _media = _playlist.ListMedia[0];
+                _media.isPlaying = false;
+                _player.Source = new Uri(_media.FileName);
+            }
             _progress.Stop();
             _player.Stop();
             _player.Close();
-            _player.Source = new Uri(_media.FileName);
             if (_fullScreen)
                 FullScreenCmd();
             OnPropertyChanged("StopPlay");

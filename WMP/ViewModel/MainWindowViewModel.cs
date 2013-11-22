@@ -16,6 +16,7 @@ namespace WMP
     {
         Window                      _tips;
         Window                      _about;
+        Window                      _stream;
         List<ViewModelBase>         _pages;
         ViewModelBase               _currentPage;
         Konami                      _k;
@@ -27,6 +28,7 @@ namespace WMP
 
             _about = null;
             _tips = null;
+            _stream = null;
             _k = new Konami();
             _pages = new List<ViewModelBase>();
             _pages.Add(mainView);
@@ -44,6 +46,11 @@ namespace WMP
         private void OnCloseTips(object sender, EventArgs e)
         {
             _tips = null;
+        }
+
+        private void OnCloseStream(object sender, EventArgs e)
+        {
+            _stream = null;
         }
 
         #endregion
@@ -65,6 +72,15 @@ namespace WMP
         #endregion
 
         #region Menu
+
+        public ICommand OpenStreaming
+        {
+            get
+            {
+                return new RelayCommand(OpenStreamingCmd, CanStreaming);
+            }
+        }
+
         public ICommand OpenMedia
         {
             get
@@ -100,6 +116,21 @@ namespace WMP
         #endregion
 
         #region CommandMenu
+
+        private void OpenStreamingCmd()
+        {
+            _stream = new Streaming();
+            if (_stream.ShowDialog() == true)
+            {
+                ((MainViewModel)_currentPage).OnOpenMedia(((Streaming)_stream).StreamPath);
+            }
+            _stream.Closed += OnCloseStream;
+        }
+
+        private bool CanStreaming()
+        {
+            return _stream == null && _pages[0].IsCurrentPage == true ? true : false;
+        }
 
         private void TipsCmd()
         {

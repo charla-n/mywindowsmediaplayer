@@ -69,6 +69,9 @@
       <DependentUpon>Playlist.xaml</DependentUpon>
     </Compile>
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="View\Streaming.xaml.cs">
+      <DependentUpon>Streaming.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Tips.xaml.cs">
       <DependentUpon>Tips.xaml</DependentUpon>
     </Compile>
@@ -95,6 +98,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\Playlist.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Streaming.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

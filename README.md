@@ -25,9 +25,11 @@ Bonus :
 	!DONE Produire un style pour le slider
 	!DONE Insérer un PlaceHolder dans la classe TextBox
 	!DONE Binder le click sur la progressBar pour controler le media
-	Faire un vrai fullscreen
-	Gerer le streaming
+	Faire un vrai fullscreen (on va p-e abandonner l'idée)
+	Gerer le streaming (streaming audio fonctionne)
 	!DONE Enregistrer les playlists
+	!DONE Indiquer le prochain titre de la playlist
+	Intégrer un mode diaporama
 	MVVM
 
 Bugs :
