@@ -82,6 +82,7 @@ namespace WMP
                     }
                 }
             }
+            OnPropertyChanged("TotalTime");
             OnPropertyChanged("MediaName");
             OnPropertyChanged("MediaNameNext");
             OnPropertyChanged("StopPlay");
@@ -90,6 +91,7 @@ namespace WMP
 
         private void ProgressElapsed(object sender, ElapsedEventArgs evt)
         {
+            OnPropertyChanged("CurrentTime");
             OnPropertyChanged("ProgressBar");
         }
 
@@ -108,7 +110,7 @@ namespace WMP
                     _player.Source = new Uri(FileName);
                     _player.Play();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     MessageBox.Show("Error occured when trying to open media", "Open error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -128,6 +130,27 @@ namespace WMP
         #endregion
 
         #region Properties
+
+        public TimeSpan CurrentTime
+        {
+            get
+            {
+                if (_player.NaturalDuration.HasTimeSpan)
+                    return TimeSpan.FromTicks(_player.Position.Ticks);
+                return TimeSpan.Zero;
+            }
+        }
+
+        public TimeSpan TotalTime
+        {
+            get
+            {
+                if (_player.NaturalDuration.HasTimeSpan)
+                    return _player.NaturalDuration.TimeSpan;
+                else
+                    return TimeSpan.Zero;
+            }
+        }
 
         public string MediaName
         {
@@ -319,7 +342,6 @@ namespace WMP
         {
             _progress.Stop();
             _player.Stop();
-            _player.Close();
             if (_media != null)
                 _media.isPlaying = false;
             OnPropertyChanged("StopPlay");
@@ -352,19 +374,18 @@ namespace WMP
 
         private void StopCmd()
         {
+            _progress.Stop();
+            OnPropertyChanged("ProgressBar");
             if (_playlist.ListMedia.Count > 0)
             {
                 _media = _playlist.ListMedia[0];
                 _media.isPlaying = false;
                 _player.Source = new Uri(_media.FileName);
             }
-            _progress.Stop();
             _player.Stop();
-            _player.Close();
             if (_fullScreen)
                 FullScreenCmd();
             OnPropertyChanged("StopPlay");
-            OnPropertyChanged("ProgressBar");
         }
 
         private void PlayCmd()
@@ -373,15 +394,17 @@ namespace WMP
                 return;
             if (_media.isPlaying == true)
             {
+                _player.Pause();
                 if (_player.NaturalDuration.HasTimeSpan)
                     _progress.Stop();
-                _player.Pause();
             }
             else
             {
-                if (_player.NaturalDuration.HasTimeSpan)
-                    _progress.Start();
                 _player.Play();
+                if (_player.NaturalDuration.HasTimeSpan)
+                {
+                    _progress.Start();
+                }
             }
             _media.isPlaying = !_media.isPlaying;
             OnPropertyChanged("StopPlay");

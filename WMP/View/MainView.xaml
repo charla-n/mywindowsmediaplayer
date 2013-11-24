@@ -274,7 +274,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="15"/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -322,9 +322,13 @@
             </TreeView>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal">
-            <Slider x:Name="ProgressBar" IsMoveToPointEnabled="True"  Value="{Binding ProgressBar, Mode=TwoWay}" Maximum="{Binding MaxProgressBar}" Style="{StaticResource SliderStyle}"></Slider>
-        </StackPanel>
+        <DockPanel Grid.Row="1" Grid.ColumnSpan="3" LastChildFill="True">
+            <TextBlock Width="30" Margin="5,0,5,0" DockPanel.Dock="Left" Text="{Binding CurrentTime, StringFormat=mm\\:ss}"></TextBlock>
+            <TextBlock Width="30" Margin="5,0,5,0" DockPanel.Dock="Right" Text="{Binding TotalTime, StringFormat=mm\\:ss}"></TextBlock>
+            <Slider Margin="0,3,0,0" x:Name="ProgressBar" IsMoveToPointEnabled="True" Value="{Binding ProgressBar, Mode=TwoWay}" Maximum="{Binding MaxProgressBar}" Style="{StaticResource SliderStyle}"></Slider>
+        </DockPanel>
+        <!--<StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal">-->
+        <!--</StackPanel>-->
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal">
             <Button Command="{Binding Play}" Height="32" Width="32" Background="Transparent" BorderBrush="Transparent" >
