@@ -41,11 +41,17 @@ namespace WMP
 
         private void OnCloseHelp(object sender, EventArgs e)
         {
+            Window w = sender as Window;
+
+            w.Close();
             _about = null;
         }
 
         private void OnCloseTips(object sender, EventArgs e)
         {
+            Window w = sender as Window;
+
+            w.Close();
             _tips = null;
         }
 
@@ -54,6 +60,7 @@ namespace WMP
             Streaming stream = sender as Streaming;
 
             _streamingName = stream.StreamPath;
+            stream.Close();
             _stream = null;
         }
 

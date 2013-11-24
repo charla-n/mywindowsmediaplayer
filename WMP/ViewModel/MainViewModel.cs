@@ -16,7 +16,7 @@ using WMP.Model;
 
 namespace WMP
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase, IDisposable
     {
         MainWindowViewModel             _model;
         PlaylistViewModel               _playlist;
@@ -435,5 +435,20 @@ namespace WMP
         }
 
         #endregion
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _progress.Close();
+                _progress.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
     }
 }

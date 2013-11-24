@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace WMP
 {
-    public class RelayCommand : ICommand
+    public sealed class RelayCommand : ICommand
     {
         Action<object> _execute;
         Action _executeNoObj;
