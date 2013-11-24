@@ -108,9 +108,9 @@ namespace WMP
                     _player.Source = new Uri(FileName);
                     _player.Play();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    MessageBox.Show("Error occured when trying to open streaming", "Streaming Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Error occured when trying to open media", "Open error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 if (_media == null)
                 {

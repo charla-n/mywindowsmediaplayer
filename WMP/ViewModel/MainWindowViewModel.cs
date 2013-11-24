@@ -14,6 +14,7 @@ namespace WMP
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        string                      _streamingName;
         Window                      _tips;
         Window                      _about;
         Window                      _stream;
@@ -50,6 +51,9 @@ namespace WMP
 
         private void OnCloseStream(object sender, EventArgs e)
         {
+            Streaming stream = sender as Streaming;
+
+            _streamingName = stream.StreamPath;
             _stream = null;
         }
 
@@ -120,13 +124,11 @@ namespace WMP
         private void OpenStreamingCmd()
         {
             _stream = new Streaming();
+            _stream.Closed += OnCloseStream;
             if (_stream.ShowDialog() == true)
             {
-                ((MainViewModel)_currentPage).OnOpenMedia(((Streaming)_stream).StreamPath);
-                _stream.Closed += OnCloseStream;
+                ((MainViewModel)_currentPage).OnOpenMedia(_streamingName);
             }
-            else
-                _stream = null;
         }
 
         private bool CanStreaming()
