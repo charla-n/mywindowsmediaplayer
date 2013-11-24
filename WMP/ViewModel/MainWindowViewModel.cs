@@ -123,8 +123,10 @@ namespace WMP
             if (_stream.ShowDialog() == true)
             {
                 ((MainViewModel)_currentPage).OnOpenMedia(((Streaming)_stream).StreamPath);
+                _stream.Closed += OnCloseStream;
             }
-            _stream.Closed += OnCloseStream;
+            else
+                _stream = null;
         }
 
         private bool CanStreaming()

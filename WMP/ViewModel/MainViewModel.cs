@@ -81,11 +81,11 @@ namespace WMP
                         Console.WriteLine(e);
                     }
                 }
-                OnPropertyChanged("MediaName");
-                OnPropertyChanged("MediaNameNext");
-                OnPropertyChanged("StopPlay");
-                OnPropertyChanged("MaxProgressBar");
             }
+            OnPropertyChanged("MediaName");
+            OnPropertyChanged("MediaNameNext");
+            OnPropertyChanged("StopPlay");
+            OnPropertyChanged("MaxProgressBar");
         }
 
         private void ProgressElapsed(object sender, ElapsedEventArgs evt)
@@ -364,6 +364,7 @@ namespace WMP
             if (_fullScreen)
                 FullScreenCmd();
             OnPropertyChanged("StopPlay");
+            OnPropertyChanged("ProgressBar");
         }
 
         private void PlayCmd()
@@ -372,12 +373,14 @@ namespace WMP
                 return;
             if (_media.isPlaying == true)
             {
-                _progress.Stop();
+                if (_player.NaturalDuration.HasTimeSpan)
+                    _progress.Stop();
                 _player.Pause();
             }
             else
             {
-                _progress.Start();
+                if (_player.NaturalDuration.HasTimeSpan)
+                    _progress.Start();
                 _player.Play();
             }
             _media.isPlaying = !_media.isPlaying;
