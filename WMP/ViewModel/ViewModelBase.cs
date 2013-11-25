@@ -20,7 +20,7 @@ namespace WMP
             }
         }
 
-        public void OnChangeView() {}
+        protected void OnChangeView() {}
 
         public bool IsCurrentPage { get; set; }
 
