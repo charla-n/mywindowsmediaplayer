@@ -14,10 +14,9 @@ Bonus :
 
 	:::html
 
+	Binder des touches clavier
 	Remanier l'interface playlist
-	Gerer le streaming vidéo
-	Intégrer un mode diaporama pour les photos
-	
+	Gerer le streaming vidéo	
 
 Bugs :
 	
