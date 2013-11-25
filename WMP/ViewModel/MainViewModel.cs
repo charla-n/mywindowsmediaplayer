@@ -59,9 +59,15 @@ namespace WMP
             _player.LoadedBehavior = MediaState.Manual;
             _player.MediaOpened += MediaLoaded;
             _player.MediaEnded += OnMediaEnded;
+            _player.MediaFailed += OnMediaFailed;
         }
 
         #region Events
+
+        private void OnMediaFailed(object sender, RoutedEventArgs evt)
+        {
+            MessageBox.Show(_media.FileName + " doesn't exist.", "Error on loading media", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        }
 
         private void OnMediaEnded(object sender, RoutedEventArgs evt)
         {
