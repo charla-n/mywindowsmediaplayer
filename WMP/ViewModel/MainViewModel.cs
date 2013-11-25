@@ -31,8 +31,24 @@ namespace WMP
         MediaElement                _player;
         Media                       _media;
 
+        //COMMANDS
+
+        RelayCommand _nextcmd;
+        RelayCommand _previouscmd;
+        RelayCommand _playlistcmd;
+        RelayCommand _playcmd;
+        RelayCommand _stopcmd;
+        RelayCommand _fullscreencmd;
+
         public MainViewModel(MainWindowViewModel model, PlaylistViewModel playlist)
         {
+            _nextcmd = new RelayCommand(NextCmd, CanNext);
+            _previouscmd = new RelayCommand(PreviousCmd, CanPrevious);
+            _playlistcmd = new RelayCommand(PlaylistCmd, () => true);
+            _playcmd = new RelayCommand(PlayCmd, () => true);
+            _stopcmd = new RelayCommand(StopCmd, () => true);
+            _fullscreencmd = new RelayCommand(FullScreenCmd, CanFullScreen);
+
             _playlist = playlist;
             _model = model;
             _media = null;
@@ -116,7 +132,7 @@ namespace WMP
                 }
                 if (_media == null)
                 {
-                    _media = new Media { isPlaying = true, FileName = FileName };
+                    _media = new Media { isPlaying = true, FileName = FileName, isStopped = false };
                     _playlist.ListMedia.Add(_media);
                 }
                 else
@@ -248,7 +264,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(NextCmd, CanNext);
+                return _nextcmd;
             }
         }
 
@@ -256,7 +272,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(PreviousCmd, CanPrevious);
+                return _previouscmd;
             }
         }
 
@@ -264,7 +280,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(PlaylistCmd, () => true);
+                return _playlistcmd;
             }
         }
 
@@ -272,7 +288,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(PlayCmd, () => true);
+                return _playcmd;
             }
         }
 
@@ -280,7 +296,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(StopCmd, () => true);
+                return _stopcmd;
             }
         }
 
@@ -288,7 +304,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(FullScreenCmd, CanFullScreen);
+                return _fullscreencmd;
             }
         }
 
@@ -365,7 +381,7 @@ namespace WMP
 
         private bool CanFullScreen()
         {
-            if (_media != null)
+            if (_media != null && _media.isStopped == false)
             {
                 return true;
             }
@@ -380,6 +396,7 @@ namespace WMP
             {
                 _media = _playlist.ListMedia[0];
                 _media.isPlaying = false;
+                _media.isStopped = true;
                 _player.Source = new Uri(_media.FileName);
             }
             _player.Stop();
@@ -400,6 +417,7 @@ namespace WMP
             }
             else
             {
+                _media.isStopped = false;
                 _player.Play();
                 if (_player.NaturalDuration.HasTimeSpan)
                 {

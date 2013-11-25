@@ -19,8 +19,22 @@ namespace WMP
     {
         MainWindowViewModel         _model;
 
+        RelayCommand _savePlaylistcmd;
+        RelayCommand _addFromFilecmd;
+        RelayCommand _addcmd;
+        RelayCommand _deletecmd;
+        RelayCommand _clearcmd;
+        RelayCommand _playlistcmd;
+
         public PlaylistViewModel(MainWindowViewModel model)
         {
+            _savePlaylistcmd = new RelayCommand(SavePlaylistCmd, CanSavePlaylist);
+            _addFromFilecmd = new RelayCommand(AddFromFileCmd, () => true);
+            _addcmd = new RelayCommand(AddCmd, () => true);
+            _deletecmd = new RelayCommand(DeleteCmd, () => true);
+            _clearcmd = new RelayCommand(ClearCmd, () => true);
+            _playlistcmd = new RelayCommand(PlaylistCmd, () => true);
+
             ListMedia = new ObservableCollection<Media>();
             _model = model;
         }
@@ -33,7 +47,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(SavePlaylistCmd, CanSavePlaylist);
+                return _savePlaylistcmd;
             }
         }
 
@@ -41,7 +55,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(AddFromFileCmd, () => true);
+                return _addFromFilecmd;
             }
         }
 
@@ -49,7 +63,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(AddCmd, () => true);
+                return _addcmd;
             }
         }
 
@@ -57,7 +71,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(DeleteCmd, () => true);
+                return _deletecmd;
             }
         }
 
@@ -65,7 +79,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(ClearCmd, () => true);
+                return _clearcmd;
             }
         }
 
@@ -73,7 +87,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(PlaylistCmd, () => true);
+                return _playlistcmd;
             }
         }
 
