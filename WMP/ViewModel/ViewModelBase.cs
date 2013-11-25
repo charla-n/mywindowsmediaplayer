@@ -20,7 +20,10 @@ namespace WMP
             }
         }
 
-        protected void OnChangeView() {}
+        public virtual void OnChangeView() 
+        {
+            Console.WriteLine("ON CHANGE VIEW MODEL BASE");
+        }
 
         public bool IsCurrentPage { get; set; }
 

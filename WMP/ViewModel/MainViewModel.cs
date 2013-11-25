@@ -454,9 +454,10 @@ namespace WMP
 
         #endregion
 
-        public new void OnChangeView()
+        public override void OnChangeView()
         {
-            ((MainViewModel)CurrentPageBase).OnAddPlaylist();
+            Console.WriteLine("ON CHANGE VIEW");
+            OnAddPlaylist();
         }
 
         private void Dispose(bool disposing)

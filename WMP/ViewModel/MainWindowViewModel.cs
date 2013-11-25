@@ -55,7 +55,7 @@ namespace WMP
             _konamiUpcmd = new RelayCommand(KonamiCmd, () => true);
 
             PlaylistViewModel playlist = new PlaylistViewModel(this);
-            ViewModelBase mainView = new MainViewModel(this, playlist) { IsCurrentPage = true };
+            MainViewModel mainView = new MainViewModel(this, playlist) { IsCurrentPage = true };
 
             _about = null;
             _tips = null;
@@ -229,7 +229,7 @@ namespace WMP
             }
             CurrentPageBase = _page[(int)e];
             _page[(int)e].IsCurrentPage = true;
-            OnChangeView();
+            CurrentPageBase.OnChangeView();
             OnPropertyChanged("CurrentPage");
         }
 
