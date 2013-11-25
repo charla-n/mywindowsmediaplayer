@@ -1,30 +1,3 @@
-Le MVVM est a priori bon.
-La bibliotheque ne se fera pas via une base de donnee, mais via un fichier XML grace a Serialize pour respecter le sujet.
-
-Todo :
-
-	:::html
-
-	
-	Intégration de la Bibliotheque
-	Rajouter les exceptions
-	
-
-Bonus :
-
-	:::html
-
-	Remanier l'interface playlist
-	Gerer le streaming vidéo
-	Intégrer un mode diaporama pour les photos
-	
-
-Bugs :
-	
-	:::html
-	
-	
-
 Done :
 
 	:::html

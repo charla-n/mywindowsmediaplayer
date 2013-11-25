@@ -13,6 +13,8 @@ namespace WMP.Model
     {
         public string FileName { get; set; }
         [XmlIgnore]
+        public bool isStopped { get; set; }
+        [XmlIgnore]
         public int Duration { get; set; }
         [XmlIgnore]
         public bool isPlaying { get; set; }

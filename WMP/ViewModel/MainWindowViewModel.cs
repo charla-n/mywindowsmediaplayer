@@ -28,8 +28,32 @@ namespace WMP
         Window                      _stream;
         Konami                      _k;
 
+        RelayCommand _openStreamingcmd;
+        RelayCommand _openMediacmd;
+        RelayCommand _quitcmd;
+        RelayCommand _aboutcmd;
+        RelayCommand _tipscmd;
+        RelayCommand _konamiUpcmd;
+        RelayCommand _konamiDowncmd;
+        RelayCommand _konamiRightcmd;
+        RelayCommand _konamiLeftcmd;
+        RelayCommand _konamiAcmd;
+        RelayCommand _konamiBcmd;
+
         public MainWindowViewModel()
         {
+            _openStreamingcmd = new RelayCommand(OpenStreamingCmd, CanStreaming);
+            _openMediacmd = new RelayCommand(OpenMediaCmd, () => true);
+            _quitcmd = new RelayCommand(QuitCmd, () => true);
+            _aboutcmd = new RelayCommand(AboutCmd, () => true);
+            _tipscmd = new RelayCommand(TipsCmd, () => true);
+            _konamiAcmd = new RelayCommand(KonamiCmd, () => true);
+            _konamiBcmd = new RelayCommand(KonamiCmd, () => true);
+            _konamiDowncmd = new RelayCommand(KonamiCmd, () => true);
+            _konamiLeftcmd = new RelayCommand(KonamiCmd, () => true);
+            _konamiRightcmd = new RelayCommand(KonamiCmd, () => true);
+            _konamiUpcmd = new RelayCommand(KonamiCmd, () => true);
+
             PlaylistViewModel playlist = new PlaylistViewModel(this);
             ViewModelBase mainView = new MainViewModel(this, playlist) { IsCurrentPage = true };
 
@@ -94,7 +118,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(OpenStreamingCmd, CanStreaming);
+                return _openStreamingcmd;
             }
         }
 
@@ -102,7 +126,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(OpenMediaCmd, () => true);
+                return _openMediacmd;
             }
         }
 
@@ -110,7 +134,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(QuitCmd, () => true);
+                return _quitcmd;
             }
         }
 
@@ -118,7 +142,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(AboutCmd, () => true);
+                return _aboutcmd;
             }
         }
 
@@ -126,7 +150,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(TipsCmd, () => true);
+                return _tipscmd;
             }
         }
 
@@ -217,7 +241,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(KonamiCmd, () => true);
+                return _konamiUpcmd;
             }
         }
 
@@ -225,7 +249,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(KonamiCmd, () => true);
+                return _konamiDowncmd;
             }
         }
 
@@ -233,7 +257,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(KonamiCmd, () => true);
+                return _konamiLeftcmd;
             }
         }
 
@@ -241,7 +265,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(KonamiCmd, () => true);
+                return _konamiRightcmd;
             }
         }
 
@@ -249,7 +273,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(KonamiCmd, () => true);
+                return _konamiAcmd;
             }
         }
 
@@ -257,7 +281,7 @@ namespace WMP
         {
             get
             {
-                return new RelayCommand(KonamiCmd, () => true);
+                return _konamiBcmd;
             }
         }
 
