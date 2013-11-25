@@ -345,7 +345,7 @@ namespace WMP
             if (_media != null)
                 _media.isPlaying = false;
             OnPropertyChanged("StopPlay");
-            _model.ChangePage();
+            _model.ChangePage(MainWindowViewModel.PageEnum.PLAYLIST);
         }
 
         private void FullScreenCmd()
@@ -435,6 +435,11 @@ namespace WMP
         }
 
         #endregion
+
+        public void OnChangeView()
+        {
+            ((MainViewModel)CurrentPageBase).OnAddPlaylist();
+        }
 
         private void Dispose(bool disposing)
         {

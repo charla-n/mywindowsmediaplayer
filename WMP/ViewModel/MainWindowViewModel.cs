@@ -14,12 +14,18 @@ namespace WMP
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        public enum PageEnum
+        {
+            MAIN,
+            PLAYLIST,
+            COUNT_PAGE
+        };
+
         string                      _streamingName;
+        ViewModelBase[]             _page;
         Window                      _tips;
         Window                      _about;
         Window                      _stream;
-        List<ViewModelBase>         _pages;
-        ViewModelBase               _currentPage;
         Konami                      _k;
 
         public MainWindowViewModel()
@@ -31,10 +37,10 @@ namespace WMP
             _tips = null;
             _stream = null;
             _k = new Konami();
-            _pages = new List<ViewModelBase>();
-            _pages.Add(mainView);
-            _pages.Add(playlist);
-            _currentPage = _pages[0];
+            _page = new ViewModelBase[(int)PageEnum.COUNT_PAGE];
+            _page[(int)PageEnum.MAIN] = mainView;
+            _page[(int)PageEnum.PLAYLIST] = playlist;
+            CurrentPageBase = _page[(int)PageEnum.MAIN];
         }
 
         #region Events
@@ -72,11 +78,11 @@ namespace WMP
         {
             get
             {
-                return _currentPage;
+                return CurrentPageBase;
             }
             set
             {
-                _currentPage = value;
+                CurrentPageBase = value;
             }
         }
 
@@ -134,13 +140,13 @@ namespace WMP
             _stream.Closed += OnCloseStream;
             if (_stream.ShowDialog() == true)
             {
-                ((MainViewModel)_currentPage).OnOpenMedia(_streamingName);
+                ((MainViewModel)CurrentPageBase).OnOpenMedia(_streamingName);
             }
         }
 
         private bool CanStreaming()
         {
-            return _stream == null && _pages[0].IsCurrentPage == true ? true : false;
+            return _stream == null && _page[(int)PageEnum.MAIN].IsCurrentPage == true ? true : false;
         }
 
         private void TipsCmd()
@@ -172,7 +178,7 @@ namespace WMP
 
         private void OpenMediaCmd()
         {
-            if (_pages[0].IsCurrentPage == true)
+            if (_page[(int)PageEnum.MAIN].IsCurrentPage == true)
             {
                 OpenFileDialog dialog = new OpenFileDialog();
                 bool? res;
@@ -181,7 +187,7 @@ namespace WMP
                 res = dialog.ShowDialog();
                 if (res == true)
                 {
-                    ((MainViewModel)_currentPage).OnOpenMedia(dialog.FileName);
+                    ((MainViewModel)CurrentPageBase).OnOpenMedia(dialog.FileName);
                 }
             }
         }
@@ -190,21 +196,16 @@ namespace WMP
 
         #region Pages
 
-        public void ChangePage()
+        public void ChangePage(PageEnum e)
         {
-            if (_pages[0].IsCurrentPage)
+            for (int i = 0; i < (int)PageEnum.COUNT_PAGE; ++i)
             {
-                _currentPage.IsCurrentPage = false;
-                _pages[1].IsCurrentPage = true;
-                _currentPage = _pages[1];
+                CurrentPageBase.IsCurrentPage = false;
+                _page[i].IsCurrentPage = false;
             }
-            else
-            {
-                _currentPage.IsCurrentPage = false;
-                _pages[0].IsCurrentPage = true;
-                _currentPage = _pages[0];
-                ((MainViewModel)_currentPage).OnAddPlaylist();
-            }
+            CurrentPageBase = _page[(int)e];
+            _page[(int)e].IsCurrentPage = true;
+            OnChangeView();
             OnPropertyChanged("CurrentPage");
         }
 
@@ -267,11 +268,12 @@ namespace WMP
 
             if (Enum.TryParse<Key>(cmd, out k) == false)
                 return;
-            if (_k.StepKonami(k) == true && _pages[0].IsCurrentPage == true)
+            if (_k.StepKonami(k) == true && _page[(int)PageEnum.MAIN].IsCurrentPage == true)
             {
                 Console.WriteLine("Call ProcessKonami");
-                ((MainViewModel)_currentPage).ProcessKonami();
+                ((MainViewModel)CurrentPageBase).ProcessKonami();
             }
+
         }
 
         #endregion

@@ -179,7 +179,7 @@ namespace WMP
 
         private void PlaylistCmd()
         {
-            _model.ChangePage();
+            _model.ChangePage(MainWindowViewModel.PageEnum.MAIN);
         }
 
         #endregion

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WMP.Model;
 
 namespace WMP
 {
@@ -19,6 +20,11 @@ namespace WMP
             }
         }
 
+        public void OnChangeView() {}
+
         public bool IsCurrentPage { get; set; }
+
+        public ViewModelBase CurrentPageBase { get; set; }
+
     }
 }
