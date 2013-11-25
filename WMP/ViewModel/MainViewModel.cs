@@ -460,7 +460,7 @@ namespace WMP
 
         #endregion
 
-        public void OnChangeView()
+        public new void OnChangeView()
         {
             ((MainViewModel)CurrentPageBase).OnAddPlaylist();
         }
