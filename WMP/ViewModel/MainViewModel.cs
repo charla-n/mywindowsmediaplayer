@@ -266,10 +266,10 @@ namespace WMP
             get
             {
                 if (_media == null)
-                    return "../Icons/109.png";
+                    return "../Icons/stop.png";
                 else if (!_media.isPlaying)
-                    return "../Icons/98.png";
-                return "../Icons/93.png";
+                    return "../Icons/pause_icon.png";
+                return "../Icons/play_icon.png";
             }
         }
         #endregion

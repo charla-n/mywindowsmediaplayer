@@ -336,22 +336,22 @@
                 <Image Source="{Binding StopPlay}" ToolTip="Play"></Image>
             </Button>
             <Button Command="{Binding Previous}" Background="Transparent" BorderBrush="Transparent" Margin="10,0,0,0" Height="32" Width="32">
-                <Image Source="../Icons/92.png" ToolTip="Previous"></Image>
+                <Image Source="../Icons/prev_icon.png" ToolTip="Previous"></Image>
             </Button>
             <Button Command="{Binding Stop}" Background="Transparent" BorderBrush="Transparent" Height="32" Width="32">
-                <Image Source="../Icons/91.png" ToolTip="Stop"></Image>
+                <Image Source="../Icons/stop_icon.png" ToolTip="Stop"></Image>
             </Button>
             <Button Command="{Binding Next}" Background="Transparent" BorderBrush="Transparent" Height="32" Width="32">
-                <Image Source="../Icons/94.png" ToolTip="Next"></Image>
+                <Image Source="../Icons/next_icon.png" ToolTip="Next"></Image>
             </Button>
             <Button Command="{Binding FullScreen}" Margin="10,0,0,0" Background="Transparent" BorderBrush="Transparent" Height="32" Width="32">
-                <Image Source="../Icons/22.png" ToolTip="FullScreen"></Image>
+                <Image Source="../Icons/fullscreen.png" ToolTip="FullScreen"></Image>
             </Button>
             <Button Command="{Binding Playlist}" Background="Transparent" BorderBrush="Transparent" Height="32" Width="32">
-                <Image Source="../Icons/127.png" ToolTip="Playlist"></Image>
+                <Image Source="../Icons/playlist.png" ToolTip="Playlist"></Image>
             </Button>
             <Button x:Name="VolumeButton" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" Height="32" Width="32" Click="VolumeButtonClick">
-                <Image Source="../Icons/114.png" ToolTip="Volume"></Image>
+                <Image Source="../Icons/sound_icon.png" ToolTip="Volume"></Image>
             </Button>
             <Popup x:Name="VolumePopup" PlacementTarget="{Binding ElementName=VolumeButton}" Placement="Center" StaysOpen="False">
                 <Grid Background="White">
