@@ -33,6 +33,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <Win32Resource>
+    </Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>WMPIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -138,6 +146,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="WMPIcon.ico" />
     <Resource Include="Icons\about_movie.png" />
     <Resource Include="Icons\clear.png" />
     <Resource Include="Icons\delete.png" />
@@ -165,6 +174,7 @@
     <Resource Include="Icons\stop_icon.png" />
     <Resource Include="Icons\stream.png" />
     <Resource Include="Icons\norepeat.png" />
+    <Resource Include="IconWMP.ico" />
     <Content Include="Konami\konami.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
