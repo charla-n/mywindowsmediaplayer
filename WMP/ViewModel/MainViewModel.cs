@@ -18,11 +18,19 @@ namespace WMP
 {
     public class MainViewModel : ViewModelBase, IDisposable
     {
+        private enum repeatStatus
+        {
+            REPEAT_ALL,
+            REPEAT_ONE,
+            NONE
+        };
+
         MainWindowViewModel             _model;
         PlaylistViewModel               _playlist;
 
         //FEATURES
 
+        repeatStatus                _repeatState;
         bool                        _fullScreen;
         Timer                       _progress;
 
@@ -41,6 +49,7 @@ namespace WMP
         RelayCommand _fullscreencmd;
         RelayCommand _exitfullscreencmd;
         RelayCommand _changevolumecmd;
+        RelayCommand _repeatcmd;
 
         public MainViewModel(MainWindowViewModel model, PlaylistViewModel playlist)
         {
@@ -48,12 +57,14 @@ namespace WMP
             _previouscmd = new RelayCommand(PreviousCmd, CanPrevious);
             _playlistcmd = new RelayCommand(PlaylistCmd, () => true);
             _playcmd = new RelayCommand(PlayCmd, () => true);
+            _repeatcmd = new RelayCommand(RepeatCmd, () => true);
             _stopcmd = new RelayCommand(StopCmd, () => true);
             _fullscreencmd = new RelayCommand(FullScreenCmd, CanFullScreen);
             _exitfullscreencmd = new RelayCommand(ExitFullScreenCmd, () => true);
             _changevolumecmd = new RelayCommand(ChangeVolumeCmd, () => true);
 
             _playlist = playlist;
+            _repeatState = repeatStatus.NONE;
             _model = model;
             _media = null;
             _fullScreen = false;
@@ -196,7 +207,13 @@ namespace WMP
                 if (_media == null || CanNext() == false)
                     return "Next media : no next media";
                 else
+                {
+                    if (_repeatState == repeatStatus.REPEAT_ALL && _playlist.ListMedia.IndexOf(_media) == (_playlist.ListMedia.Count - 1))
+                        return "Next media : " + Path.GetFileName(_playlist.ListMedia[0].FileName);
+                    if (_repeatState == repeatStatus.REPEAT_ONE)
+                        return ("Next media : " + Path.GetFileName(_media.FileName));
                     return "Next media : " + Path.GetFileName(_playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) + 1].FileName);
+                }
             }
         }
 
@@ -257,7 +274,19 @@ namespace WMP
             }
             set
             {
-                OnPropertyChanged("MaxProgressBar");
+                OnPropertyChanged("ProMaxgressBar");
+            }
+        }
+
+        public string RepeatIcon
+        {
+            get
+            {
+                if (_repeatState == repeatStatus.NONE)
+                    return "../Icons/norepeat.png";
+                else if (_repeatState == repeatStatus.REPEAT_ONE)
+                    return "../Icons/repeat.png";
+                return "../Icons/repeat_infinite.png";
             }
         }
 
@@ -316,6 +345,14 @@ namespace WMP
             }
         }
 
+        public ICommand Repeat
+        {
+            get
+            {
+                return _repeatcmd;
+            }
+        }
+
         public ICommand FullScreen
         {
             get
@@ -348,7 +385,11 @@ namespace WMP
         {
             bool playingPrev = _media.isPlaying;
 
-            _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) + 1];
+            if (_playlist.ListMedia.IndexOf(_media) == (_playlist.ListMedia.Count - 1) && _repeatState == repeatStatus.REPEAT_ALL)
+                _media = _playlist.ListMedia[0];
+            else if (_repeatState == repeatStatus.REPEAT_ONE);
+            else
+                _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) + 1];
             _media.isPlaying = playingPrev;
             _player.Source = new Uri(_media.FileName);
             OnPropertyChanged("MediaName");
@@ -359,7 +400,11 @@ namespace WMP
         {
             bool playingNext = _media.isPlaying;
 
-            _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) - 1];
+            if (_playlist.ListMedia.IndexOf(_media) == 0 && _repeatState == repeatStatus.REPEAT_ALL)
+                _media = _playlist.ListMedia[_playlist.ListMedia.Count - 1];
+            else if (_repeatState == repeatStatus.REPEAT_ONE);
+            else
+                _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) - 1];
             _media.isPlaying = playingNext;
             _player.Source = new Uri(_media.FileName);
             OnPropertyChanged("MediaName");
@@ -370,6 +415,8 @@ namespace WMP
         {
             if (_media != null)
             {
+                if (_repeatState != repeatStatus.NONE)
+                    return true;
                 if (_playlist.ListMedia.Count > 0 && (_playlist.ListMedia.IndexOf(_media) - 1) >= 0)
                     return true;
             }
@@ -380,10 +427,21 @@ namespace WMP
         {
             if (_media != null)
             {
+                if (_repeatState != repeatStatus.NONE)
+                    return true;
                 if (_playlist.ListMedia.Count > 0 && (_playlist.ListMedia.IndexOf(_media) + 1) < _playlist.ListMedia.Count)
                     return true;
             }
             return false;
+        }
+
+        private void RepeatCmd()
+        {
+            ++_repeatState;
+            if (_repeatState > repeatStatus.NONE)
+                _repeatState = repeatStatus.REPEAT_ALL;
+            OnPropertyChanged("RepeatIcon");
+            OnPropertyChanged("MediaNameNext");
         }
 
         private void PlaylistCmd()
