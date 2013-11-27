@@ -38,29 +38,29 @@
             <MenuItem Header="_File" >
                 <MenuItem Command="{Binding OpenMedia}" Header="_Open">
                     <MenuItem.Icon>
-                        <Image Source="../Icons/119.png" />
+                        <Image Source="../Icons/open.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Command="{Binding OpenStreaming}" Header="_Open stream">
                     <MenuItem.Icon>
-                        <Image Source="../Icons/6.png" />
+                        <Image Source="../Icons/stream.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Command="{Binding Quit}" Header="_Quit">
                     <MenuItem.Icon>
-                        <Image Source="../Icons/116.png" />
+                        <Image Source="../Icons/exit.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Help" >
                 <MenuItem Command="{Binding Tips}" Header="_Tips">
                     <MenuItem.Icon>
-                        <Image Source="../Icons/34.png" />
+                        <Image Source="../Icons/help.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Command="{Binding About}" Header="_About">
                     <MenuItem.Icon>
-                        <Image Source="../Icons/65.png" />
+                        <Image Source="../Icons/info.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>

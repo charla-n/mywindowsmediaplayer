@@ -32,29 +32,29 @@
                 <ContextMenu>
                     <MenuItem Header="Add Media" Command="{Binding Add}">
                         <MenuItem.Icon>
-                            <Image Source="../Icons/112.png" />
+                            <Image Source="../Icons/plus.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Add from file" Command="{Binding AddFromFile}">
                         <MenuItem.Icon>
-                            <Image Source="../Icons/119.png" />
+                            <Image Source="../Icons/open.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
                     <MenuItem Header="Save playlist" Command="{Binding SavePlaylist}">
                         <MenuItem.Icon>
-                            <Image Source="../Icons/119.png" />
+                            <Image Source="../Icons/save.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
                     <MenuItem Header="Delete Media" Command="{Binding Delete}">
                         <MenuItem.Icon>
-                            <Image Source="../Icons/7.png" />
+                            <Image Source="../Icons/delete.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Clear Playlist" Command="{Binding Clear}">
                         <MenuItem.Icon>
-                            <Image Source="../Icons/126.png" />
+                            <Image Source="../Icons/clear.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
@@ -63,7 +63,7 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Height="32" Margin="0">
             <Button Command="{Binding Playlist}" Height="32" Width="38" Background="{x:Null}" BorderThickness="0" FontSize="16" Margin="0">
-                <Image Source="../Icons/72.png"/>
+                <Image Source="../Icons/previous.png"/>
             </Button>
         </StackPanel>
 
