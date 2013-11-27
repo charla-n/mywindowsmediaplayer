@@ -110,6 +110,14 @@ namespace WMP
             }
         }
 
+        public ViewModelBase MainView
+        {
+            get
+            {
+                return _page[(int)PageEnum.MAIN];
+            }
+        }
+
         #endregion
 
         #region Menu
