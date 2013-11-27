@@ -31,6 +31,9 @@ namespace WMP
         //FEATURES
 
         repeatStatus                _repeatState;
+        Random                      _rnd;
+        bool                        _isRandEnabled;
+        int                         _rand;
         bool                        _fullScreen;
         Timer                       _progress;
 
@@ -50,6 +53,7 @@ namespace WMP
         RelayCommand _exitfullscreencmd;
         RelayCommand _changevolumecmd;
         RelayCommand _repeatcmd;
+        RelayCommand _randcmd;
 
         public MainViewModel(MainWindowViewModel model, PlaylistViewModel playlist)
         {
@@ -58,16 +62,20 @@ namespace WMP
             _playlistcmd = new RelayCommand(PlaylistCmd, () => true);
             _playcmd = new RelayCommand(PlayCmd, () => true);
             _repeatcmd = new RelayCommand(RepeatCmd, () => true);
+            _randcmd = new RelayCommand(RandCmd, () => true);
             _stopcmd = new RelayCommand(StopCmd, () => true);
             _fullscreencmd = new RelayCommand(FullScreenCmd, CanFullScreen);
             _exitfullscreencmd = new RelayCommand(ExitFullScreenCmd, () => true);
             _changevolumecmd = new RelayCommand(ChangeVolumeCmd, () => true);
 
+            _rand = 0;
             _playlist = playlist;
+            _isRandEnabled = false;
             _repeatState = repeatStatus.NONE;
             _model = model;
             _media = null;
             _fullScreen = false;
+            _rnd = new Random();
             _progress = new Timer(1000);
             _progress.Elapsed += ProgressElapsed;
             _player = new MediaElement();
@@ -208,6 +216,11 @@ namespace WMP
                     return "Next media : no next media";
                 else
                 {
+                    if (_isRandEnabled)
+                    {
+                        _rand = _rnd.Next() % (_playlist.ListMedia.Count - 1);
+                        return ("Next random media : " + Path.GetFileName(_playlist.ListMedia[_rand].FileName));
+                    }
                     if (_repeatState == repeatStatus.REPEAT_ALL && _playlist.ListMedia.IndexOf(_media) == (_playlist.ListMedia.Count - 1))
                         return "Next media : " + Path.GetFileName(_playlist.ListMedia[0].FileName);
                     if (_repeatState == repeatStatus.REPEAT_ONE)
@@ -353,6 +366,15 @@ namespace WMP
             }
         }
 
+        public ICommand Random
+        {
+            get
+            {
+                return _randcmd;
+            }
+        }
+
+
         public ICommand FullScreen
         {
             get
@@ -385,7 +407,9 @@ namespace WMP
         {
             bool playingPrev = _media.isPlaying;
 
-            if (_playlist.ListMedia.IndexOf(_media) == (_playlist.ListMedia.Count - 1) && _repeatState == repeatStatus.REPEAT_ALL)
+            if (_isRandEnabled)
+                _media = _playlist.ListMedia[_rand];
+            else if (_playlist.ListMedia.IndexOf(_media) == (_playlist.ListMedia.Count - 1) && _repeatState == repeatStatus.REPEAT_ALL)
                 _media = _playlist.ListMedia[0];
             else if (_repeatState != repeatStatus.REPEAT_ONE)
                 _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) + 1];
@@ -399,7 +423,9 @@ namespace WMP
         {
             bool playingNext = _media.isPlaying;
 
-            if (_playlist.ListMedia.IndexOf(_media) == 0 && _repeatState == repeatStatus.REPEAT_ALL)
+            if (_isRandEnabled)
+                _media = _playlist.ListMedia[_rand];
+            else if (_playlist.ListMedia.IndexOf(_media) == 0 && _repeatState == repeatStatus.REPEAT_ALL)
                 _media = _playlist.ListMedia[_playlist.ListMedia.Count - 1];
             else if (_repeatState != repeatStatus.REPEAT_ONE)
                 _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) - 1];
@@ -413,7 +439,7 @@ namespace WMP
         {
             if (_media != null)
             {
-                if (_repeatState != repeatStatus.NONE)
+                if (_repeatState != repeatStatus.NONE || _isRandEnabled)
                     return true;
                 if (_playlist.ListMedia.Count > 0 && (_playlist.ListMedia.IndexOf(_media) - 1) >= 0)
                     return true;
@@ -425,7 +451,7 @@ namespace WMP
         {
             if (_media != null)
             {
-                if (_repeatState != repeatStatus.NONE)
+                if (_repeatState != repeatStatus.NONE || _isRandEnabled)
                     return true;
                 if (_playlist.ListMedia.Count > 0 && (_playlist.ListMedia.IndexOf(_media) + 1) < _playlist.ListMedia.Count)
                     return true;
@@ -442,6 +468,15 @@ namespace WMP
             OnPropertyChanged("MediaNameNext");
         }
 
+        private void RandCmd()
+        {
+            _isRandEnabled = !_isRandEnabled;
+            OnPropertyChanged("RepeatIcon");
+            OnPropertyChanged("MediaNameNext");
+        }
+
+
+        
         private void PlaylistCmd()
         {
             _progress.Stop();
