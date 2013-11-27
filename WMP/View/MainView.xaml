@@ -361,6 +361,9 @@
                 </Grid>
             </Popup>
             <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding Volume, StringFormat=\{0:P\}}"></TextBlock>
+            <Button Command="{Binding Repeat}" x:Name="RepeatButton" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" Margin="10,0,0,0" Height="32" Width="32">
+                <Image Source="{Binding RepeatIcon}" ToolTip="Volume"></Image>
+            </Button>
             <StackPanel Margin="20,0,0,0">
             	<TextBlock TextWrapping="Wrap" Text="{Binding MediaName}"/>
             	<TextBlock TextWrapping="Wrap" Text="{Binding MediaNameNext}" />
