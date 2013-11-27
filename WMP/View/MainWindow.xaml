@@ -1,4 +1,5 @@
-﻿<Window x:Class="WMP.MainWindow"
+﻿<Window x:Name="MWin"
+        x:Class="WMP.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:view="clr-namespace:WMP"
@@ -15,6 +16,13 @@
         <KeyBinding Key="Right" Command="{Binding KonamiRight}" CommandParameter="Right"></KeyBinding>
         <KeyBinding Key="A" Command="{Binding KonamiA}" CommandParameter="A"></KeyBinding>
         <KeyBinding Key="B" Command="{Binding KonamiB}" CommandParameter="B"></KeyBinding>
+
+        <KeyBinding Key="Space" Command="{Binding MainView.Play}"></KeyBinding>
+        <KeyBinding Key="Escape" Command="{Binding MainView.ExitFullScreen}"></KeyBinding>
+        <KeyBinding Modifiers="Control" Key="Left" Command="{Binding MainView.Previous}"></KeyBinding>
+        <KeyBinding Modifiers="Control" Key="Right" Command="{Binding MainView.Next}"></KeyBinding>
+        <KeyBinding Modifiers="Control" Key="Up" Command="{Binding MainView.ChangeVolume}" CommandParameter="Increase"></KeyBinding>
+        <KeyBinding Modifiers="Control" Key="Down" Command="{Binding MainView.ChangeVolume}" CommandParameter="Decrease"></KeyBinding>
     </Window.InputBindings>
 
     <Grid x:Name="MainPanel">

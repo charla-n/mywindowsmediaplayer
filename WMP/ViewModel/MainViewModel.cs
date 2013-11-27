@@ -39,6 +39,8 @@ namespace WMP
         RelayCommand _playcmd;
         RelayCommand _stopcmd;
         RelayCommand _fullscreencmd;
+        RelayCommand _exitfullscreencmd;
+        RelayCommand _changevolumecmd;
 
         public MainViewModel(MainWindowViewModel model, PlaylistViewModel playlist)
         {
@@ -48,6 +50,8 @@ namespace WMP
             _playcmd = new RelayCommand(PlayCmd, () => true);
             _stopcmd = new RelayCommand(StopCmd, () => true);
             _fullscreencmd = new RelayCommand(FullScreenCmd, CanFullScreen);
+            _exitfullscreencmd = new RelayCommand(ExitFullScreenCmd, () => true);
+            _changevolumecmd = new RelayCommand(ChangeVolumeCmd, () => true);
 
             _playlist = playlist;
             _model = model;
@@ -204,7 +208,13 @@ namespace WMP
             }
             set
             {
-                _player.Volume = value;
+                if (value > 1)
+                    _player.Volume = 1;
+                else if (value < 0)
+                    _player.Volume = 0;
+                else
+                    _player.Volume = value;
+                OnPropertyChanged("Volume");
             }
         }
 
@@ -314,6 +324,22 @@ namespace WMP
             }
         }
 
+        public ICommand ExitFullScreen
+        {
+            get
+            {
+                return _exitfullscreencmd;
+            }
+        }
+
+        public ICommand ChangeVolume
+        {
+            get
+            {
+                return _changevolumecmd;
+            }
+        }
+
         #endregion
 
         #region CommandTaskBar
@@ -368,6 +394,16 @@ namespace WMP
                 _media.isPlaying = false;
             OnPropertyChanged("StopPlay");
             _model.ChangePage(MainWindowViewModel.PageEnum.PLAYLIST);
+        }
+
+        private void ExitFullScreenCmd()
+        {
+            if (_fullScreen)
+            {
+                Application.Current.MainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+                Application.Current.MainWindow.WindowState = WindowState.Normal;
+                _fullScreen = false;
+            }
         }
 
         private void FullScreenCmd()
@@ -432,6 +468,16 @@ namespace WMP
             }
             _media.isPlaying = !_media.isPlaying;
             OnPropertyChanged("StopPlay");
+        }
+
+        public void ChangeVolumeCmd(object parameter)
+        {
+            string action = (string) parameter;
+
+            if (action == "Increase")
+                Volume += .05;
+            else
+                Volume -= .05;
         }
 
         #endregion

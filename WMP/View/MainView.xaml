@@ -6,10 +6,6 @@
       xmlns:local="clr-namespace:WMP"
       mc:Ignorable="d">
     
-    <UserControl.InputBindings>
-        <KeyBinding Key="Space" Command="{Binding }"/>
-    </UserControl.InputBindings>
-    
 	<UserControl.Resources>
 		<SolidColorBrush x:Key="SliderThumb.Static.Foreground" Color="#FFE5E5E5"/>
 		<SolidColorBrush x:Key="SliderThumb.MouseOver.Background" Color="#FFDCECFC"/>
@@ -364,7 +360,7 @@
                     </Border>
                 </Grid>
             </Popup>
-            <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding ElementName=ZoomSlider, StringFormat=\{0:P\}, Path=Value}"></TextBlock>
+            <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding Volume, StringFormat=\{0:P\}}"></TextBlock>
             <StackPanel Margin="20,0,0,0">
             	<TextBlock TextWrapping="Wrap" Text="{Binding MediaName}"/>
             	<TextBlock TextWrapping="Wrap" Text="{Binding MediaNameNext}" />
