@@ -163,13 +163,13 @@ namespace WMP
             bool? res;
 
             dialog.Multiselect = true;
-            dialog.Filter = "Video files|*.avi;*.mpg;*.mov;*.asf|Audio files|*.mp3;*.wav;*.wma;*.ogg;*.pls|Picture Files|*.jpg;*.bmp;*.png|ALL files|*.*";
+            dialog.Filter = "Video files|*.avi;*.mpg;*.mov;*.asf;*.mkv|Audio files|*.mp3;*.wav;*.wma;*.ogg|Picture Files|*.jpg;*.bmp;*.png|ALL files|*.*";
             res = dialog.ShowDialog();
             if (res == true)
             {
                 foreach (string file in dialog.FileNames)
                 {
-                    ListMedia.Add(new Media { FileName = file, isPlaying = false });
+                    ListMedia.Add(new Media { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)) });
                 }
             }
         }

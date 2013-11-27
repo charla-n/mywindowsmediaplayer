@@ -153,7 +153,7 @@ namespace WMP
                 }
                 if (_media == null)
                 {
-                    _media = new Media { isPlaying = true, FileName = FileName, isStopped = false };
+                    _media = new Media { isPlaying = true, FileName = FileName, isStopped = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(FileName)) };
                     _playlist.ListMedia.Add(_media);
                 }
                 else
