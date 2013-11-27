@@ -268,8 +268,8 @@ namespace WMP
                 if (_media == null)
                     return "../Icons/stop.png";
                 else if (!_media.isPlaying)
-                    return "../Icons/pause_icon.png";
-                return "../Icons/play_icon.png";
+                    return "../Icons/play_icon.png";
+                return "../Icons/pause_icon.png";
             }
         }
         #endregion
