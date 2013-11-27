@@ -138,11 +138,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\2_audio_repeat%281%29.png" />
-    <Resource Include="Icons\2_audio_repeat.png" />
-    <Resource Include="Icons\2_audio_repeat_unlimit.png" />
-    <Resource Include="Icons\2_audio_simple_random.png" />
-    <Resource Include="Icons\2_audio_simple_repeat_2.ico" />
+    <Resource Include="Icons\about_movie.png" />
     <Resource Include="Icons\clear.png" />
     <Resource Include="Icons\delete.png" />
     <Resource Include="Icons\exit.png" />
@@ -160,12 +156,14 @@
     <Resource Include="Icons\plus.png" />
     <Resource Include="Icons\previous.png" />
     <Resource Include="Icons\prev_icon.png" />
+    <Resource Include="Icons\random.png" />
+    <Resource Include="Icons\repeat.png" />
+    <Resource Include="Icons\repeat_infinite.png" />
     <Resource Include="Icons\save.png" />
+    <Resource Include="Icons\sound_icon.png" />
     <Resource Include="Icons\stop.png" />
     <Resource Include="Icons\stop_icon.png" />
     <Resource Include="Icons\stream.png" />
-    <Resource Include="Icons\about_movie.png" />
-    <Resource Include="Icons\sound_icon.png" />
     <Content Include="Konami\konami.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
