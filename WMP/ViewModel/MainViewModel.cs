@@ -387,8 +387,7 @@ namespace WMP
 
             if (_playlist.ListMedia.IndexOf(_media) == (_playlist.ListMedia.Count - 1) && _repeatState == repeatStatus.REPEAT_ALL)
                 _media = _playlist.ListMedia[0];
-            else if (_repeatState == repeatStatus.REPEAT_ONE);
-            else
+            else if (_repeatState != repeatStatus.REPEAT_ONE)
                 _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) + 1];
             _media.isPlaying = playingPrev;
             _player.Source = new Uri(_media.FileName);
@@ -402,8 +401,7 @@ namespace WMP
 
             if (_playlist.ListMedia.IndexOf(_media) == 0 && _repeatState == repeatStatus.REPEAT_ALL)
                 _media = _playlist.ListMedia[_playlist.ListMedia.Count - 1];
-            else if (_repeatState == repeatStatus.REPEAT_ONE);
-            else
+            else if (_repeatState != repeatStatus.REPEAT_ONE)
                 _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) - 1];
             _media.isPlaying = playingNext;
             _player.Source = new Uri(_media.FileName);
