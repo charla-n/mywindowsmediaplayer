@@ -162,11 +162,15 @@ namespace WMP
             OpenFileDialog dialog = new OpenFileDialog();
             bool? res;
 
+            dialog.Multiselect = true;
             dialog.Filter = "Video files|*.avi;*.mpg;*.mov;*.asf|Audio files|*.mp3;*.wav;*.wma;*.ogg;*.pls|Picture Files|*.jpg;*.bmp;*.png|ALL files|*.*";
             res = dialog.ShowDialog();
             if (res == true)
             {
-                ListMedia.Add(new Media { FileName = dialog.FileName, isPlaying = false });
+                foreach (string file in dialog.FileNames)
+                {
+                    ListMedia.Add(new Media { FileName = file, isPlaying = false });
+                }
             }
         }
 
