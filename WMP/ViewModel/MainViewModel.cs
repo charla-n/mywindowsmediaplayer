@@ -68,7 +68,7 @@ namespace WMP
             _model = model;
             _media = null;
             _fullScreen = false;
-            _progress = new Timer(400);
+            _progress = new Timer(200);
             _progress.Elapsed += ProgressElapsed;
             _player = new MediaElement();
             _player.LoadedBehavior = MediaState.Manual;
@@ -511,18 +511,18 @@ namespace WMP
                 return;
             if (_media.isPlaying == true)
             {
-                _player.Pause();
                 if (_player.NaturalDuration.HasTimeSpan)
                     _progress.Stop();
+                _player.Pause();
             }
             else
             {
                 _media.isStopped = false;
-                _player.Play();
                 if (_player.NaturalDuration.HasTimeSpan)
                 {
                     _progress.Start();
                 }
+                _player.Play();
             }
             _media.isPlaying = !_media.isPlaying;
             OnPropertyChanged("StopPlay");
