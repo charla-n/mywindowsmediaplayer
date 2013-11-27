@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ExtensionStatic.cs" />
     <Compile Include="PlaceHolderTextBox.cs" />
     <Compile Include="ViewModel\PlaylistViewModel.cs" />
     <Compile Include="View\About.xaml.cs">
@@ -164,6 +165,7 @@
     <Resource Include="Icons\stop.png" />
     <Resource Include="Icons\stop_icon.png" />
     <Resource Include="Icons\stream.png" />
+    <Resource Include="Icons\view_playlist.png" />
     <Content Include="Konami\konami.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

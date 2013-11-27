@@ -20,5 +20,7 @@ namespace WMP.Model
         public bool isPlaying { get; set; }
         [XmlIgnore]
         public bool IsSelected { get; set; }
+        [XmlIgnore]
+        public string Icon { get; set; }
     }
 }
