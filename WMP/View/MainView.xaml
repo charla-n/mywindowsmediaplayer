@@ -328,8 +328,6 @@
             <TextBlock Width="30" Margin="5,0,5,0" DockPanel.Dock="Right" Text="{Binding TotalTime, StringFormat=mm\\:ss}"></TextBlock>
             <Slider Margin="0,3,0,0" x:Name="ProgressBar" IsMoveToPointEnabled="True" Value="{Binding ProgressBar, Mode=TwoWay}" Maximum="{Binding MaxProgressBar}" Style="{StaticResource SliderStyle}"></Slider>
         </DockPanel>
-        <!--<StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal">-->
-        <!--</StackPanel>-->
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal">
             <Button Command="{Binding Play}" Height="32" Width="32" Background="Transparent" BorderBrush="Transparent" >
@@ -362,7 +360,7 @@
             </Popup>
             <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding Volume, StringFormat=\{0:P\}}"></TextBlock>
             <Button Command="{Binding Repeat}" x:Name="RepeatButton" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" Margin="10,0,0,0" Height="32" Width="32">
-                <Image Source="{Binding RepeatIcon}" ToolTip="Volume"></Image>
+                <Image Source="{Binding RepeatIcon}" ToolTip="Repeat"></Image>
             </Button>
             <StackPanel Margin="20,0,0,0">
             	<TextBlock TextWrapping="Wrap" Text="{Binding MediaName}"/>

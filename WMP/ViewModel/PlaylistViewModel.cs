@@ -146,6 +146,7 @@ namespace WMP
                         List<Media> list = (List<Media>)serializer.Deserialize(reader);
                         foreach (Media m in list)
                         {
+                            m.Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(m.FileName));
                             ListMedia.Add(m);
                         }
                     };

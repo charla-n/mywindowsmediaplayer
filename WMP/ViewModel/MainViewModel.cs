@@ -68,7 +68,7 @@ namespace WMP
             _model = model;
             _media = null;
             _fullScreen = false;
-            _progress = new Timer(1000);
+            _progress = new Timer(400);
             _progress.Elapsed += ProgressElapsed;
             _player = new MediaElement();
             _player.LoadedBehavior = MediaState.Manual;
@@ -81,6 +81,7 @@ namespace WMP
 
         private void OnMediaFailed(object sender, RoutedEventArgs evt)
         {
+            _progress.Stop();
             MessageBox.Show(_media.FileName + " doesn't exist.", "Error on loading media", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
@@ -95,6 +96,7 @@ namespace WMP
             }
             else
             {
+                _progress.Stop();
                 NextCmd();
             }
             OnPropertyChanged("Next");
@@ -111,6 +113,7 @@ namespace WMP
                 {
                     try
                     {
+                        _progress.Start();
                         _media.Duration = (int)_player.NaturalDuration.TimeSpan.TotalSeconds;
                     }
                     catch (System.InvalidOperationException e)
@@ -141,7 +144,6 @@ namespace WMP
             if (FileName != null)
             {
                 Console.WriteLine("FileName : " + FileName);
-                _progress.Start();
                 try
                 {
                     _player.Source = new Uri(FileName);
@@ -247,12 +249,12 @@ namespace WMP
         {
             get
             {
-                Console.WriteLine("ProgressBar=" + _player.Position.Hours * 3600 + _player.Position.Minutes * 60 + _player.Position.Seconds);
-                return _player.Position.Hours * 3600 + _player.Position.Minutes * 60 + _player.Position.Seconds;
+                Console.WriteLine("ProgressBar=" + (_player.Position.Hours * 3600000 + _player.Position.Minutes * 60000 + _player.Position.Seconds * 1000 + _player.Position.Milliseconds));
+                return _player.Position.Hours * 3600000 + _player.Position.Minutes * 60000 + _player.Position.Seconds * 1000 + _player.Position.Milliseconds;
             }
             set
             {
-                _player.Position = TimeSpan.FromSeconds(value);
+                _player.Position = TimeSpan.FromMilliseconds(value);
             }
         }
 
@@ -264,8 +266,8 @@ namespace WMP
                 {
                     if (_player.IsLoaded && _player.NaturalDuration.HasTimeSpan)
                     {
-                        Console.WriteLine("MaxProgressBar=" + _player.NaturalDuration.TimeSpan.TotalSeconds);
-                        return (int)_player.NaturalDuration.TimeSpan.TotalSeconds;
+                        Console.WriteLine("MaxProgressBar=" + _player.NaturalDuration.TimeSpan.TotalMilliseconds);
+                        return (int)_player.NaturalDuration.TimeSpan.TotalMilliseconds;
                     }
                     else
                         return 0;

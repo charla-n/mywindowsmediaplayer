@@ -43,10 +43,10 @@ namespace WMP
         public MainWindowViewModel()
         {
             _openStreamingcmd = new RelayCommand(OpenStreamingCmd, CanStreaming);
-            _openMediacmd = new RelayCommand(OpenMediaCmd, () => true);
+            _openMediacmd = new RelayCommand(OpenMediaCmd, CanOpenMedia);
             _quitcmd = new RelayCommand(QuitCmd, () => true);
-            _aboutcmd = new RelayCommand(AboutCmd, () => true);
-            _tipscmd = new RelayCommand(TipsCmd, () => true);
+            _aboutcmd = new RelayCommand(AboutCmd, CanAbout);
+            _tipscmd = new RelayCommand(TipsCmd, CanTips);
             _konamiAcmd = new RelayCommand(KonamiCmd, () => true);
             _konamiBcmd = new RelayCommand(KonamiCmd, () => true);
             _konamiDowncmd = new RelayCommand(KonamiCmd, () => true);
@@ -181,31 +181,38 @@ namespace WMP
             return _stream == null && _page[(int)PageEnum.MAIN].IsCurrentPage == true ? true : false;
         }
 
+        private bool CanAbout()
+        {
+            return _about == null ? true : false;
+        }
+
+        private bool CanTips()
+        {
+            return _tips == null ? true : false;
+        }
+
         private void TipsCmd()
         {
-            if (_tips == null)
-            {
-                _tips = new Tips();
-
-                _tips.Closed += OnCloseTips;
-                _tips.Show();
-            }
+            _tips = new Tips();
+            _tips.Closed += OnCloseTips;
+            _tips.Show();
         }
 
         private void AboutCmd()
         {
-            if (_about == null)
-            {
-                _about = new About();
-
-                _about.Closed += OnCloseHelp;
-                _about.Show();
-            }
+            _about = new About();
+            _about.Closed += OnCloseHelp;
+            _about.Show();
         }
 
         private void QuitCmd()
         {
             Application.Current.Shutdown();
+        }
+
+        private bool CanOpenMedia()
+        {
+            return _page[(int)PageEnum.MAIN].IsCurrentPage ? true : false;
         }
 
         private void OpenMediaCmd()
