@@ -165,6 +165,7 @@
     <Resource Include="Icons\stop_icon.png" />
     <Resource Include="Icons\stream.png" />
     <Resource Include="Icons\about_movie.png" />
+    <Resource Include="Icons\sound_icon.png" />
     <Content Include="Konami\konami.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
