@@ -170,7 +170,7 @@ namespace WMP
             {
                 foreach (string file in dialog.FileNames)
                 {
-                    ListMedia.Add(new Media { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)) });
+                    ListMedia.Add(Media.CreateMedia(false, file, false, ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file))));
                 }
             }
         }

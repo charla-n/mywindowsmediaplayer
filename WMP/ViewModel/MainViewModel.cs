@@ -1,18 +1,12 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using WMP.Model;
+using WMP.View;
+using WMP.ViewModel;
 
 namespace WMP
 {
@@ -42,6 +36,13 @@ namespace WMP
         MediaElement                _player;
         Media                       _media;
 
+        //MEDIA INFOS
+        bool                        _mediaInfosOpen; // is one of the windows open
+        Window[]                    _mediaInfos; // Various media infos windows
+        Action[]                    _mediaInfosFillers; // Functions to fill corresponding model
+        ViewModelBase[]             _infosModels; // Models containing the variables used by the windows
+        Func<Window>[]              _createMediaWindow; // Functions to create the corresponding window
+
         //COMMANDS
 
         RelayCommand _nextcmd;
@@ -54,6 +55,7 @@ namespace WMP
         RelayCommand _changevolumecmd;
         RelayCommand _repeatcmd;
         RelayCommand _randcmd;
+        RelayCommand _mediainfoscmd;
 
         public MainViewModel(MainWindowViewModel model, PlaylistViewModel playlist)
         {
@@ -67,13 +69,31 @@ namespace WMP
             _fullscreencmd = new RelayCommand(FullScreenCmd, CanFullScreen);
             _exitfullscreencmd = new RelayCommand(ExitFullScreenCmd, () => true);
             _changevolumecmd = new RelayCommand(ChangeVolumeCmd, () => true);
+            _mediainfoscmd = new RelayCommand(MediaInfosCmd, CanMediaInfos);
 
             _rand = 0;
             _playlist = playlist;
             _isRandEnabled = false;
-            _repeatState = repeatStatus.NONE;
+            _repeatState = repeatStatus.NONE    ;
             _model = model;
             _media = null;
+            _mediaInfosOpen = false;
+            _mediaInfos = new Window[(int)t_MediaType.NONE];
+            _mediaInfos[(int)t_MediaType.AUDIO] = null;
+            _mediaInfos[(int)t_MediaType.VIDEO] = null;
+            _mediaInfos[(int)t_MediaType.PICTURE] = null;
+            _mediaInfosFillers = new Action[(int)t_MediaType.NONE];
+            _mediaInfosFillers[(int)t_MediaType.AUDIO] = new Action(FillAudioModel);
+            _mediaInfosFillers[(int)t_MediaType.VIDEO] = new Action(FillVideoModel);
+            _mediaInfosFillers[(int)t_MediaType.PICTURE] = new Action(FillPictureModel);
+            _createMediaWindow = new Func<Window>[(int)t_MediaType.NONE];
+            _createMediaWindow[(int)t_MediaType.AUDIO] = new Func<Window>(CreateAudioWindow);
+            _createMediaWindow[(int)t_MediaType.VIDEO] = new Func<Window>(CreateVideoWindow);
+            _createMediaWindow[(int)t_MediaType.PICTURE] = new Func<Window>(CreatePictureWindow);
+            _infosModels = new ViewModelBase[(int)t_MediaType.NONE];
+            _infosModels[(int)t_MediaType.AUDIO] = new AudioMediaViewModel();
+            _infosModels[(int)t_MediaType.VIDEO] = new VideoMediaViewModel();
+            _infosModels[(int)t_MediaType.PICTURE] = new PictureMediaViewModel();
             _fullScreen = false;
             _rnd = new Random();
             _progress = new Timer(200);
@@ -86,6 +106,17 @@ namespace WMP
         }
 
         #region Events
+
+        private void OnCloseMediaInfos(object sender, EventArgs e)
+        {
+            Window w = sender as Window;
+
+            w.Close();
+            _mediaInfosOpen = false;
+            _mediaInfos[(int)t_MediaType.AUDIO] = null;
+            _mediaInfos[(int)t_MediaType.VIDEO] = null;
+            _mediaInfos[(int)t_MediaType.PICTURE] = null;
+        }
 
         private void OnMediaFailed(object sender, RoutedEventArgs evt)
         {
@@ -163,14 +194,91 @@ namespace WMP
                 }
                 if (_media == null)
                 {
-                    _media = new Media { isPlaying = true, FileName = FileName, isStopped = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(FileName)) };
+                    _media = Media.CreateMedia(true, FileName, false, ExtensionStatic.GetIconsFromExtension(Path.GetExtension(FileName)));
                     _playlist.ListMedia.Add(_media);
                 }
                 else
                 {
-                    _media.isPlaying = true;
-                    _media.FileName = FileName;
+                    _playlist.ListMedia.Remove(_media);
+                    _media = Media.CreateMedia(true, FileName, false, ExtensionStatic.GetIconsFromExtension(Path.GetExtension(FileName)));
+                    _playlist.ListMedia.Add(_media);
                 }
+            }
+        }
+
+        #endregion
+
+        #region CommandContextMenu
+
+        private bool CanMediaInfos()
+        {
+            return (_media != null && (_mediaInfos == null || _mediaInfosOpen == false ? true : false));
+        }
+
+        # region FillModelsFunctions
+
+        private void FillAudioModel()
+        {
+            AudioMedia media = _media as AudioMedia;
+            AudioMediaInfosModel.FillModel(media);
+        }
+
+        private void FillVideoModel()
+        {
+            VideoMedia media = _media as VideoMedia;
+            VideoMediaInfosModel.FillModel(media);
+        }
+
+        private void FillPictureModel()
+        {
+            PictureMedia media = _media as PictureMedia;
+            PictureMediaInfosModel.FillModel(media);
+        }
+
+        # endregion
+
+        private void FillGoodModel()
+        {
+            if (_media.MediaType != t_MediaType.NONE)
+            {
+                _mediaInfosFillers[(int)_media.MediaType]();
+            }
+        }
+
+        # region CreateWindowFunctions
+
+        private Window CreateAudioWindow()
+        {
+            return new AudioMediaInfos();
+        }
+
+        private Window CreateVideoWindow()
+        {
+            return new VideoMediaInfos();
+        }
+
+        private Window CreatePictureWindow()
+        {
+            return new PictureMediaInfos();
+        }
+
+        #endregion
+
+        private void CreateGoodMediaInfos()
+        {
+            if (_media.MediaType != t_MediaType.NONE)
+                _mediaInfos[(int)_media.MediaType] = _createMediaWindow[(int)_media.MediaType]();
+        }
+
+        private void MediaInfosCmd()
+        {
+            if (_media.MediaType != t_MediaType.NONE)
+            {
+                FillGoodModel();
+                CreateGoodMediaInfos();
+                _mediaInfos[(int)_media.MediaType].Closed += OnCloseMediaInfos;
+                _mediaInfosOpen = true;
+                _mediaInfos[(int)_media.MediaType].Show();
             }
         }
 
@@ -262,7 +370,6 @@ namespace WMP
         {
             get
             {
-                Console.WriteLine("ProgressBar=" + (_player.Position.Hours * 3600000 + _player.Position.Minutes * 60000 + _player.Position.Seconds * 1000 + _player.Position.Milliseconds));
                 return _player.Position.Hours * 3600000 + _player.Position.Minutes * 60000 + _player.Position.Seconds * 1000 + _player.Position.Milliseconds;
             }
             set
@@ -316,6 +423,44 @@ namespace WMP
                 return "../Icons/pause_icon.png";
             }
         }
+        
+        public Media Media
+        {
+            get
+            {
+                return _media;
+            }
+            set
+            {
+                _media = value;
+                OnPropertyChanged("Media");
+            }
+        }
+
+        public AudioMediaViewModel AudioMediaInfosModel
+        {
+            get
+            {
+                return _infosModels[(int)t_MediaType.AUDIO] as AudioMediaViewModel;
+            }
+        }
+
+        public VideoMediaViewModel VideoMediaInfosModel
+        {
+            get
+            {
+                return _infosModels[(int)t_MediaType.VIDEO] as VideoMediaViewModel;
+            }
+        }
+
+        public PictureMediaViewModel PictureMediaInfosModel
+        {
+            get
+            {
+                return _infosModels[(int)t_MediaType.PICTURE] as PictureMediaViewModel;
+            }
+        }
+
         #endregion
 
         #region TaskBar
@@ -398,6 +543,14 @@ namespace WMP
             get
             {
                 return _changevolumecmd;
+            }
+        }
+
+        public ICommand MediaInfos
+        {
+            get
+            {
+                return _mediainfoscmd;
             }
         }
 

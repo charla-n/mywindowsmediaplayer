@@ -1,0 +1,18 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:WMP="clr-namespace:WMP" x:Name="PictureMediaInfos1" x:Class="WMP.View.PictureMediaInfos"
+        Title="PictureMediaInfos" Height="139.8" Width="481" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Window.DataContext>
+        <WMP:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Label x:Name="lbTitle" Content="Title :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="39" Height="26"/>
+        <Label x:Name="lbWidth" Content="Width :" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="48" Height="26"/>
+        <Label x:Name="lbHeight" Content="Height :" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Width="52" Height="26"/>
+        <Label x:Name="valTitle" Content="{Binding MainView.PictureMediaInfosModel.Title}" HorizontalAlignment="Left" Margin="82,10,0,0" VerticalAlignment="Top" Width="382" Height="26"/>
+        <Label x:Name="valWidth" Content="{Binding MainView.PictureMediaInfosModel.Width}" HorizontalAlignment="Left" Margin="82,41,0,0" VerticalAlignment="Top" Width="382" Height="26"/>
+        <Label x:Name="valHeight" Content="{Binding MainView.PictureMediaInfosModel.Height}" HorizontalAlignment="Left" Margin="82,72,0,0" VerticalAlignment="Top" Width="382" Height="26"/>
+
+    </Grid>
+</Window>

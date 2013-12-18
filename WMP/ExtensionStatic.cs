@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WMP.Model;
 
 namespace WMP
 {
@@ -27,6 +28,24 @@ namespace WMP
             {".mkv", "../Icons/movie.png"}
         };
 
+        static Dictionary<string, t_MediaType> _types = new Dictionary<string, t_MediaType>
+        {
+            {".jpg", t_MediaType.PICTURE},
+            {".png", t_MediaType.PICTURE},
+            {".bmp", t_MediaType.PICTURE},
+            {".gif", t_MediaType.PICTURE},
+            {".mp3", t_MediaType.AUDIO},
+            {".wav", t_MediaType.AUDIO},
+            {".wma", t_MediaType.AUDIO},
+            {".ogg", t_MediaType.AUDIO},
+            {".avi", t_MediaType.VIDEO},
+            {".mpg", t_MediaType.VIDEO},
+            {".mov", t_MediaType.VIDEO},
+            {".asf", t_MediaType.VIDEO},
+            {".mkv", t_MediaType.VIDEO}
+        };
+
+
         public static string GetIconsFromExtension(string ext)
         {
             string result;
@@ -37,5 +56,17 @@ namespace WMP
             }
             return UNKNOWN;
         }
+
+        public static t_MediaType GetTypeFromExtension(string ext)
+        {
+            t_MediaType result;
+
+            if (_types.TryGetValue(ext, out result))
+            {
+                return result;
+            }
+            return t_MediaType.NONE;
+        }
+
     }
 }

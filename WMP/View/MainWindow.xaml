@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:view="clr-namespace:WMP"
         Title="MyWindowsMediaPlayer" Height="600" Width="800" Icon="../IConWMP.ico">
-    
+
     <Window.DataContext>
         <view:MainWindowViewModel/>
     </Window.DataContext>
@@ -19,6 +19,7 @@
 
         <KeyBinding Key="Space" Command="{Binding MainView.Play}"></KeyBinding>
         <KeyBinding Key="Escape" Command="{Binding MainView.ExitFullScreen}"></KeyBinding>
+        <KeyBinding Modifiers="Control" Key="I" Command="{Binding MainView.MediaInfos}"></KeyBinding>
         <KeyBinding Modifiers="Control" Key="Left" Command="{Binding MainView.Previous}"></KeyBinding>
         <KeyBinding Modifiers="Control" Key="Right" Command="{Binding MainView.Next}"></KeyBinding>
         <KeyBinding Modifiers="Control" Key="Up" Command="{Binding MainView.ChangeVolume}" CommandParameter="Increase"></KeyBinding>
@@ -67,6 +68,6 @@
         </Menu>
 
         <ContentControl Grid.Row="1" Content="{Binding CurrentPage}"/>
-        
+
     </Grid>
 </Window>
