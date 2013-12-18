@@ -278,6 +278,7 @@ namespace WMP
                 CreateGoodMediaInfos();
                 _mediaInfos[(int)_media.MediaType].Closed += OnCloseMediaInfos;
                 _mediaInfosOpen = true;
+                _mediaInfos[(int)_media.MediaType].DataContext = _model;
                 _mediaInfos[(int)_media.MediaType].Show();
             }
         }

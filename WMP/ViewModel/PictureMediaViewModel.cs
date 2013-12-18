@@ -9,48 +9,9 @@ namespace WMP.ViewModel
 {
     public class PictureMediaViewModel : ViewModelBase
     {
-        private string _title;
-        private int _width;
-        private int _height;
-
-        public string Title
-        {
-            get
-            {
-                return _title;
-            }
-            set
-            {
-                _title = value;
-                OnPropertyChanged("Title");
-            }
-        }
-
-        public int Width
-        {
-            get
-            {
-                return _width;
-            }
-            set
-            {
-                _width = value;
-                OnPropertyChanged("Width");
-            }
-        }
-
-        public int Height
-        {
-            get
-            {
-                return _height;
-            }
-            set
-            {
-                _height = value;
-                OnPropertyChanged("Height");
-            }
-        }
+        public string Title { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         public void FillModel(PictureMedia media)
         {
