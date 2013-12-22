@@ -296,29 +296,206 @@
             <TextBlock HorizontalAlignment="Center">Library</TextBlock>
             <local:PlaceHolderTextBox PlaceHolder="Search" Height="19" TextWrapping="Wrap" BorderThickness="1" MinWidth="60" Margin="5,5,5,0"/>
             <TreeView BorderThickness="0" Margin="5">
+                <TreeView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add medias" Command="{Binding add}">
+                            <MenuItem.Icon>
+                                <Image Height="16" Width="16" Source="../Icons/plus.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator/>
+                        <MenuItem Header="delete all medias" Command="{Binding ClearAll}">
+                            <MenuItem.Icon>
+                                <Image Height="16" Width="16" Source="../Icons/clear.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </TreeView.ContextMenu>
                 <TreeViewItem>
                     <TreeViewItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Image Width="12" Height="12" Margin="0,0,3,0" Source="../Icons/movie.png"/> 
+                            <StackPanel.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Add videos" Command="{Binding addVideo}">
+                                        <MenuItem.Icon>
+                                            <Image Height="16" Width="16" Source="../Icons/plus.png" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator/>
+                                    <MenuItem Header="Clear all videos" Command="{Binding ClearVideos}">
+                                        <MenuItem.Icon>
+                                            <Image Height="16" Width="16" Source="../Icons/clear.png" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </StackPanel.ContextMenu>
+                            <Image Width="12" Height="12" Margin="0,0,3,0" Source="../Icons/movie.png"/>
                             <TextBlock Text="Videos"/>
                         </StackPanel>
                     </TreeViewItem.Header>
+                    <ListView x:Name="listVideos" ItemsSource="{Binding ListVideos}" Grid.Column="1" Margin="1,1,1,1" Grid.RowSpan="2">
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Play Media" Command="{Binding PlayMedia}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16" Width="16" Source="../Icons/plus.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Header="Delete Media" Command="{Binding DeleteVideo}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16" Width="16" Source="../Icons/delete.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Header="add to playlist" Command="{Binding AddVideoToPlaylist}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16" Width="16" Source="../Icons/plus.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.InputBindings>
+                            <KeyBinding Key="Delete" Command="{Binding DeleteVideo}"></KeyBinding>
+                        </ListView.InputBindings>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="IsSelected" Value="{Binding Mode=TwoWay, Path=IsSelected}"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="16" Width="16" Source="{Binding Icon}" Margin="0,0,5,0"></Image>
+                                    <TextBlock Text="{Binding FileName}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </TreeViewItem>
                 <TreeViewItem>
                     <TreeViewItem.Header>
                         <StackPanel Orientation="Horizontal">
+                            <StackPanel.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Add songs" Command="{Binding addSong}">
+                                        <MenuItem.Icon>
+                                            <Image Height="16" Width="16" Source="../Icons/plus.png" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator/>
+                                    <MenuItem Header="Clear all songs" Command="{Binding ClearSongs}">
+                                        <MenuItem.Icon>
+                                            <Image Height="16" Width="16" Source="../Icons/clear.png" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </StackPanel.ContextMenu>
                             <Image Width="12" Height="12" Margin="0,0,3,0" Source="../Icons/music.png"/>
-                            <TextBlock Text="Music"/>
+                            <TextBlock Text="Songs"/>
                         </StackPanel>
                     </TreeViewItem.Header>
+                    <ListView x:Name="listSongs" ItemsSource="{Binding ListSongs}" Grid.Column="1" Margin="1,2,1,0" Grid.RowSpan="2">
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Play Media" Command="{Binding PlayMedia}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16" Width="16" Source="../Icons/plus.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Header="Delete Media" Command="{Binding DeleteSong}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16" Width="16" Source="../Icons/delete.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Header="add to playlist" Command="{Binding AddSongToPlaylist}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16" Width="16" Source="../Icons/plus.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.InputBindings>
+                            <KeyBinding Key="Delete" Command="{Binding DeleteSong}"></KeyBinding>
+                        </ListView.InputBindings>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="IsSelected" Value="{Binding Mode=TwoWay, Path=IsSelected}"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="16" Width="16" Source="{Binding Icon}" Margin="0,0,5,0"></Image>
+                                    <TextBlock Text="{Binding FileName}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </TreeViewItem>
                 <TreeViewItem>
                     <TreeViewItem.Header>
                         <StackPanel Orientation="Horizontal">
+                            <StackPanel.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Add pictures" Command="{Binding addPicture}">
+                                        <MenuItem.Icon>
+                                            <Image Height="16" Width="16" Source="../Icons/plus.png" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator/>
+                                    <MenuItem Header="Clear all pictures" Command="{Binding ClearPictures}">
+                                        <MenuItem.Icon>
+                                            <Image Height="16" Width="16" Source="../Icons/clear.png" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </StackPanel.ContextMenu>
                             <Image Width="12" Height="12" Margin="0,0,3,0" Source="../Icons/picture.png"/>
                             <TextBlock Text="Pictures"/>
                         </StackPanel>
                     </TreeViewItem.Header>
+                    <ListView x:Name="listPictures" ItemsSource="{Binding ListPictures}" Grid.Column="1" Margin="1,2,1,0" Grid.RowSpan="2">
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Play Media" Command="{Binding PlayMedia}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16" Width="16" Source="../Icons/plus.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Header="Delete Media" Command="{Binding DeletePicture}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16" Width="16" Source="../Icons/delete.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Header="add to playlist" Command="{Binding AddPictureToPlaylist}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16" Width="16" Source="../Icons/plus.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.InputBindings>
+                            <KeyBinding Key="Delete" Command="{Binding DeletePicture}"></KeyBinding>
+                        </ListView.InputBindings>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="IsSelected" Value="{Binding Mode=TwoWay, Path=IsSelected}"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="16" Width="16" Source="{Binding Icon}" Margin="0,0,5,0"></Image>
+                                    <TextBlock Text="{Binding FileName}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </TreeViewItem>
             </TreeView>
         </StackPanel>

@@ -1,10 +1,18 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
-using System.Timers;
+using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Serialization;
 using WMP.Model;
+using System.Timers;
 using WMP.View;
 using WMP.ViewModel;
 
@@ -57,6 +65,30 @@ namespace WMP
         RelayCommand _randcmd;
         RelayCommand _mediainfoscmd;
 
+        RelayCommand _addvideoscmd;
+        RelayCommand _addsongscmd;
+        RelayCommand _addpicturescmd;
+        
+        RelayCommand _clearvideos;
+        RelayCommand _clearsongs;
+        RelayCommand _clearpictures;
+        
+        RelayCommand _deletevideocmd;
+        RelayCommand _deletesongcmd;
+        RelayCommand _deletepicturecmd;
+        
+        RelayCommand _addsongtoplaylist;
+        RelayCommand _addvideotoplaylist;
+        RelayCommand _addpicturetoplaylist;
+        
+        RelayCommand _playmediacmd;
+        RelayCommand _addcmd;
+        RelayCommand _clearallcmd;
+
+        public ObservableCollection<Media> ListVideos { get; private set; }
+        public ObservableCollection<Media> ListSongs { get; private set; }
+        public ObservableCollection<Media> ListPictures { get; private set; }
+
         public MainViewModel(MainWindowViewModel model, PlaylistViewModel playlist)
         {
             _nextcmd = new RelayCommand(NextCmd, CanNext);
@@ -70,6 +102,26 @@ namespace WMP
             _exitfullscreencmd = new RelayCommand(ExitFullScreenCmd, () => true);
             _changevolumecmd = new RelayCommand(ChangeVolumeCmd, () => true);
             _mediainfoscmd = new RelayCommand(MediaInfosCmd, CanMediaInfos);
+
+            _playmediacmd = new RelayCommand(playMediaCmd, () => true);
+            _addcmd = new RelayCommand(addCmd, () => true);
+            _addvideoscmd = new RelayCommand(addVideoCmd, () => true);
+            _addsongscmd = new RelayCommand(addSongCmd, () => true);
+            _addpicturescmd = new RelayCommand(addPictureCmd, () => true);
+            _addsongtoplaylist = new RelayCommand(addSongToPlayList, () => true);
+            _addvideotoplaylist = new RelayCommand(addVideoToPlayList, () => true);
+            _addpicturetoplaylist = new RelayCommand(addPictureToPlayList, () => true);
+            _deletevideocmd = new RelayCommand(deleteVideoCmd, () => true);
+            _deletesongcmd = new RelayCommand(deleteSongCmd, () => true);
+            _deletepicturecmd = new RelayCommand(deletePictureCmd, () => true);
+            _clearvideos = new RelayCommand(clearVideos, () => true);
+            _clearpictures = new RelayCommand(clearPictures, () => true);
+            _clearsongs = new RelayCommand(clearSongs, () => true);
+            _clearallcmd = new RelayCommand(clearAll, () => true);
+
+            ListVideos = new ObservableCollection<Media>();
+            ListSongs = new ObservableCollection<Media>();
+            ListPictures = new ObservableCollection<Media>();
 
             _rand = 0;
             _playlist = playlist;
@@ -103,7 +155,473 @@ namespace WMP
             _player.MediaOpened += MediaLoaded;
             _player.MediaEnded += OnMediaEnded;
             _player.MediaFailed += OnMediaFailed;
+
+            loadPicturesLibrary();
+            loadSongsLibrary();
+            loadVideosLibrary();
         }
+
+
+        #region Library
+
+        private void loadVideosLibrary()
+        {
+            try
+            {
+                using (FileStream stream = new FileStream(@"../../library/videos.xml", FileMode.OpenOrCreate, FileAccess.Read))
+                {
+                    TextReader reader = new StreamReader(stream);
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<Media>));
+                    List<Media> list = (List<Media>)serializer.Deserialize(reader);
+                    foreach (Media m in list)
+                    {
+                        m.Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(m.FileName));
+                        ListVideos.Add(m);
+                    }
+                };
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void loadSongsLibrary()
+        {
+            try
+            {
+                using (FileStream stream = new FileStream(@"../../library/songs.xml", FileMode.OpenOrCreate, FileAccess.Read))
+                {
+                    TextReader reader = new StreamReader(stream);
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<Media>));
+
+                    List<Media> list = (List<Media>)serializer.Deserialize(reader);
+                    foreach (Media m in list)
+                    {
+                        m.Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(m.FileName));
+                        ListSongs.Add(m);
+                    }
+                };
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void loadPicturesLibrary()
+        {
+            try
+            {
+                using (FileStream stream = new FileStream(@"../../library/pictures.xml", FileMode.OpenOrCreate, FileAccess.Read))
+                {
+                    TextReader reader = new StreamReader(stream);
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<Media>));
+
+                    List<Media> list = (List<Media>)serializer.Deserialize(reader);
+                    foreach (Media m in list)
+                    {
+                        m.Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(m.FileName));
+                        ListPictures.Add(m);
+                    }
+                };
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public ICommand PlayMedia
+        {
+            get
+            {
+                return _playmediacmd;
+            }
+        }
+
+        public ICommand AddSongToPlaylist
+        {
+            get
+            {
+                return _addsongtoplaylist;
+            }
+        }
+
+        public ICommand AddVideoToPlaylist
+        {
+            get
+            {
+                return _addvideotoplaylist;
+            }
+        }
+
+        public ICommand AddPictureToPlaylist
+        {
+            get
+            {
+                return _addpicturetoplaylist;
+            }
+        }
+
+        public ICommand add
+        {
+            get
+            {
+                return _addcmd;
+            }
+        }
+
+        public ICommand addVideo
+        {
+            get
+            {
+                return _addvideoscmd;
+            }
+        }
+
+        public ICommand addSong
+        {
+            get
+            {
+                return _addsongscmd;
+            }
+        }
+
+        public ICommand addPicture
+        {
+            get
+            {
+                return _addpicturescmd;
+            }
+        }
+
+        public ICommand DeleteVideo
+        {
+            get
+            {
+                return _deletevideocmd;
+            }
+        }
+
+        public ICommand DeletePicture
+        {
+            get
+            {
+                return _deletesongcmd;
+            }
+        }
+
+        public ICommand DeleteSong
+        {
+            get
+            {
+                return _deletesongcmd;
+            }
+        }
+
+        public ICommand ClearVideos
+        {
+            get
+            {
+                return _clearvideos;
+            }
+        }
+
+        public ICommand ClearSongs
+        {
+            get
+            {
+                return _clearsongs;
+            }
+        }
+
+        public ICommand ClearPictures
+        {
+            get
+            {
+                return _clearpictures;
+            }
+        }
+
+        public ICommand ClearAll
+        {
+            get
+            {
+                return _clearallcmd;
+            }
+        }
+
+        private void playMediaCmd()
+        {
+            IEnumerable<Media> lv = ListVideos.Where(m => m.IsSelected == true);
+            IEnumerable<Media> lm = ListSongs.Where(m => m.IsSelected == true);
+            IEnumerable<Media> lp = ListPictures.Where(m => m.IsSelected == true);
+
+            if (lv.Count() > 0)
+            {
+                _player.Stop();
+                _media = lv.ElementAt(0);
+                _player.Source = new Uri(lv.ElementAt(0).FileName);
+                _player.Play();
+            }
+            else if (lm.Count() > 0)
+            {
+                _player.Stop();
+                _media = lm.ElementAt(0);
+                _player.Source = new Uri(lm.ElementAt(0).FileName);
+                _player.Play();
+            }
+            else if (lp.Count() > 0)
+            {
+                _player.Stop();
+                _media = lp.ElementAt(0);
+                _player.Source = new Uri(lp.ElementAt(0).FileName);
+                _player.Play();
+            }
+        }
+
+        private void addSongToPlayList()
+        {
+            IEnumerable<Media> lm = ListSongs.Where(m => m.IsSelected == true);
+
+            foreach (Media m in lm)
+            {
+                _playlist.ListMedia.Add(m);
+            }
+        }
+
+        private void addVideoToPlayList()
+        {
+            IEnumerable<Media> lm = ListVideos.Where(m => m.IsSelected == true);
+
+            foreach (Media m in lm)
+            {
+                _playlist.ListMedia.Add(m);
+            }
+        }
+
+        private void addPictureToPlayList()
+        {
+            IEnumerable<Media> lm = ListPictures.Where(m => m.IsSelected == true);
+
+            foreach (Media m in lm)
+            {
+                _playlist.ListMedia.Add(m);
+            }
+        }
+
+        private void clearPictures()
+        {
+            ListPictures.Clear();
+            savePictures();
+        }
+
+        private void clearSongs()
+        {
+            ListSongs.Clear();
+            saveSongs();
+        }
+
+        private void clearVideos()
+        {
+            ListVideos.Clear();
+            saveVideos();
+        }
+
+        private void clearAll()
+        {
+            clearSongs();
+            clearVideos();
+            clearPictures();
+        }
+
+        private void saveVideos()
+        {
+            try
+            {
+                using (FileStream stream = new FileStream(@"../../library/videos.xml", FileMode.Truncate))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<Media>));
+
+                    serializer.Serialize(stream, ListVideos.ToList());
+                };
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error occured when saving songs library" + Environment.NewLine + "Be sure you've correct permissions", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void saveSongs()
+        {
+            try
+            {
+                using (FileStream stream = new FileStream(@"../../library/songs.xml", FileMode.Truncate))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<Media>));
+
+                    serializer.Serialize(stream, ListSongs.ToList());
+                };
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error occured when saving songs library" + Environment.NewLine + "Be sure you've correct permissions", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void savePictures()
+        {
+            try
+            {
+                using (FileStream stream = new FileStream(@"../../library/pictures.xml", FileMode.OpenOrCreate | FileMode.Truncate, FileAccess.ReadWrite))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<Media>));
+
+                    serializer.Serialize(stream, ListPictures.ToList());
+                };
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error occured when saving pictures library" + Environment.NewLine + "Be sure you've correct permissions", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void deleteVideoCmd()
+        {
+            List<Media> tmp = new List<Media>();
+            IEnumerable<Media> lm = ListVideos.Where(m => m.IsSelected == true);
+
+
+            foreach (Media m in lm)
+            {
+                tmp.Add(m);
+            }
+            foreach (Media m in tmp)
+            {
+                ListVideos.Remove(m);
+            }
+            saveVideos();
+        }
+
+        private void addVideoCmd()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            bool? res;
+
+            dialog.Multiselect = true;
+            dialog.Filter = "Video files|*.wmv;*.avi;*.mpg;*.mov;*.asf;*.mkv|ALL files|*.*";
+            res = dialog.ShowDialog();
+            if (res == true)
+            {
+                foreach (string file in dialog.FileNames)
+                {
+                    ListVideos.Add(new Media { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)) });
+                }
+            }
+            saveVideos();
+        }
+
+        private void deleteSongCmd()
+        {
+            List<Media> tmp = new List<Media>();
+            IEnumerable<Media> lm = ListSongs.Where(m => m.IsSelected == true);
+
+
+            foreach (Media m in lm)
+            {
+                tmp.Add(m);
+            }
+            foreach (Media m in tmp)
+            {
+                ListSongs.Remove(m);
+            }
+            saveSongs();
+        }
+
+        private void addSongCmd()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            bool? res;
+
+            dialog.Multiselect = true;
+            dialog.Filter = "Audio files|*.mp3;*.wav;*.wma;*.ogg|ALL files|*.*";
+            res = dialog.ShowDialog();
+            if (res == true)
+            {
+                foreach (string file in dialog.FileNames)
+                {
+                    ListSongs.Add(new Media { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)) });
+                }
+            }
+            saveSongs();
+        }
+
+        private void deletePictureCmd()
+        {
+            List<Media> tmp = new List<Media>();
+            IEnumerable<Media> lm = ListPictures.Where(m => m.IsSelected == true);
+
+
+            foreach (Media m in lm)
+            {
+                tmp.Add(m);
+            }
+            foreach (Media m in tmp)
+            {
+                ListPictures.Remove(m);
+            }
+            savePictures();
+        }
+
+        private void addCmd()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            bool? res;
+
+            dialog.Multiselect = true;
+            dialog.Filter = "Video files|*.wmv;*.avi;*.mpg;*.mov;*.asf;*.mkv|Audio files|*.mp3;*.wav;*.wma;*.ogg|Picture Files|*.jpg;*.bmp;*.png|ALL files|*.*";
+            res = dialog.ShowDialog();
+
+            if (res == true)
+            {
+                foreach (string file in dialog.FileNames)
+                {
+                    string ext = Path.GetExtension(file);
+                    if (ext == ".wmv" || ext == ".avi" || ext == ".mpg" || ext == ".mov" || ext == ".mkv" || ext == ".asf")
+                        ListVideos.Add(new Media { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)) });
+                    else if (ext == ".mp3" || ext == ".wav" || ext == ".wma" || ext == ".ogg")
+                        ListSongs.Add(new Media { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)) });
+                    else if (ext == ".png" || ext == ".bmp" || ext == ".jpg")
+                        ListPictures.Add(new Media { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)) });
+                    else
+                        MessageBox.Show(file + "file type not reconized !");
+                }
+            }
+            savePictures();
+            saveVideos();
+            saveSongs();
+        }
+
+        private void addPictureCmd()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            bool? res;
+
+            dialog.Multiselect = true;
+            dialog.Filter = "Picture Files|*.jpg;*.bmp;*.png|ALL files|*.*";
+            res = dialog.ShowDialog();
+            if (res == true)
+            {
+                foreach (string file in dialog.FileNames)
+                {
+                    ListPictures.Add(new Media { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)) });
+                }
+            }
+            savePictures();
+        }
+
+        #endregion
 
         #region Events
 

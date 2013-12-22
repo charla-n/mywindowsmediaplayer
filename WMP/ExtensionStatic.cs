@@ -25,7 +25,8 @@ namespace WMP
             {".mpg", "../Icons/movie.png"},
             {".mov", "../Icons/movie.png"},
             {".asf", "../Icons/movie.png"},
-            {".mkv", "../Icons/movie.png"}
+            {".mkv", "../Icons/movie.png"},
+            {".wmv", "../Icons/movie.png"}
         };
 
         static Dictionary<string, t_MediaType> _types = new Dictionary<string, t_MediaType>
@@ -42,7 +43,8 @@ namespace WMP
             {".mpg", t_MediaType.VIDEO},
             {".mov", t_MediaType.VIDEO},
             {".asf", t_MediaType.VIDEO},
-            {".mkv", t_MediaType.VIDEO}
+            {".mkv", t_MediaType.VIDEO},
+            {".mmv", t_MediaType.VIDEO}
         };
 
 
