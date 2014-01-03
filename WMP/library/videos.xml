@@ -1,2 +1,9 @@
 <?xml version="1.0"?>
-<ArrayOfMedia xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<ArrayOfMedia xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Media>
+    <FileName>D:\asdfmovie\asdfmovie- deleted scenes.avi</FileName>
+  </Media>
+  <Media>
+    <FileName>D:\asdfmovie\asdfmovie2.avi</FileName>
+  </Media>
+</ArrayOfMedia>

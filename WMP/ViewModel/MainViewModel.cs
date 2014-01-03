@@ -80,6 +80,7 @@ namespace WMP
         RelayCommand _addsongtoplaylist;
         RelayCommand _addvideotoplaylist;
         RelayCommand _addpicturetoplaylist;
+        RelayCommand _addToPlaylist;
         
         RelayCommand _playmediacmd;
         RelayCommand _addcmd;
@@ -111,6 +112,7 @@ namespace WMP
             _addsongtoplaylist = new RelayCommand(addSongToPlayList, () => true);
             _addvideotoplaylist = new RelayCommand(addVideoToPlayList, () => true);
             _addpicturetoplaylist = new RelayCommand(addPictureToPlayList, () => true);
+            _addToPlaylist = new RelayCommand(addToPlaylistCmd, () => true);
             _deletevideocmd = new RelayCommand(deleteVideoCmd, () => true);
             _deletesongcmd = new RelayCommand(deleteSongCmd, () => true);
             _deletepicturecmd = new RelayCommand(deletePictureCmd, () => true);
@@ -180,7 +182,7 @@ namespace WMP
                     }
                 };
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -229,6 +231,14 @@ namespace WMP
             catch (Exception)
             {
                 MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public ICommand AddToPlaylist
+        {
+            get
+            {
+                return _addToPlaylist;
             }
         }
 
@@ -350,6 +360,13 @@ namespace WMP
             {
                 return _clearallcmd;
             }
+        }
+
+        private void addToPlaylistCmd()
+        {
+            addSongToPlayList();
+            addPictureToPlayList();
+            addVideoToPlayList();
         }
 
         private void playMediaCmd()
