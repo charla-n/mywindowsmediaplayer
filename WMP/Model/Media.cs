@@ -101,11 +101,12 @@ namespace WMP.Model
             Media media;
             TagLib.File file;
 
+            Console.WriteLine(fileName);
             try
             {
                 file = TagLib.File.Create(fileName);
             }
-            catch (TagLib.UnsupportedFormatException)
+            catch (Exception)
             {
                 return new Media() { isPlaying = isPlaying, FileName = fileName, isStopped = isStopped,
                                      Icon = icon, MediaType = t_MediaType.NONE};
