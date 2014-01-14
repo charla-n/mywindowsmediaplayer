@@ -23,8 +23,8 @@ namespace WMP.Model
             if (filter == null || filter.Length <= 0)
                 return (true);
             if (Title != null)
-                return ((Title.Contains(filter.ToLower())) ? true : false);
-            return ((FileName.Contains(filter.ToLower())) ? true : false);
+                return ((Title.ToLower().Contains(filter.ToLower())) ? true : false);
+            return ((FileName.ToLower().Contains(filter.ToLower())) ? true : false);
         }
         virtual protected bool albumFilter(string filter) { return (false); }
         virtual protected bool artistFilter(string filter) { return (false); }
