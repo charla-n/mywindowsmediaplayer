@@ -38,6 +38,8 @@ namespace WMP
         int                         _rand;
         bool                        _fullScreen;
         Timer                       _progress;
+        String                      _search;
+        WMP.Model.MediaFilter       _typeFilter;
 
         //MEDIA
 
@@ -104,6 +106,7 @@ namespace WMP
             _changevolumecmd = new RelayCommand(ChangeVolumeCmd, () => true);
             _mediainfoscmd = new RelayCommand(MediaInfosCmd, CanMediaInfos);
 
+            _typeFilter = WMP.Model.MediaFilter.TITLE;
             _playmediacmd = new RelayCommand(playMediaCmd, () => true);
             _addcmd = new RelayCommand(addCmd, () => true);
             _addvideoscmd = new RelayCommand(addVideoCmd, () => true);
@@ -131,6 +134,7 @@ namespace WMP
             _repeatState = repeatStatus.NONE    ;
             _model = model;
             _media = null;
+            _search = "";
             _mediaInfosOpen = false;
             _mediaInfos = new Window[(int)t_MediaType.NONE];
             _mediaInfos[(int)t_MediaType.AUDIO] = null;
@@ -166,6 +170,37 @@ namespace WMP
 
         #region Library
 
+        public string SearchTxt
+        {
+            set
+            {
+                _search = value;
+                ListVideos.Clear();
+                ListSongs.Clear();
+                ListPictures.Clear();
+                loadPicturesLibrary();
+                loadSongsLibrary();
+                loadVideosLibrary();
+            }
+           
+        }
+
+        public MediaFilter ChangeTypeFilter
+        {
+            set
+            {
+                System.Console.WriteLine(value);
+                _typeFilter = value;
+                ListVideos.Clear();
+                ListSongs.Clear();
+                ListPictures.Clear();
+                loadPicturesLibrary();
+                loadSongsLibrary();
+                loadVideosLibrary();
+            }
+
+        }
+
         private void loadVideosLibrary()
         {
             try
@@ -178,7 +213,8 @@ namespace WMP
                     foreach (Media m in list)
                     {
                         m.Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(m.FileName));
-                        ListVideos.Add(m);
+                        if (m.isDisplayable(_search, _typeFilter))
+                            ListVideos.Add(m);
                     }
                 };
             }
@@ -201,7 +237,8 @@ namespace WMP
                     foreach (Media m in list)
                     {
                         m.Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(m.FileName));
-                        ListSongs.Add(m);
+                        if (m.isDisplayable(_search, _typeFilter)) 
+                            ListSongs.Add(m);
                     }
                 };
             }
@@ -224,7 +261,8 @@ namespace WMP
                     foreach (Media m in list)
                     {
                         m.Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(m.FileName));
-                        ListPictures.Add(m);
+                        if (m.isDisplayable(_search, _typeFilter)) 
+                            ListPictures.Add(m);
                     }
                 };
             }
