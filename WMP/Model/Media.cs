@@ -3,18 +3,44 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Diagnostics;
 using System.Drawing;
+using System.Collections.Generic;
 using WMP;
 
 namespace WMP.Model
 {
+
+    public enum MediaFilter
+    { TITLE, ARTIST, YEARS, ALBUM };
     public enum t_MediaType
     { AUDIO, VIDEO, PICTURE, NONE };
     
     [Serializable]
     public class Media
     {
+
+        protected bool titleFilter(string filter)
+        {
+            if (filter == null || filter.Length <= 0)
+                return (true);
+            if (Title != null)
+                return ((Title.Contains(filter.ToLower())) ? true : false);
+            return ((FileName.Contains(filter.ToLower())) ? true : false);
+        }
+        virtual protected bool albumFilter(string filter) { return (false); }
+        virtual protected bool artistFilter(string filter) { return (false); }
+        virtual protected bool yearsFilter(string filter) { return (false); }
+
+        protected Dictionary<WMP.Model.MediaFilter, Delegate> _dict; 
+
         public Media()
         {
+           _dict = new Dictionary<WMP.Model.MediaFilter, Delegate>
+            {
+                {MediaFilter.TITLE, new Func<string, bool>(titleFilter)},
+                {MediaFilter.ARTIST, new Func<string, bool>(artistFilter)},
+                {MediaFilter.ALBUM, new Func<string, bool>(albumFilter)},
+                {MediaFilter.YEARS, new Func<string, bool>(yearsFilter)}
+            };
             MediaType = t_MediaType.NONE;
         }
 
@@ -25,6 +51,11 @@ namespace WMP.Model
             _createPictureMedia,
         };
 
+        virtual public bool isDisplayable(string filter, WMP.Model.MediaFilter type)
+        {
+            return ((bool)(_dict[type].DynamicInvoke(filter)));
+        }
+     
         public string FileName { get; set; }
         [XmlIgnore]
         public bool isStopped { get; set; }

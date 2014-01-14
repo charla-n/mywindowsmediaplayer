@@ -10,6 +10,17 @@ namespace WMP.Model
     [Serializable]
     public class AudioMedia: Media
     {
+
+        protected override bool artistFilter(string filter)
+        {
+            return ((Artist == filter) ? true : false);
+        }
+
+        protected override bool albumFilter(string filter)
+        {
+            return ((Album == filter) ? true : false);
+        }
+
         [XmlIgnore]
         public string Artist { get; set; }
         [XmlIgnore]

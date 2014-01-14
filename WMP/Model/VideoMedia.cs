@@ -7,9 +7,16 @@ using System.Xml.Serialization;
 
 namespace WMP.Model
 {
+
     [Serializable]
     public class VideoMedia : Media
     {
+
+        protected override bool yearsFilter(string filter)
+        {
+            return ((Year.ToString() == filter) ? true : false);
+        }
+     
         [XmlIgnore]
         public uint Year { get; set; }
         [XmlIgnore]
