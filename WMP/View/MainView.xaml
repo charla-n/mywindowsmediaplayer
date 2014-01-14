@@ -511,7 +511,6 @@
                     </ListView>
                 </TreeViewItem>
             </TreeView> 
-            <TextBlock TextWrapping="Wrap" Text="TextBlock"/>
         </StackPanel>
 
         <DockPanel Grid.Row="1" Grid.ColumnSpan="3" LastChildFill="True">
