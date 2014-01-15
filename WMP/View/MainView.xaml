@@ -294,8 +294,8 @@
 
         <StackPanel Background="LightGray" Grid.Column="2" Grid.Row="0" >
             <TextBlock HorizontalAlignment="Center">Library</TextBlock>
-            <ComboBox SelectedIndex="0" Margin="0,0,-0.2,0" SelectionChanged="ComboBox_SelectionChanged" Text="{Binding ChangeTypeFilter}">
-                <ComboBoxItem Content="Title" HorizontalAlignment="Left" Width="179.2"/>
+            <ComboBox SelectedIndex="1" Margin="5,5,5,0" SelectionChanged="ComboBox_SelectionChanged" Text="{Binding ChangeTypeFilter}">
+                <ComboBoxItem x:Name="First"  Content="Title" HorizontalAlignment="Left" Width="179.2"/>
                 <ComboBoxItem Content="Artist" HorizontalAlignment="Left" Width="179.2"/>
                 <ComboBoxItem Content="Years" HorizontalAlignment="Left" Width="179.2"/>
                 <ComboBoxItem Content="Album" HorizontalAlignment="Left" Width="179.2"/>
