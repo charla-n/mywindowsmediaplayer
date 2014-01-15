@@ -270,6 +270,20 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <Style TargetType="ListView" x:Key="ListStyle" BasedOn="{StaticResource {x:Type ListBox}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <TextBlock FontSize="10" Foreground="Black">Empty ! <LineBreak/>You can add media by right clicking on me</TextBlock>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
@@ -346,7 +360,7 @@
                             <TextBlock Text="Videos"/>
                         </StackPanel>
                     </TreeViewItem.Header>
-                    <ListView x:Name="listVideos" ItemsSource="{Binding ListVideos}" Grid.Column="1" Margin="1,1,1,1" Grid.RowSpan="2">
+                    <ListView BorderThickness="0" x:Name="listVideos" ItemsSource="{Binding ListVideos}" Grid.Column="1" Margin="1,1,1,1" Grid.RowSpan="2" Style="{StaticResource ListStyle}">
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Play Media" Command="{Binding PlayMedia}">
@@ -408,7 +422,7 @@
                             <TextBlock Text="Songs"/>
                         </StackPanel>
                     </TreeViewItem.Header>
-                    <ListView x:Name="listSongs" ItemsSource="{Binding ListSongs}" Grid.Column="1" Margin="1,2,1,0" Grid.RowSpan="2">
+                    <ListView BorderThickness="0" x:Name="listSongs" ItemsSource="{Binding ListSongs}" Grid.Column="1" Margin="1,2,1,0" Grid.RowSpan="2" Style="{StaticResource ListStyle}">
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Play Media" Command="{Binding PlayMedia}">
@@ -470,7 +484,7 @@
                             <TextBlock Text="Pictures"/>
                         </StackPanel>
                     </TreeViewItem.Header>
-                    <ListView x:Name="listPictures" ItemsSource="{Binding ListPictures}" Grid.Column="1" Margin="1,2,1,0" Grid.RowSpan="2">
+                    <ListView BorderThickness="0" x:Name="listPictures" ItemsSource="{Binding ListPictures}" Grid.Column="1" Margin="1,2,1,0" Grid.RowSpan="2" Style="{StaticResource ListStyle}">
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Play Media" Command="{Binding PlayMedia}">
