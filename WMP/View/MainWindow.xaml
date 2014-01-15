@@ -10,13 +10,6 @@
     </Window.DataContext>
 
     <Window.InputBindings>
-        <KeyBinding Key="Up" Command="{Binding KonamiUp}" CommandParameter="Up"></KeyBinding>
-        <KeyBinding Key="Down" Command="{Binding KonamiDown}" CommandParameter="Down"></KeyBinding>
-        <KeyBinding Key="Left" Command="{Binding KonamiLeft}" CommandParameter="Left"></KeyBinding>
-        <KeyBinding Key="Right" Command="{Binding KonamiRight}" CommandParameter="Right"></KeyBinding>
-        <KeyBinding Key="A" Command="{Binding KonamiA}" CommandParameter="A"></KeyBinding>
-        <KeyBinding Key="B" Command="{Binding KonamiB}" CommandParameter="B"></KeyBinding>
-
         <KeyBinding Key="Space" Command="{Binding MainView.Play}"></KeyBinding>
         <KeyBinding Key="Escape" Command="{Binding MainView.ExitFullScreen}"></KeyBinding>
         <KeyBinding Modifiers="Control" Key="I" Command="{Binding MainView.MediaInfos}"></KeyBinding>
@@ -37,6 +30,14 @@
 
         <Menu Grid.Row="0" IsMainMenu="True" Background="Transparent">
             <MenuItem Header="_File" >
+                <MenuItem.InputBindings>
+                    <KeyBinding Key="Up" Command="{Binding KonamiUp}" CommandParameter="Up"></KeyBinding>
+                    <KeyBinding Key="Down" Command="{Binding KonamiDown}" CommandParameter="Down"></KeyBinding>
+                    <KeyBinding Key="Left" Command="{Binding KonamiLeft}" CommandParameter="Left"></KeyBinding>
+                    <KeyBinding Key="Right" Command="{Binding KonamiRight}" CommandParameter="Right"></KeyBinding>
+                    <KeyBinding Key="A" Command="{Binding KonamiA}" CommandParameter="A"></KeyBinding>
+                    <KeyBinding Key="B" Command="{Binding KonamiB}" CommandParameter="B"></KeyBinding>
+                </MenuItem.InputBindings>
                 <MenuItem Command="{Binding OpenMedia}" Header="_Open">
                     <MenuItem.Icon>
                         <Image Height="16" Width="16" Source="../Icons/open.png" />

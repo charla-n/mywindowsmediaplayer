@@ -80,7 +80,7 @@ namespace WMP.Model
             media.Artist = file.Tag.FirstPerformer;
             media.Album = file.Tag.Album;
             media.Year = file.Tag.Year;
-            media.Title = file.Tag.Title != "" ? file.Tag.Title : Path.GetFileNameWithoutExtension(fileName);
+            media.Title = file.Tag.Title != "" && file.Tag.Title != null ? file.Tag.Title : Path.GetFileNameWithoutExtension(fileName);
             foreach (TagLib.ICodec codec in file.Properties.Codecs)
             {
                 TagLib.IAudioCodec acodec = codec as TagLib.IAudioCodec;
@@ -97,7 +97,7 @@ namespace WMP.Model
 
             media.MediaType = t_MediaType.VIDEO;
             media.Year = file.Tag.Year;
-            media.Title = file.Tag.Title != "" ? file.Tag.Title : Path.GetFileNameWithoutExtension(fileName);
+            media.Title = file.Tag.Title != "" && file.Tag.Title != null ? file.Tag.Title : Path.GetFileNameWithoutExtension(fileName);
             foreach (TagLib.ICodec codec in file.Properties.Codecs)
             {
                 TagLib.IAudioCodec acodec = codec as TagLib.IAudioCodec;

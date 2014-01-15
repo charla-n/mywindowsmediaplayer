@@ -221,7 +221,7 @@ namespace WMP
             }
             catch (Exception)
             {
-                MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -248,7 +248,7 @@ namespace WMP
             }
             catch (Exception)
             {
-                MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -274,7 +274,7 @@ namespace WMP
             }
             catch (Exception)
             {
-                MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
