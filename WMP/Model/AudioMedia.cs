@@ -13,20 +13,22 @@ namespace WMP.Model
 
         protected override bool artistFilter(string filter)
         {
-            return ((Artist == filter) ? true : false);
+            if (filter != null && filter.Length <= 0)
+                return (true);
+            return ((Artist != null && Artist.ToLower() == filter.ToLower()) ? true : false);
         }
 
         protected override bool albumFilter(string filter)
         {
-            return ((Album == filter) ? true : false);
+            System.Console.WriteLine("album filter in");
+            if (filter != null && filter.Length <= 0)
+                return (true);
+            return ((Album != null && Album.ToLower() == filter.ToLower()) ? true : false);
         }
 
-        [XmlIgnore]
         public string Artist { get; set; }
-        [XmlIgnore]
-        public string Album { get; set; }
-        [XmlIgnore]
         public uint Year { get; set; }
+        public string Album { get; set; }
         [XmlIgnore]
         public int Bitrate { get; set; }
     }

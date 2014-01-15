@@ -16,7 +16,7 @@ namespace WMP.Model
         {
             return ((Year.ToString() == filter) ? true : false);
         }
-     
+
         [XmlIgnore]
         public uint Year { get; set; }
         [XmlIgnore]
