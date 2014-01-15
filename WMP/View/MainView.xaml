@@ -294,14 +294,14 @@
 
         <StackPanel Background="LightGray" Grid.Column="2" Grid.Row="0" >
             <TextBlock HorizontalAlignment="Center">Library</TextBlock>
-            <ComboBox SelectedIndex="1" Margin="5,5,5,0" SelectionChanged="ComboBox_SelectionChanged" Text="{Binding ChangeTypeFilter}">
-                <ComboBoxItem x:Name="First"  Content="Title" HorizontalAlignment="Left" Width="179.2"/>
+            <ComboBox x:Name="MyComboBox" SelectedIndex="0" Margin="5,5,5,0">
+                <ComboBoxItem x:Name="First" Content="Title" HorizontalAlignment="Left" Width="179.2"/>
                 <ComboBoxItem Content="Artist" HorizontalAlignment="Left" Width="179.2"/>
                 <ComboBoxItem Content="Years" HorizontalAlignment="Left" Width="179.2"/>
                 <ComboBoxItem Content="Album" HorizontalAlignment="Left" Width="179.2"/>
             </ComboBox>
 
-            <TextBox Text="{Binding SearchTxt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="19" TextWrapping="Wrap" BorderThickness="1" MinWidth="60" Margin="5,5,0,0" HorizontalAlignment="Left" Width="171"/>
+            <TextBox Text="{Binding SearchTxt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="19" TextWrapping="Wrap" BorderThickness="1" Width="{Binding ElementName=MyComboBox, Path=ActualWidth}" Margin="5,5,0,0" HorizontalAlignment="Left"/>
 
             <TreeView BorderThickness="0" Margin="5">
                 <TreeView.ContextMenu>

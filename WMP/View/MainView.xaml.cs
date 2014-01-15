@@ -29,10 +29,5 @@ namespace WMP
         {
             VolumePopup.IsOpen = true;
         }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
