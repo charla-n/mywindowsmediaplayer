@@ -577,7 +577,8 @@ namespace WMP
             {
                 foreach (string file in dialog.FileNames)
                 {
-                    ListVideos.Add(new VideoMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
+                    VideoMedia tmp = (VideoMedia)Media.CreateMedia(false, file, false, ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)));
+                    ListVideos.Add(tmp);
                 }
             }
             saveVideos();
@@ -612,7 +613,8 @@ namespace WMP
             {
                 foreach (string file in dialog.FileNames)
                 {
-                    ListSongs.Add(new AudioMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
+                    AudioMedia tmp = (AudioMedia)Media.CreateMedia(false, file, false, ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)));
+                    ListSongs.Add(tmp);
                 }
             }
             saveSongs();
@@ -676,7 +678,8 @@ namespace WMP
             {
                 foreach (string file in dialog.FileNames)
                 {
-                    ListPictures.Add(new PictureMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
+                    PictureMedia tmp = (PictureMedia)Media.CreateMedia(false, file, false, ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)));
+                    ListPictures.Add(tmp);
                 }
             }
             savePictures();

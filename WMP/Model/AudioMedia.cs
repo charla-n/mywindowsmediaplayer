@@ -15,7 +15,7 @@ namespace WMP.Model
         {
             if (filter != null && filter.Length <= 0)
                 return (true);
-            return ((Artist != null && Artist.ToLower() == filter.ToLower()) ? true : false);
+            return ((Artist != null && Artist.ToLower().Contains(filter.ToLower())) ? true : false);
         }
 
         protected override bool albumFilter(string filter)
@@ -23,7 +23,7 @@ namespace WMP.Model
             System.Console.WriteLine("album filter in");
             if (filter != null && filter.Length <= 0)
                 return (true);
-            return ((Album != null && Album.ToLower() == filter.ToLower()) ? true : false);
+            return ((Album != null && Album.ToLower().Contains(filter.ToLower())) ? true : false);
         }
 
         public string Artist { get; set; }

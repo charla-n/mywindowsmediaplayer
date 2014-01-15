@@ -16,7 +16,7 @@ namespace WMP.Model
         {
             if (filter != null && filter.Length <= 0)
                 return (true);
-            return ((Year.ToString() == filter) ? true : false);
+            return ((Year.ToString().Contains(filter)) ? true : false);
         }
 
         [XmlIgnore]
