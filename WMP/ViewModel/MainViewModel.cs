@@ -88,9 +88,9 @@ namespace WMP
         RelayCommand _addcmd;
         RelayCommand _clearallcmd;
 
-        public ObservableCollection<Media> ListVideos { get; private set; }
+        public ObservableCollection<VideoMedia> ListVideos { get; private set; }
         public ObservableCollection<AudioMedia> ListSongs { get; private set; }
-        public ObservableCollection<Media> ListPictures { get; private set; }
+        public ObservableCollection<PictureMedia> ListPictures { get; private set; }
 
         public MainViewModel(MainWindowViewModel model, PlaylistViewModel playlist)
         {
@@ -124,9 +124,9 @@ namespace WMP
             _clearsongs = new RelayCommand(clearSongs, () => true);
             _clearallcmd = new RelayCommand(clearAll, () => true);
 
-            ListVideos = new ObservableCollection<Media>();
+            ListVideos = new ObservableCollection<VideoMedia>();
             ListSongs = new ObservableCollection<AudioMedia>();
-            ListPictures = new ObservableCollection<Media>();
+            ListPictures = new ObservableCollection<PictureMedia>();
 
             _rand = 0;
             _playlist = playlist;
@@ -207,9 +207,9 @@ namespace WMP
                 using (FileStream stream = new FileStream(@"../../library/videos.xml", FileMode.OpenOrCreate, FileAccess.Read))
                 {
                     TextReader reader = new StreamReader(stream);
-                    XmlSerializer serializer = new XmlSerializer(typeof(List<Media>));
-                    List<Media> list = (List<Media>)serializer.Deserialize(reader);
-                    foreach (Media m in list)
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<VideoMedia>));
+                    List<VideoMedia> list = (List<VideoMedia>)serializer.Deserialize(reader);
+                    foreach (VideoMedia m in list)
                     {
                         if (m.Title == null)
                             m.Title = Path.GetFileNameWithoutExtension(m.FileName);
@@ -259,10 +259,10 @@ namespace WMP
                 using (FileStream stream = new FileStream(@"../../library/pictures.xml", FileMode.OpenOrCreate, FileAccess.Read))
                 {
                     TextReader reader = new StreamReader(stream);
-                    XmlSerializer serializer = new XmlSerializer(typeof(List<Media>));
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<PictureMedia>));
 
-                    List<Media> list = (List<Media>)serializer.Deserialize(reader);
-                    foreach (Media m in list)
+                    List<PictureMedia> list = (List<PictureMedia>)serializer.Deserialize(reader);
+                    foreach (PictureMedia m in list)
                     {
                         if (m.Title == null)
                             m.Title = Path.GetFileNameWithoutExtension(m.FileName);
@@ -503,7 +503,7 @@ namespace WMP
             {
                 using (FileStream stream = new FileStream(@"../../library/videos.xml", FileMode.Truncate))
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(List<Media>));
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<VideoMedia>));
 
                     serializer.Serialize(stream, ListVideos.ToList());
                 };
@@ -537,7 +537,7 @@ namespace WMP
             {
                 using (FileStream stream = new FileStream(@"../../library/pictures.xml", FileMode.OpenOrCreate | FileMode.Truncate, FileAccess.ReadWrite))
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(List<Media>));
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<PictureMedia>));
 
                     serializer.Serialize(stream, ListPictures.ToList());
                 };
@@ -550,15 +550,15 @@ namespace WMP
 
         private void deleteVideoCmd()
         {
-            List<Media> tmp = new List<Media>();
-            IEnumerable<Media> lm = ListVideos.Where(m => m.IsSelected == true);
+            List<VideoMedia> tmp = new List<VideoMedia>();
+            IEnumerable<VideoMedia> lm = ListVideos.Where(m => m.IsSelected == true);
 
 
-            foreach (Media m in lm)
+            foreach (VideoMedia m in lm)
             {
                 tmp.Add(m);
             }
-            foreach (Media m in tmp)
+            foreach (VideoMedia m in tmp)
             {
                 ListVideos.Remove(m);
             }
@@ -571,13 +571,13 @@ namespace WMP
             bool? res;
 
             dialog.Multiselect = true;
-            dialog.Filter = "Video files|*.wmv;*.avi;*.mpg;*.mov;*.asf;*.mkv|ALL files|*.*";
+            dialog.Filter = "Video files|*.wmv;*.avi;*.mpg;*.mov;*.asf;*.mkv";
             res = dialog.ShowDialog();
             if (res == true)
             {
                 foreach (string file in dialog.FileNames)
                 {
-                    ListVideos.Add(new Media { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
+                    ListVideos.Add(new VideoMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
                 }
             }
             saveVideos();
@@ -585,11 +585,11 @@ namespace WMP
 
         private void deleteSongCmd()
         {
-            List<Media> tmp = new List<Media>();
-            IEnumerable<Media> lm = ListSongs.Where(m => m.IsSelected == true);
+            List<AudioMedia> tmp = new List<AudioMedia>();
+            IEnumerable<AudioMedia> lm = ListSongs.Where(m => m.IsSelected == true);
 
 
-            foreach (Media m in lm)
+            foreach (AudioMedia m in lm)
             {
                 tmp.Add(m);
             }
@@ -606,7 +606,7 @@ namespace WMP
             bool? res;
 
             dialog.Multiselect = true;
-            dialog.Filter = "Audio files|*.mp3;*.wav;*.wma;*.ogg|ALL files|*.*";
+            dialog.Filter = "Audio files|*.mp3;*.wav;*.wma;*.ogg";
             res = dialog.ShowDialog();
             if (res == true)
             {
@@ -620,15 +620,15 @@ namespace WMP
 
         private void deletePictureCmd()
         {
-            List<Media> tmp = new List<Media>();
-            IEnumerable<Media> lm = ListPictures.Where(m => m.IsSelected == true);
+            List<PictureMedia> tmp = new List<PictureMedia>();
+            IEnumerable<PictureMedia> lm = ListPictures.Where(m => m.IsSelected == true);
 
 
-            foreach (Media m in lm)
+            foreach (PictureMedia m in lm)
             {
                 tmp.Add(m);
             }
-            foreach (Media m in tmp)
+            foreach (PictureMedia m in tmp)
             {
                 ListPictures.Remove(m);
             }
@@ -650,11 +650,11 @@ namespace WMP
                 {
                     string ext = Path.GetExtension(file);
                     if (ext == ".wmv" || ext == ".avi" || ext == ".mpg" || ext == ".mov" || ext == ".mkv" || ext == ".asf")
-                        ListVideos.Add(new Media { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
+                        ListVideos.Add(new VideoMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
                     else if (ext == ".mp3" || ext == ".wav" || ext == ".wma" || ext == ".ogg")
                         ListSongs.Add(new AudioMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
                     else if (ext == ".png" || ext == ".bmp" || ext == ".jpg")
-                        ListPictures.Add(new Media { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
+                        ListPictures.Add(new PictureMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
                     else
                         MessageBox.Show(file + "file type not reconized !");
                 }
@@ -670,13 +670,13 @@ namespace WMP
             bool? res;
 
             dialog.Multiselect = true;
-            dialog.Filter = "Picture Files|*.jpg;*.bmp;*.png|ALL files|*.*";
+            dialog.Filter = "Picture Files|*.jpg;*.bmp;*.png";
             res = dialog.ShowDialog();
             if (res == true)
             {
                 foreach (string file in dialog.FileNames)
                 {
-                    ListPictures.Add(new Media { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
+                    ListPictures.Add(new PictureMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
                 }
             }
             savePictures();

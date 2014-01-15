@@ -1,14 +1,6 @@
 <?xml version="1.0"?>
 <ArrayOfAudioMedia xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <AudioMedia>
-    <FileName>C:\Users\Public\Music\Sample Music\Kalimba.mp3</FileName>
-    <Year>0</Year>
-  </AudioMedia>
-  <AudioMedia>
-    <FileName>C:\Users\Public\Music\Sample Music\Maid with the Flaxen Hair.mp3</FileName>
-    <Year>0</Year>
-  </AudioMedia>
-  <AudioMedia>
     <FileName>C:\Users\Public\Music\Sample Music\Sleep Away.mp3</FileName>
     <Year>0</Year>
   </AudioMedia>

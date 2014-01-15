@@ -14,6 +14,8 @@ namespace WMP.Model
 
         protected override bool yearsFilter(string filter)
         {
+            if (filter != null && filter.Length <= 0)
+                return (true);
             return ((Year.ToString() == filter) ? true : false);
         }
 
