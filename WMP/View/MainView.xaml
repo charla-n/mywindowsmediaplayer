@@ -277,7 +277,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate>
-                                <TextBlock FontSize="10" Foreground="Black">Empty ! <LineBreak/>You can add media by right clicking on me</TextBlock>
+                                <TextBlock FontSize="10" Foreground="Black">Empty</TextBlock>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
