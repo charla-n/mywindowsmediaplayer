@@ -20,10 +20,16 @@ namespace WMP.Model
 
         protected override bool albumFilter(string filter)
         {
-            System.Console.WriteLine("album filter in");
             if (filter != null && filter.Length <= 0)
                 return (true);
             return ((Album != null && Album.ToLower().Contains(filter.ToLower())) ? true : false);
+        }
+
+        protected override bool yearsFilter(string filter)
+        {
+            if (filter != null && filter.Length <= 0)
+                return (true);
+            return ((Year.ToString().Contains(filter)) ? true : false);
         }
 
         public string Artist { get; set; }
