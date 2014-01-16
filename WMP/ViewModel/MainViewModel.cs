@@ -423,22 +423,19 @@ namespace WMP
             {
                 _player.Stop();
                 _media = lv.ElementAt(0);
-                _player.Source = new Uri(lv.ElementAt(0).FileName);
-                _player.Play();
+                OnOpenMedia(_media.FileName);
             }
             else if (lm.Count() > 0)
             {
                 _player.Stop();
                 _media = lm.ElementAt(0);
-                _player.Source = new Uri(lm.ElementAt(0).FileName);
-                _player.Play();
+                OnOpenMedia(_media.FileName);
             }
             else if (lp.Count() > 0)
             {
                 _player.Stop();
                 _media = lp.ElementAt(0);
-                _player.Source = new Uri(lp.ElementAt(0).FileName);
-                _player.Play();
+                OnOpenMedia(_media.FileName);
             }
         }
 
@@ -717,12 +714,14 @@ namespace WMP
             Console.WriteLine("Event OnMediaEnded");
             if (!CanNext())
             {
+                Console.WriteLine("Can't next");
                 _media.isPlaying = false;
                 _progress.Stop();
                 _player.Stop();
             }
             else
             {
+                Console.WriteLine("Can next");
                 _progress.Stop();
                 NextCmd();
             }
@@ -915,7 +914,7 @@ namespace WMP
                     return "Next media : no next media";
                 else
                 {
-                    if (_isRandEnabled)
+                    if (_isRandEnabled && _playlist.ListMedia.Count > 1)
                     {
                         _rand = _rnd.Next() % (_playlist.ListMedia.Count - 1);
                         return ("Next random media : " + Path.GetFileName(_playlist.ListMedia[_rand].FileName));
@@ -1159,6 +1158,8 @@ namespace WMP
                 _media = _playlist.ListMedia[_playlist.ListMedia.IndexOf(_media) + 1];
             _media.isPlaying = playingPrev;
             _player.Source = new Uri(_media.FileName);
+            if (_playlist.ListMedia.Count == 1)
+                MediaLoaded(this, null);
             OnPropertyChanged("MediaName");
             OnPropertyChanged("MediaNameNext");
         }
@@ -1183,7 +1184,7 @@ namespace WMP
         {
             if (_media != null)
             {
-                if (_repeatState != repeatStatus.NONE || _isRandEnabled)
+                if (_repeatState != repeatStatus.NONE || (_isRandEnabled && _playlist.ListMedia.Count > 1))
                     return true;
                 if (_playlist.ListMedia.Count > 0 && (_playlist.ListMedia.IndexOf(_media) - 1) >= 0)
                     return true;
@@ -1195,7 +1196,7 @@ namespace WMP
         {
             if (_media != null)
             {
-                if (_repeatState != repeatStatus.NONE || _isRandEnabled)
+                if (_repeatState != repeatStatus.NONE || (_isRandEnabled && _playlist.ListMedia.Count > 1))
                     return true;
                 if (_playlist.ListMedia.Count > 0 && (_playlist.ListMedia.IndexOf(_media) + 1) < _playlist.ListMedia.Count)
                     return true;

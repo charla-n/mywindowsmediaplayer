@@ -113,8 +113,9 @@ namespace WMP
                         serializer.Serialize(stream, ListMedia.ToList());
                     };
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine("EXCEPTION=" + ex);
                     MessageBox.Show("Error occured when saving playlist" + Environment.NewLine + "Be sure you've correct permissions", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
@@ -146,8 +147,7 @@ namespace WMP
                         List<Media> list = (List<Media>)serializer.Deserialize(reader);
                         foreach (Media m in list)
                         {
-                            m.Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(m.FileName));
-                            ListMedia.Add(m);
+                            ListMedia.Add(Media.CreateMedia(false, m.FileName, true, ExtensionStatic.GetIconsFromExtension(Path.GetExtension(m.FileName))));
                         }
                     };
                 }

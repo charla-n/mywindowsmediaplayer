@@ -15,6 +15,9 @@ namespace WMP.Model
     { AUDIO, VIDEO, PICTURE, NONE };
     
     [Serializable]
+    [XmlInclude(typeof(VideoMedia))]
+    [XmlInclude(typeof(AudioMedia))]
+    [XmlInclude(typeof(PictureMedia))]
     public class Media
     {
 
@@ -144,7 +147,7 @@ namespace WMP.Model
                 file = TagLib.File.Create(fileName);
             }
             catch (Exception)
-            {}
+            { }
             if (type != t_MediaType.NONE)
                 media = createMedia[(int)type](fileName, file);
             else
