@@ -77,16 +77,19 @@ namespace WMP.Model
             AudioMedia media = new AudioMedia();
 
             media.MediaType = t_MediaType.AUDIO;
-            media.Artist = file.Tag.FirstPerformer;
-            media.Album = file.Tag.Album;
-            media.Year = file.Tag.Year;
-            media.Title = file.Tag.Title != "" && file.Tag.Title != null ? file.Tag.Title : Path.GetFileNameWithoutExtension(fileName);
-            foreach (TagLib.ICodec codec in file.Properties.Codecs)
+            if (file != null)
             {
-                TagLib.IAudioCodec acodec = codec as TagLib.IAudioCodec;
-                if (acodec != null && (acodec.MediaTypes & TagLib.MediaTypes.Audio) != TagLib.MediaTypes.None)
-                    media.Bitrate = acodec.AudioBitrate;
-                break;
+                media.Artist = file.Tag.FirstPerformer;
+                media.Album = file.Tag.Album;
+                media.Year = file.Tag.Year;
+                media.Title = file.Tag.Title != "" && file.Tag.Title != null ? file.Tag.Title : Path.GetFileNameWithoutExtension(fileName);
+                foreach (TagLib.ICodec codec in file.Properties.Codecs)
+                {
+                    TagLib.IAudioCodec acodec = codec as TagLib.IAudioCodec;
+                    if (acodec != null && (acodec.MediaTypes & TagLib.MediaTypes.Audio) != TagLib.MediaTypes.None)
+                        media.Bitrate = acodec.AudioBitrate;
+                    break;
+                }
             }
             return media;
         }
@@ -96,20 +99,23 @@ namespace WMP.Model
             VideoMedia media = new VideoMedia();
 
             media.MediaType = t_MediaType.VIDEO;
-            media.Year = file.Tag.Year;
-            media.Title = file.Tag.Title != "" && file.Tag.Title != null ? file.Tag.Title : Path.GetFileNameWithoutExtension(fileName);
-            foreach (TagLib.ICodec codec in file.Properties.Codecs)
+            if (file != null)
             {
-                TagLib.IAudioCodec acodec = codec as TagLib.IAudioCodec;
-                TagLib.IVideoCodec vcodec = codec as TagLib.IVideoCodec;
-                if (acodec != null && (acodec.MediaTypes & TagLib.MediaTypes.Audio) != TagLib.MediaTypes.None)
-                    media.Bitrate = acodec.AudioBitrate;
-                if (vcodec != null && (vcodec.MediaTypes & TagLib.MediaTypes.Video) != TagLib.MediaTypes.None)
+                media.Year = file.Tag.Year;
+                media.Title = file.Tag.Title != "" && file.Tag.Title != null ? file.Tag.Title : Path.GetFileNameWithoutExtension(fileName);
+                foreach (TagLib.ICodec codec in file.Properties.Codecs)
                 {
-                    media.Width = vcodec.VideoWidth;
-                    media.Height = vcodec.VideoHeight;
+                    TagLib.IAudioCodec acodec = codec as TagLib.IAudioCodec;
+                    TagLib.IVideoCodec vcodec = codec as TagLib.IVideoCodec;
+                    if (acodec != null && (acodec.MediaTypes & TagLib.MediaTypes.Audio) != TagLib.MediaTypes.None)
+                        media.Bitrate = acodec.AudioBitrate;
+                    if (vcodec != null && (vcodec.MediaTypes & TagLib.MediaTypes.Video) != TagLib.MediaTypes.None)
+                    {
+                        media.Width = vcodec.VideoWidth;
+                        media.Height = vcodec.VideoHeight;
+                    }
+                    break;
                 }
-                break;
             }
             return media;
         }
@@ -130,7 +136,7 @@ namespace WMP.Model
         {
             t_MediaType type = ExtensionStatic.GetTypeFromExtension(Path.GetExtension(fileName));
             Media media;
-            TagLib.File file;
+            TagLib.File file = null;
 
             Console.WriteLine(fileName);
             try
@@ -138,11 +144,7 @@ namespace WMP.Model
                 file = TagLib.File.Create(fileName);
             }
             catch (Exception)
-            {
-                return new Media() { isPlaying = isPlaying, FileName = fileName, isStopped = isStopped,
-                                     Icon = icon, MediaType = t_MediaType.NONE};
-            }
-
+            {}
             if (type != t_MediaType.NONE)
                 media = createMedia[(int)type](fileName, file);
             else

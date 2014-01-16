@@ -1,6 +1,2 @@
 <?xml version="1.0"?>
-<ArrayOfPictureMedia xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <PictureMedia>
-    <FileName>C:\Users\ballan_q\Pictures\Editor.png</FileName>
-  </PictureMedia>
-</ArrayOfPictureMedia>
+<ArrayOfPictureMedia xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
