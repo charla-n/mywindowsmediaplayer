@@ -82,10 +82,8 @@ namespace WMP
         RelayCommand _addsongtoplaylist;
         RelayCommand _addvideotoplaylist;
         RelayCommand _addpicturetoplaylist;
-        RelayCommand _addToPlaylist;
         
         RelayCommand _playmediacmd;
-        RelayCommand _addcmd;
         RelayCommand _clearallcmd;
 
         public ObservableCollection<VideoMedia> ListVideos { get; private set; }
@@ -108,14 +106,12 @@ namespace WMP
 
             _typeFilter = WMP.Model.MediaFilter.TITLE;
             _playmediacmd = new RelayCommand(playMediaCmd, () => true);
-            _addcmd = new RelayCommand(addCmd, () => true);
             _addvideoscmd = new RelayCommand(addVideoCmd, () => true);
             _addsongscmd = new RelayCommand(addSongCmd, () => true);
             _addpicturescmd = new RelayCommand(addPictureCmd, () => true);
             _addsongtoplaylist = new RelayCommand(addSongToPlayList, () => true);
             _addvideotoplaylist = new RelayCommand(addVideoToPlayList, () => true);
             _addpicturetoplaylist = new RelayCommand(addPictureToPlayList, () => true);
-            _addToPlaylist = new RelayCommand(addToPlaylistCmd, () => true);
             _deletevideocmd = new RelayCommand(deleteVideoCmd, () => true);
             _deletesongcmd = new RelayCommand(deleteSongCmd, () => true);
             _deletepicturecmd = new RelayCommand(deletePictureCmd, () => true);
@@ -228,9 +224,7 @@ namespace WMP
                 };
             }
             catch (Exception)
-            {
-                //MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            {}
         }
 
         private void loadSongsLibrary()
@@ -255,9 +249,7 @@ namespace WMP
                 };
             }
             catch (Exception)
-            {
-                //MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            {}
         }
 
         private void loadPicturesLibrary()
@@ -281,17 +273,7 @@ namespace WMP
                 };
             }
             catch (Exception)
-            {
-                //MessageBox.Show("Error occured when loading library" + Environment.NewLine + "Be sure you've correct permissions or you open a well-formated file", "Library Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        public ICommand AddToPlaylist
-        {
-            get
-            {
-                return _addToPlaylist;
-            }
+            {}
         }
 
         public ICommand PlayMedia
@@ -323,14 +305,6 @@ namespace WMP
             get
             {
                 return _addpicturetoplaylist;
-            }
-        }
-
-        public ICommand add
-        {
-            get
-            {
-                return _addcmd;
             }
         }
 
@@ -412,13 +386,6 @@ namespace WMP
             {
                 return _clearallcmd;
             }
-        }
-
-        private void addToPlaylistCmd()
-        {
-            //addSongToPlayList();
-            //addPictureToPlayList();
-            //addVideoToPlayList();
         }
 
         private void playMediaCmd()
@@ -644,35 +611,6 @@ namespace WMP
                 ListPictures.Remove(m);
             }
             savePictures();
-        }
-
-        private void addCmd()
-        {
-            //OpenFileDialog dialog = new OpenFileDialog();
-            //bool? res;
-
-            //dialog.Multiselect = true;
-            //dialog.Filter = "Video files|*.wmv;*.avi;*.mpg;*.mov;*.asf;*.mkv|Audio files|*.mp3;*.wav;*.wma;*.ogg|Picture Files|*.jpg;*.bmp;*.png|ALL files|*.*";
-            //res = dialog.ShowDialog();
-
-            //if (res == true)
-            //{
-            //    foreach (string file in dialog.FileNames)
-            //    {
-            //        string ext = Path.GetExtension(file);
-            //        if (ext == ".wmv" || ext == ".avi" || ext == ".mpg" || ext == ".mov" || ext == ".mkv" || ext == ".asf")
-            //            ListVideos.Add(new VideoMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
-            //        else if (ext == ".mp3" || ext == ".wav" || ext == ".wma" || ext == ".ogg")
-            //            ListSongs.Add(new AudioMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
-            //        else if (ext == ".png" || ext == ".bmp" || ext == ".jpg")
-            //            ListPictures.Add(new PictureMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
-            //        else
-            //            MessageBox.Show(file + "file type not recognized !");
-            //    }
-            //}
-            //savePictures();
-            //saveVideos();
-            //saveSongs();
         }
 
         private void addPictureCmd()
