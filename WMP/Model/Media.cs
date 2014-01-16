@@ -94,6 +94,8 @@ namespace WMP.Model
                     break;
                 }
             }
+            else
+                media.Title = Path.GetFileNameWithoutExtension(fileName);
             return media;
         }
 
@@ -120,6 +122,8 @@ namespace WMP.Model
                     break;
                 }
             }
+            else
+                media.Title = Path.GetFileNameWithoutExtension(fileName);
             return media;
         }
 

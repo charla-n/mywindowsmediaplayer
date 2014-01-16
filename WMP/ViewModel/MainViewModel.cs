@@ -172,6 +172,10 @@ namespace WMP
 
         public string SearchTxt
         {
+            get
+            {
+                return _search;
+            }
             set
             {
                 _search = value;
@@ -187,6 +191,10 @@ namespace WMP
 
         public MediaFilter ChangeTypeFilter
         {
+            get
+            {
+                return _typeFilter;
+            }
             set
             {
                 _typeFilter = value;
@@ -408,9 +416,9 @@ namespace WMP
 
         private void addToPlaylistCmd()
         {
-            addSongToPlayList();
-            addPictureToPlayList();
-            addVideoToPlayList();
+            //addSongToPlayList();
+            //addPictureToPlayList();
+            //addVideoToPlayList();
         }
 
         private void playMediaCmd()
@@ -640,31 +648,31 @@ namespace WMP
 
         private void addCmd()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            bool? res;
+            //OpenFileDialog dialog = new OpenFileDialog();
+            //bool? res;
 
-            dialog.Multiselect = true;
-            dialog.Filter = "Video files|*.wmv;*.avi;*.mpg;*.mov;*.asf;*.mkv|Audio files|*.mp3;*.wav;*.wma;*.ogg|Picture Files|*.jpg;*.bmp;*.png|ALL files|*.*";
-            res = dialog.ShowDialog();
+            //dialog.Multiselect = true;
+            //dialog.Filter = "Video files|*.wmv;*.avi;*.mpg;*.mov;*.asf;*.mkv|Audio files|*.mp3;*.wav;*.wma;*.ogg|Picture Files|*.jpg;*.bmp;*.png|ALL files|*.*";
+            //res = dialog.ShowDialog();
 
-            if (res == true)
-            {
-                foreach (string file in dialog.FileNames)
-                {
-                    string ext = Path.GetExtension(file);
-                    if (ext == ".wmv" || ext == ".avi" || ext == ".mpg" || ext == ".mov" || ext == ".mkv" || ext == ".asf")
-                        ListVideos.Add(new VideoMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
-                    else if (ext == ".mp3" || ext == ".wav" || ext == ".wma" || ext == ".ogg")
-                        ListSongs.Add(new AudioMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
-                    else if (ext == ".png" || ext == ".bmp" || ext == ".jpg")
-                        ListPictures.Add(new PictureMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
-                    else
-                        MessageBox.Show(file + "file type not recognized !");
-                }
-            }
-            savePictures();
-            saveVideos();
-            saveSongs();
+            //if (res == true)
+            //{
+            //    foreach (string file in dialog.FileNames)
+            //    {
+            //        string ext = Path.GetExtension(file);
+            //        if (ext == ".wmv" || ext == ".avi" || ext == ".mpg" || ext == ".mov" || ext == ".mkv" || ext == ".asf")
+            //            ListVideos.Add(new VideoMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
+            //        else if (ext == ".mp3" || ext == ".wav" || ext == ".wma" || ext == ".ogg")
+            //            ListSongs.Add(new AudioMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
+            //        else if (ext == ".png" || ext == ".bmp" || ext == ".jpg")
+            //            ListPictures.Add(new PictureMedia { FileName = file, isPlaying = false, Icon = ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file)), Title = Path.GetFileNameWithoutExtension(file) });
+            //        else
+            //            MessageBox.Show(file + "file type not recognized !");
+            //    }
+            //}
+            //savePictures();
+            //saveVideos();
+            //saveSongs();
         }
 
         private void addPictureCmd()

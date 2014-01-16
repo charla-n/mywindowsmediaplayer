@@ -106,16 +106,15 @@ namespace WMP
             {
                 try
                 {
-                    using (FileStream stream = new FileStream(dlg.FileName, FileMode.OpenOrCreate))
+                    using (FileStream stream = new FileStream(dlg.FileName, FileMode.OpenOrCreate | FileMode.Truncate))
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(List<Media>));
 
                         serializer.Serialize(stream, ListMedia.ToList());
                     };
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Console.WriteLine("EXCEPTION=" + ex);
                     MessageBox.Show("Error occured when saving playlist" + Environment.NewLine + "Be sure you've correct permissions", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
