@@ -8,7 +8,20 @@
     <Window.DataContext>
         <view:MainWindowViewModel/>
     </Window.DataContext>
-
+    
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo>
+            <TaskbarItemInfo.ThumbButtonInfos>
+                <ThumbButtonInfo ImageSource="../Icons/prev_icon.png"
+                             Command="{Binding MainView.Previous}" Description="Previous" />
+                <ThumbButtonInfo ImageSource="{Binding MainView.StopPlay}"
+                             Command="{Binding MainView.Play}" Description="Play" />
+                <ThumbButtonInfo ImageSource="../Icons/next_icon.png"
+                             Command="{Binding MainView.Next}" Description="Next" />
+            </TaskbarItemInfo.ThumbButtonInfos>
+        </TaskbarItemInfo>
+    </Window.TaskbarItemInfo>
+    
     <Window.InputBindings>
         <KeyBinding Key="Space" Command="{Binding MainView.Play}"></KeyBinding>
         <KeyBinding Key="Escape" Command="{Binding MainView.ExitFullScreen}"></KeyBinding>
