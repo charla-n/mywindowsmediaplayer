@@ -174,6 +174,11 @@ namespace WMP
             }
         }
 
+        public void AddFromDrop(string file)
+        {
+            ListMedia.Add(Media.CreateMedia(false, file, false, ExtensionStatic.GetIconsFromExtension(Path.GetExtension(file))));
+        }
+
         public void DeleteCmd()
         {
             List<Media> tmp = new List<Media>();

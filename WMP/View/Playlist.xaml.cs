@@ -48,12 +48,25 @@ namespace WMP
                 (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
                 Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
             {
-                Console.WriteLine("COUCOU");
                 if (listView.SelectedItems.Count > 0)
                 {
-                    Console.WriteLine("PREVIEW MOUSE LEFT BUTTON DOWN");
-                    DataObject obj = new DataObject("myFormat", listView.SelectedItems.Cast<object>());
+                    DataObject obj = new DataObject("myFormat", listView.SelectedItems);
                     DragDrop.DoDragDrop(listView, obj, DragDropEffects.Move);
+                }
+            }
+        }
+
+        private void listView_Drop(object sender, DragEventArgs e)
+        {
+            PlaylistViewModel ctx = (PlaylistViewModel)DataContext;
+
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
+
+                foreach (string cur in files)
+                {
+                    ctx.AddFromDrop(cur);
                 }
             }
         }

@@ -23,8 +23,8 @@
             <Image Width="64" Height="64"  Source="../Icons/view_playlist.png"/>
         </DockPanel>
         
-        <ListView AllowDrop="True" Name="listView" ItemsSource="{Binding ListMedia}" Grid.Column="1" Margin="10,10,10,0"
-                  PreviewMouseLeftButtonDown="listView_PreviewMouseLeftButtonDown" MouseMove="listView_MouseMove">
+        <ListView SelectionMode="Multiple" AllowDrop="True" Name="listView" ItemsSource="{Binding ListMedia}" Grid.Column="1" Margin="10,10,10,0"
+                  PreviewMouseLeftButtonDown="listView_PreviewMouseLeftButtonDown" MouseMove="listView_MouseMove" Drop="listView_Drop">
             <ListView.InputBindings>
                 <KeyBinding Key="Delete" Command="{Binding Delete}"></KeyBinding>
             </ListView.InputBindings>
