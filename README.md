@@ -17,7 +17,7 @@ Done :
 	Raccourcis (next, prev, play, fullscreen)
 	Button random media
 	Button loop media, infinite media
-	Drag & Drop de la playlist dans la corbeille et de l'explorer à la playlist
+	Drag & Drop de la playlist dans la corbeille et de l'explorer a la playlist
 	C'est cholie ... ou pas
 
 
