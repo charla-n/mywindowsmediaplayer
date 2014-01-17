@@ -8,7 +8,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="32"/>
+            <RowDefinition Height="64"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -23,7 +23,8 @@
             <Image Width="64" Height="64"  Source="../Icons/view_playlist.png"/>
         </DockPanel>
         
-        <ListView x:Name="listView" ItemsSource="{Binding ListMedia}" Grid.Column="1" Margin="10,10,10,0">
+        <ListView AllowDrop="True" Name="listView" ItemsSource="{Binding ListMedia}" Grid.Column="1" Margin="10,10,10,0"
+                  PreviewMouseLeftButtonDown="listView_PreviewMouseLeftButtonDown" MouseMove="listView_MouseMove">
             <ListView.InputBindings>
                 <KeyBinding Key="Delete" Command="{Binding Delete}"></KeyBinding>
             </ListView.InputBindings>
@@ -73,9 +74,9 @@
             </ListView.ContextMenu>
         </ListView>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Height="32" Margin="0">
-            
-        </StackPanel>
+        <DockPanel Grid.Row="1" Grid.Column="1" Margin="0,5,0,0">
+            <Image AllowDrop="True" Drop="Image_Drop" DockPanel.Dock="Right" Width="64" Height="64" Source="../Icons/delete.png"/>
+        </DockPanel>
 
     </Grid>
 </UserControl>

@@ -174,7 +174,7 @@ namespace WMP
             }
         }
 
-        private void DeleteCmd()
+        public void DeleteCmd()
         {
             List<Media> tmp = new List<Media>();
             IEnumerable<Media> lm = ListMedia.Where(m => m.IsSelected == true);
