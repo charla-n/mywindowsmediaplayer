@@ -1130,7 +1130,7 @@ namespace WMP
         {
             if (_media != null)
             {
-                if (_repeatState != repeatStatus.NONE || (_isRandEnabled && _playlist.ListMedia.Count > 1))
+                if ((_repeatState != repeatStatus.NONE && _playlist.ListMedia.Count > 1) || (_isRandEnabled && _playlist.ListMedia.Count > 1))
                     return true;
                 if (_playlist.ListMedia.Count > 0 && (_playlist.ListMedia.IndexOf(_media) - 1) >= 0)
                     return true;
@@ -1142,7 +1142,7 @@ namespace WMP
         {
             if (_media != null)
             {
-                if (_repeatState != repeatStatus.NONE || (_isRandEnabled && _playlist.ListMedia.Count > 1))
+                if ((_repeatState != repeatStatus.NONE && _playlist.ListMedia.Count > 1) || (_isRandEnabled && _playlist.ListMedia.Count > 1))
                     return true;
                 if (_playlist.ListMedia.Count > 0 && (_playlist.ListMedia.IndexOf(_media) + 1) < _playlist.ListMedia.Count)
                     return true;

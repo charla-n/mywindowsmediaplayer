@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ArrayOfPictureMedia xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PictureMedia>
+    <FileName>C:\Users\Grapefruit\Pictures\mabitedanstonuretre.png</FileName>
+  </PictureMedia>
+  <PictureMedia>
+    <FileName>C:\Users\Grapefruit\Pictures\manahost.png</FileName>
+  </PictureMedia>
+  <PictureMedia>
+    <FileName>C:\Users\Grapefruit\Pictures\qt5.png</FileName>
+  </PictureMedia>
+  <PictureMedia>
+    <FileName>C:\Users\Grapefruit\Pictures\qtcreator.png</FileName>
+  </PictureMedia>
+  <PictureMedia>
+    <FileName>C:\Users\Grapefruit\Pictures\steam_assertion.png</FileName>
+  </PictureMedia>
+  <Picture
+</ArrayOfPictureMedia>
